@@ -3,358 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agentforce Specialist Mastery - 100 Qs</title>
+    <title>Salesforce Admin Study App</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap');
-        body { font-family: 'Noto Sans JP', sans-serif; background-color: #f1f5f9; color: #1e293b; overflow-x: hidden; }
-        .option-btn:disabled { cursor: not-allowed; }
-        .progress-bar { transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
-        .exam-card:hover { transform: translateY(-8px); box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1); }
-        .dashboard-card { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); }
-        .animate-fade-in { animation: fadeIn 0.4s ease-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
-        .modal-overlay { background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(5px); }
-        .explanation-box { white-space: pre-wrap; word-break: break-all; }
+        .option-btn.selected { border-color: #4f46e5; background-color: #eef2ff; }
+        .option-btn.correct { border-color: #10b981; background-color: #ecfdf5; color: #065f46; }
+        .option-btn.wrong { border-color: #ef4444; background-color: #fef2f2; color: #991b1b; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col items-center p-4 md:p-8">
-
-    <header class="w-full max-w-5xl mb-6 flex justify-between items-center px-2">
-        <h1 onclick="location.reload()" class="text-xl md:text-3xl font-black text-slate-800 cursor-pointer flex items-center gap-2">
-            <i class="fas fa-robot text-blue-600"></i>
-            <span>Agentforce <span class="text-blue-600">Mastery</span></span>
-        </h1>
-        <div class="bg-white px-4 py-2 rounded-2xl shadow-sm border border-slate-200 flex items-center gap-4">
-            <div class="flex flex-col items-end leading-none">
-                <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Wrong</span>
-                <span id="header-wrong-count" class="text-lg font-black text-red-500">0</span>
-            </div>
-        </div>
-    </header>
-
-    <main id="app-container" class="w-full max-w-5xl">
-        <!-- Dashboard Screen -->
-        <div id="selection-screen" class="space-y-6 animate-fade-in">
-            <section class="dashboard-card rounded-[2.5rem] p-8 text-white shadow-2xl relative overflow-hidden">
-                <div class="relative z-10 flex flex-col md:flex-row justify-between items-center gap-8">
-                    <div>
-                        <h2 class="text-sm font-black text-blue-400 uppercase tracking-[0.2em] mb-1">Overall Status</h2>
-                        <p class="text-3xl font-black">学習進捗ダッシュボード</p>
-                    </div>
-                    <div class="flex gap-10">
-                        <div class="text-center">
-                            <span class="block text-[10px] font-bold text-slate-500 uppercase mb-1">総回答数</span>
-                            <span id="dash-total-attempts" class="text-3xl font-black text-white">0</span>
-                        </div>
-                        <div class="text-center border-l border-slate-800 pl-10">
-                            <span class="block text-[10px] font-bold text-slate-500 uppercase mb-1">正解率</span>
-                            <span id="dash-overall-accuracy" class="text-3xl font-black text-green-400">0%</span>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section id="review-section" class="hidden p-6 bg-red-50 rounded-3xl border-2 border-red-100 shadow-sm flex items-center justify-between gap-4">
-                <div class="flex items-center gap-4 text-slate-800">
-                    <i class="fas fa-redo-alt text-2xl text-red-600"></i>
-                    <div>
-                        <h3 class="font-black">ニガテ克服コース</h3>
-                        <p class="text-xs text-slate-500">ミスした問題が <span id="failed-count-display">0</span> 問あります。</p>
-                    </div>
-                </div>
-                <button onclick="quizApp.startReview()" class="bg-red-600 text-white font-black py-3 px-8 rounded-xl hover:bg-red-700 transition">復習開始</button>
-            </section>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <button onclick="quizApp.start(false)" class="bg-white rounded-[2rem] p-8 shadow-lg border-b-8 border-slate-900 text-left hover:-translate-y-2 transition">
-                    <i class="fas fa-play text-blue-600 text-2xl mb-4"></i>
-                    <h3 class="text-xl font-black mb-2 tracking-tighter">1問目から解く</h3>
-                    <p class="text-xs text-slate-400">全100問を順番に攻略するマラソンコースです。</p>
-                </button>
-                <button onclick="quizApp.start(true)" class="bg-white rounded-[2rem] p-8 shadow-lg border-b-8 border-blue-600 text-left hover:-translate-y-2 transition">
-                    <i class="fas fa-random text-blue-600 text-2xl mb-4"></i>
-                    <h3 class="text-xl font-black mb-2 tracking-tighter">ランダムに出題</h3>
-                    <p class="text-xs text-slate-400">実戦形式でシャッフル出題します。</p>
-                </button>
-            </div>
-
-            <div class="space-y-4">
-                <h3 class="text-xs font-black text-slate-400 uppercase tracking-widest pl-2">カテゴリー別ドリル</h3>
-                <div id="category-list-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3"></div>
-            </div>
+<body class="bg-slate-50 min-h-screen p-4 md:p-8">
+    <div class="max-w-3xl mx-auto space-y-6">
+        <div class="bg-white p-6 rounded-2xl shadow-sm flex flex-wrap gap-4 items-center">
+            <select id="category-filter" class="border p-2 rounded-lg bg-white text-sm">
+                <option value="All">すべてのカテゴリ</option>
+            </select>
+            <button id="random-btn" class="border px-4 py-2 rounded-lg text-sm bg-white hover:bg-slate-50">🔄 番号順</button>
+            <input type="text" id="search-input" placeholder="問題を検索..." class="border p-2 rounded-lg flex-1 text-sm">
         </div>
 
-        <!-- Quiz Screen -->
-        <div id="quiz-screen" class="hidden animate-fade-in w-full">
+        <div class="bg-white p-6 md:p-10 rounded-3xl shadow-xl border border-slate-200">
             <div class="flex justify-between items-center mb-6">
-                <div class="flex items-center gap-3">
-                    <button onclick="quizApp.showQuitModal()" class="text-slate-300 hover:text-red-500 transition"><i class="fas fa-times-circle text-2xl"></i></button>
-                    <span id="progress-text" class="text-xl font-black text-slate-700 tracking-tighter">QUESTION 1/100</span>
-                </div>
-                <div class="flex items-center gap-2">
-                    <span id="quiz-mode-label" class="text-[10px] font-black bg-slate-100 px-3 py-1 rounded-full text-slate-500 uppercase">MARATHON</span>
-                    <span id="score-text" class="text-2xl font-black text-blue-600 italic">0%</span>
-                </div>
+                <span id="progress-badge" class="bg-indigo-100 text-indigo-700 text-xs font-bold px-3 py-1 rounded-full"></span>
             </div>
-            <div class="w-full bg-slate-200 h-3 rounded-full mb-8 overflow-hidden shadow-inner border border-slate-100">
-                <div id="progress-bar" class="progress-bar bg-blue-600 h-full w-0"></div>
+            
+            <h2 id="question-text" class="text-xl font-bold text-slate-800 leading-relaxed mb-8"></h2>
+            <div id="options-container" class="grid gap-4 mb-8"></div>
+
+            <button id="submit-btn" class="w-full bg-indigo-600 text-white py-4 rounded-2xl font-bold shadow-lg hover:bg-indigo-700 transition-all disabled:opacity-30">回答を確定する</button>
+
+            <div id="explanation-box" class="hidden mt-6 p-6 rounded-2xl border-2 border-emerald-100 bg-emerald-50">
+                <p class="font-black text-emerald-800 mb-2">💡 解説</p>
+                <p id="explanation-text" class="text-emerald-700 leading-relaxed"></p>
             </div>
 
-            <div class="bg-white rounded-[3rem] shadow-2xl p-6 md:p-12 border border-slate-100">
-                <div id="category-badge" class="inline-block px-4 py-1.5 rounded-xl bg-blue-50 text-blue-600 text-[10px] font-black mb-8 uppercase tracking-widest border border-blue-100 italic font-mono">CATEGORY</div>
-                <h3 id="question-text" class="text-xl md:text-2xl font-bold text-slate-800 mb-10 leading-snug"></h3>
-                <div id="options-container" class="grid grid-cols-1 gap-4 mb-8"></div>
-                
-                <div id="explanation-container" class="hidden mt-10 pt-10 border-t-2 border-slate-50 animate-fade-in">
-                    <div id="result-badge" class="flex items-center p-6 rounded-2xl mb-6 font-black text-lg"></div>
-                    <div id="explanation-content" class="bg-slate-50 p-6 rounded-2xl border border-slate-100 custom-scrollbar overflow-y-auto max-h-[400px]">
-                        <h4 class="text-xs font-black text-slate-400 uppercase tracking-widest mb-4">詳細解説 (ABC全選択肢)</h4>
-                        <div id="explanation-text" class="explanation-box text-slate-600 text-sm md:text-base leading-relaxed italic"></div>
-                    </div>
-                    <button id="next-btn" onclick="quizApp.nextQuestion()" class="mt-8 w-full bg-slate-900 hover:bg-black text-white font-black py-5 rounded-2xl transition shadow-xl transform active:scale-95 flex items-center justify-center gap-2 group">
-                        <span>次の問題へ</span> <i class="fas fa-chevron-right transition group-hover:translate-x-1"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Result Screen -->
-        <div id="result-screen" class="hidden space-y-8 animate-fade-in pb-20">
-            <div class="bg-white rounded-[3rem] shadow-2xl p-10 md:p-16 text-center">
-                <h2 class="text-3xl font-black text-slate-400 uppercase tracking-widest mb-4">Result</h2>
-                <div id="final-emoji" class="text-8xl my-10">🏆</div>
-                <div id="final-score" class="text-7xl font-black text-blue-600 mb-4 tracking-tighter">0%</div>
-                <p id="final-stats" class="text-slate-400 font-bold mb-12 uppercase tracking-widest"></p>
-                
-                <div class="text-left border-t pt-10 mt-10">
-                    <h3 class="text-xl font-black mb-8 flex items-center gap-3"><i class="fas fa-chart-pie text-blue-500"></i> 強み・弱み分析</h3>
-                    <div class="overflow-hidden rounded-2xl border border-slate-100 shadow-sm">
-                        <table class="w-full text-left">
-                            <thead class="bg-slate-50 border-b border-slate-100">
-                                <tr class="text-[10px] font-black text-slate-400 uppercase tracking-widest">
-                                    <th class="p-4">カテゴリー</th>
-                                    <th class="p-4 text-right">正解率 / 判定</th>
-                                </tr>
-                            </thead>
-                            <tbody id="analysis-table-body" class="divide-y divide-slate-50 bg-white"></tbody>
-                        </table>
-                    </div>
-                </div>
-                <button onclick="location.reload()" class="mt-12 bg-slate-900 text-white font-black py-5 px-10 rounded-2xl shadow-xl w-full md:w-auto transition hover:bg-black">メニューに戻る</button>
-            </div>
-        </div>
-    </main>
-
-    <!-- Quit Modal -->
-    <div id="quit-modal" class="hidden fixed inset-0 z-50 modal-overlay flex items-center justify-center p-4">
-        <div class="bg-white rounded-[2rem] p-10 max-w-sm w-full shadow-2xl animate-fade-in text-center">
-            <div class="text-red-500 text-6xl mb-6"><i class="fas fa-exclamation-triangle"></i></div>
-            <h3 class="text-2xl font-black mb-4 tracking-tighter leading-tight">学習を中断しますか？</h3>
-            <p class="text-slate-500 mb-8 text-sm">現在の回答結果は保存されます。</p>
-            <div class="grid grid-cols-2 gap-4">
-                <button onclick="quizApp.hideQuitModal()" class="bg-slate-100 text-slate-600 font-black py-4 rounded-xl hover:bg-slate-200 transition">続ける</button>
-                <button onclick="quizApp.quitQuiz()" class="bg-red-600 text-white font-black py-4 rounded-xl shadow-lg hover:bg-red-700 transition">中断する</button>
+            <div class="flex justify-between items-center mt-10 pt-6 border-t border-slate-100">
+                <button id="prev-btn" class="text-slate-400 font-bold hover:text-indigo-600 transition-colors">← 前の問題</button>
+                <button id="next-btn" class="bg-slate-800 text-white px-8 py-2 rounded-xl font-bold hover:bg-slate-700 transition-all">次へ</button>
             </div>
         </div>
     </div>
 
-    <script>
-        const RAW_DATA = [
-            // --- 1-25 ---
-            { id: 1, cat: "Agentforce 基本", q: "Agentforceの推論エンジンがトピックを選択するために使用する情報はどれですか？", a: "A. トピック名と分類の説明", b: "B. トピック名とスコープ", c: "C. 分類の説明とスコープ", correct: "C", exp: "A：不正解。「トピック名」は主にシステム管理者向けの管理ラベルであり、AIの動的な選択ロジックには使用されません。\nB：不正解。Aと同様に「トピック名」はAIの推論ロジックでは使用されません。「スコープ」は重要ですが、トピックを定義する「分類の説明」がなければ、エンジンは正しく選択できません。\nC：正解。Agentforceの推論エンジンは、ユーザーの要求に最適なトピックを判断するために「分類の説明」と「スコープ」の2つを利用します。「分類の説明」は意図を定義し、「スコープ」は具体的な制約（例：90日以内）を提供します。" },
-            { id: 2, cat: "生成AI機能", q: "推奨記事に基づき生成AIによる返信やEメールの下書きを「生成」する機能はどれですか？", a: "A. Einstein 返信のおすすめ", b: "B. Einstein サービス返信", c: "C. Einstein グラウンディング", correct: "B", exp: "A：不正解。この機能は関連記事をエージェントに「推奨」しますが、それに基づいて新しい返信文を「生成」するわけではなく、手動選択を補助する機能です。\nB：正解。Service GPTの一部であり、ナレッジ記事や信頼できるソースに基づいて、顧客への返信やEメールの下書きを自動的に「生成」する機能です。\nC：不正解。生成AIの回答が社内データに基づいていることを保証するための「技術やプロセス」であり、返信生成機能そのものではありません。" },
-            { id: 3, cat: "実装設計", q: "ノーコードのみで、CRMやData Cloudデータに基づき電話準備を支援（要約）するには？", a: "A. 標準の基盤モデル ＋ プロンプトテンプレート", b: "B. 標準モデルをファインチューニング", c: "C. カスタム基盤モデルのデプロイ", correct: "A", exp: "A：正解。プロンプトテンプレートで指示を定義しグラウンディング（RAG）を行う手法は「ノーコードツールのみ」という要件に合致し、要約が可能です。\nB：不正解。ファインチューニングはモデル自体の振る舞いを調整する高度な（プロコード）手法であり、制約に反します。また要約には不要です。\nC：不正解。独自の基盤モデルを持ち込むのは最も複雑なプロコードのアプローチであり、開発リソースを必要とするため要件に明確に違反します。" },
-            { id: 4, cat: "Agentforce", q: "キャンセル実行と、再予約に関する記事の確認を同時に達成するAgentforceの機能は？", a: "A. フローを起動する", b: "B. 利用可能なアクション実行 ＋ ナレッジで回答", c: "C. ナレッジ記事を生成", correct: "B", exp: "A：不正解。新しい記事の「作成」ではなく既存の「確認」が必要なため要件に合いません。またアクション実行も不足しています。\nB：正解。AgentforceはSalesforce内のアクション実行と、ナレッジを参照して質問に回答する能力の両方を備えているため最適です。\nC：不正解。担当者は記事の「確認」を求めており「生成」は求めていません。アクション（キャンセル）の実行も含まれていないため誤りです。" },
-            { id: 5, cat: "実装設計", q: "（再掲）ノーコードツールのみで、過去の購入履歴や会話の要約を提供するには？", a: "A. カスタム基盤モデル", b: "B. ファインチューニング", c: "C. 標準モデル ＋ プロンプトテンプレート", correct: "C", exp: "A：不正解。BYOM（独自モデル持ち込み）は高度な専門知識と開発（プロコード）を必要とし、ノーコード要件に反します。\nB：不正解。モデル調整が必要な手法であり、ノーコードという要件を満たしません。\nC：正解。プロンプトテンプレート（ノーコード）で指示を書き、グラウンディングでData Cloudの情報をAIに提供するのが標準的なノーコード手法です。" },
-            { id: 6, cat: "デプロイ", q: "独自LLMを使用するプロンプトをサンドボックスから本番へデプロイする際のエラーの原因は？", a: "A. カスタムLLMの指定なし", b: "B. BYOLLM未サポート", c: "C. LLMの名前が組織間で不一致", correct: "C", exp: "A：不正解。設定自体で行うため、プロンプトのテキスト内容は原因になりません。\nB：不正解。BYOLLMは本番環境でも正式にサポートされている機能です。\nC：正解。テンプレートはLLMのAPI参照名を保持しており、デプロイ先に同名の設定がないと解決できず失敗します。" },
-            { id: 7, cat: "音声AI", q: "「Call Explorer」有効化の前に割り当てる必要がある権限セットは？", a: "A. 設定不要", b: "B. カスタムアクション", c: "C. Einstein 会話インサイト権限セット", correct: "C", exp: "A：不正解。通話システムの接続など、事前のセットアップが必要です。\nB：不正解。拡張用であり、標準機能の有効化に必須ではありません。\nC：正解。Call ExplorerはECIの一部であり、ユーザーにその権限が割り当てられていることが必須条件です。" },
-            { id: 8, cat: "Einstein Studio", q: "外部基盤モデルに接続(BYOM)すべきビジネス要件はどれ？", a: "A. 温度調整", b: "B. 自社データで外部トレーニングされたモデルを求めている", c: "C. 頻度ペナルティ変更", correct: "B", exp: "A：不正解。プロンプト設定やモデル呼び出し時に調整可能な値であり、BYOMの理由になりません。\nB：正解。外部プラットフォームで自社データを用いて独自に学習させたモデルを繋ぐのがBYOMの主目的です。\nC：不正解。設定値の一つであり、これだけのために外部モデルを導入することはありません。" },
-            { id: 9, cat: "アクション", q: "過去の成功例に基づきパーソナライズされたEメールを作成する標準アクションは？", a: "A. 類似商談検索", b: "B. 営業Eメールの下書きまたは修正", c: "C. レコード要約", correct: "B", exp: "A：不正解。他商談を探すだけで、メールの文面そのものを生成する機能ではありません。\nB：正解。営業文脈に特化し、過去の成功例等を根拠にメールを「生成」する専用アクションです。\nC：不正解。現在開いているレコードを要約するだけで、メール作成用ではありません。" },
-            { id: 10, cat: "プロンプト管理", q: "プロンプトテンプレートのバージョンが「イミュータブル」とはどういう意味？", a: "A. 最新版のみ有効化可", b: "B. 自動保存", c: "C. 有効化された後は変更不可", correct: "C", exp: "A：不正解。どのバージョンを有効化できるかを定義する用語ではありません。\nB：不正解。既存の有効化されたバージョンが「変更できない」という状態を指します。\nC：正解。「不変」を意味し、一度有効化されたバージョンはロックされます。修正にはコピーして新バージョン作成が必要です。" },
-            { id: 11, cat: "デプロイ", q: "エージェントアクションで呼び出すApexをデプロイする際、コードカバレッジは何%必要？", a: "A. 75%以上 ＋ 依存関係の包含", b: "B. 未有効化なら75%未満で可", c: "C. エージェント用なら回避可", correct: "A", exp: "A：正解。用途に関わらず、本番環境へのApexデプロイには標準のカバレッジ要件（75%以上）が適用されます。\nB：不正解。ステータスに関わらず、本番環境のデプロイ要件を回避することはできません。\nC：不正解。Agentforce専用であるという理由での免除ルールは存在しません。" },
-            { id: 12, cat: "テスト", q: "テスト中にCRMデータを変更しないためのベストプラクティスは？", a: "A. 本番環境で実行", b: "B. ケース数を制限", c: "C. サンドボックス環境のみで使用", correct: "C", exp: "A：不正解。実際の顧客データが書き換わる重大なリスクがあり、絶対に避けるべきです。\nB：不正解。件数を絞ってもデータ変更ロジックがあればリスクは消えません。\nC：正解。本番から隔離された安全な環境でテストを行うのが、データの安全を守る最善策です。" },
-            { id: 13, cat: "音声AI", q: "通話からインサイトを得るための設定として欠かせないのは？", a: "A. ECI有効化 ＋ プロバイダ接続 ＋ インサイト設定", b: "B. 録音マネージャ定義", c: "C. 営業録音有効化", correct: "A", exp: "A：正解。ECIを有効にし、録音プロバイダを接続し、キーワードを設定するのが正しい手順です。\nB：不正解。データを流し込むためのプロバイダ接続ステップが欠如しています。\nC：不正解。不正確な表現であり、外部/内部の具体的な録音プロバイダ接続設定が必要です。" },
-            { id: 14, cat: "監視/改善", q: "テンプレートの効果が低い際の監視支援ツールは？", a: "A. フィードバック監視", b: "B. Prompt Builder スコアカード", c: "C. グラウンディング変更", correct: "B", exp: "A：不正解。重要ですが、Salesforceが提供する具体的なツールの使用に言及していません。\nB：正解。ユーザーの評価（👍等）を追跡し、パフォーマンスを分析するために設計された専用ツールです。\nC：不正解。理由なく変更しても有効性は保証されず、逆効果になる可能性があります。" },
-            { id: 15, cat: "プロンプト設定", q: "カスタムプロンプトで「関連リスト」を使用する際の考慮事項は？", a: "A. テキストエンコーディング", b: "B. 差し込み項目の最大数", c: "C. XML/JSON形式選択", correct: "B", exp: "A：不正解。管理者が直接設定または考慮する特定のオプションではありません。\nB：正解。トークン制限や性能維持のため、取得できる項目数やレコード数には制約があります。\nC：不正解。管理者がこれらを画面で選択するオプションは存在しません。" },
-            { id: 16, cat: "Data Cloud", q: "識別項目とコンテンツ項目の違いは？", a: "A. 識別は検索用、コンテンツは回答生成用", b: "B. 識別は分類用、コンテンツは要約用", c: "C. 識別は用語強調用", correct: "A", exp: "A：正解。識別項目（タイトル等）で記事を特定し、コンテンツ項目（本文等）の詳細を使ってAIが回答を作ります。\nB：不正解。コンテンツ項目はAIが回答を作るための核心的な情報源であり、要約用ではありません。\nC：不正解。役割が混同されています。識別項目は特定に使用されます。" },
-            { id: 17, cat: "営業AI", q: "複数オブジェクトから「スナップショット」を作る機能は？", a: "A. 営業サマリー", b: "B. 営業インサイトサマリー", c: "C. 作業サマリー", correct: "B", exp: "A：不正解。標準的なAI機能の正確な名称ではありません。\nB：正解。複数の営業オブジェクトから主要な情報を抽出し、要約（スナップショット）を作る機能です。\nC：不正解。Service GPTの機能であり、完了後のやり取りを要約するための機能です。" },
-            { id: 18, cat: "プロンプト設定", q: "特定のレコードページにボタン配置等を行うビルダーは？", a: "A. モデルビルダー", b: "B. エージェントビルダー", c: "C. プロンプトビルダー", correct: "C", exp: "A：不正解。外部AI接続用であり、ページ上でのプロンプト実行には使いません。\nB：不正解。ボット構築用であり、ページ上の特定の要約という用途には不向きです。\nC：正解。テンプレートを作成し、特定のページにボタン等で配置するのが標準的な実装です。" },
-            { id: 19, cat: "Agentforce", q: "Agentforce実装の最も主要なビジネス理由は？", a: "A. クレンジング", b: "B. ユーザー介在なし", c: "C. ワークフロー合理化と反復タスク自動化", correct: "C", exp: "A：不正解。効果の一部ですが、エージェント導入の「主な理由」としては範囲が狭いです。\nB：不正解。通常はユーザーと対話して支援することに大きな価値があります。\nC：正解。メール下書きや検索等の反復タスクをAIが代行し、業務効率を高めるのが主目的です。" },
-            { id: 20, cat: "Trust Layer", q: "毒性スコア「1」は何を示していますか？", a: "A. 最も毒性が低い", b: "B. 毒性なし", c: "C. 最も毒性が高い", correct: "C", exp: "A：不正解。数値の解釈が逆です。安全なものには高い数値が付きます。\nB：不正解。1は最も深刻な毒性が検出された状態を指します。\nC：正解。Trust Layerのスコアでは、1はヘイトスピーチ等の最も深刻なレベルを示します。" },
-            { id: 21, cat: "セキュリティ", q: "データマスキング検証のために最初に行うべき手順は？", a: "A. デバッグ", b: "B. 監査データ要求", c: "C. 監査データ収集の有効化", correct: "C", exp: "A：不正解。Trust Layerでの処理結果を確認するためのツールではありません。\nB：不正解。まず収集の設定をオンにしないとデータが存在しません。\nC：正解。AIとのやり取りを記録する監査データの収集を有効にすることが、検証の起点となります。" },
-            { id: 22, cat: "統合", q: "外部API応答を差し込み項目として使うには？", a: "A. 外部サービスレコードの差し込み項目を使用", b: "B. JSONをXMLに変換", c: "C. フロー指示追加要素使用", correct: "A", exp: "A：正解。API応答データは「外部サービスレコード」タイプの項目としてAIが利用可能になります。\nB：不正解。変換作業は不要です。プラットフォームが自動で差し込み項目として処理します。\nC：不正解。エージェントの推論動作を制御するもので、データマージ用ではありません。" },
-            { id: 23, cat: "アクション", q: "トピックは選ばれるがアクションが選ばれない際の対策は？", a: "A. アクションスコープ", b: "B. アクション指示（Instruction）の修正", c: "C. 分類の説明", correct: "B", exp: "A：不正解。動作の境界を定義するもので、選択ロジックの修正箇所ではありません。\nB：正解。「いつ・どんな時に」呼ぶかのマニュアル部分であり、ここを反復修正します。\nC：不正解。トピック振り分け用の設定であり、既に成功している今回は修正不要です。" },
-            { id: 24, cat: "統合", q: "外部サイトから直接通信するためのフレームワークは？", a: "A. A2A", b: "B. MCP", c: "C. エージェントAPI", correct: "C", exp: "A：不正解。AI同士が通信するための特殊な仕組みを指します。\nB：不正解。予測モデル等との接続用であり、Webサイト連携用ではありません。\nC：正解。外部サイトから問い合わせを送り、回答を貰うための標準的な口です。" },
-            { id: 25, cat: "グラウンディング", q: "レコードスナップショット利用のために必要な準備は？", a: "A. ページレイアウト設定", b: "B. 項目セット作成", c: "C. 動的フォーム有効化", correct: "A", exp: "A：正解。画面上の項目を参照するため、レイアウトに項目を配置する必要があります。\nB：不正解。関連リストのデータ取得用であり、主レコードのスナップショット用ではありません。\nC：不正解。必須条件ではなく、従来のページレイアウト設定でも十分機能します。" },
-
-            // --- 26-65 ---
-            { id: 26, cat: "グラウンディング", q: "レコードスナップショットの除外データは？", a: "A. ToDoや行動などの活動項目", b: "B. 空の項目", c: "C. Eメールアドレス", correct: "A", exp: "A：正解。活動関連の情報はトークン負荷軽減等のため、スナップショットからは自動で除外されます。\nB：不正解。データがないだけで、除外されるという仕様上の定義ではありません。\nC：不正解。レイアウトに配置されていれば原則含まれます。" },
-            { id: 27, cat: "検索戦略", q: "精度とあいまいさ解消のバランスが取れた戦略は？", a: "A. ハイブリッド検索", b: "B. セマンティックのみ", c: "C. キーワードのみ", correct: "A", exp: "A：正解。キーワード一致と文脈理解（ベクトル）の両輪で、意味の取り違えを防ぎます。\nB：不正解。用語単体では意図が不明確になり、精度が落ちるリスクがあります。\nC：不正解。文脈を無視し、無関係な結果も全てキーワードヒットとして返します。" },
-            { id: 28, cat: "監視", q: "イベントログ強化で可能になることは？", a: "A. クリックパス追跡", b: "B. 会話の入出力セッションデータの表示", c: "C. 無制限レポート生成", correct: "B", exp: "A：不正解。ユーザーのUI上での操作ログを追跡する機能ではありません。\nB：正解。実際のユーザー発話とAI応答の原文が記録され、調査やデバッグが可能になります。\nC：不正解。期間制限を撤廃したりレポート機能を拡張するものではありません。" },
-            { id: 29, cat: "権限", q: "テンプレートの「実行」のみができる権限セットは？", a: "A. Prompt Execute Template", b: "B. Prompt Template User", c: "C. Prompt Template Manager", correct: "B", exp: "A：不正解。Salesforceが提供する標準権限セットの名称ではありません。\nB：正解。実行のみを許し、作成や編集は許可しない標準の権限セットです。\nC：不正解。作成や削除といった管理権限も付与されるため、実行のみの要件には過剰です。" },
-            { id: 30, cat: "動作", q: "リクエストを理解できない場合、どう応答しますか？", a: "A. アクションタイプに基づく事前設定メッセージ", b: "B. 言い換えを求める一般的なメッセージ", c: "C. エラー出力", correct: "B", exp: "A：不正解。トピック選択後の動作であり、理解できない段階では返せません。\nB：正解。「理解できませんでした。別の言い方を...」と聞き返すのが標準のフォールバック動作です。\nC：不正解。対話が失敗しただけであり、技術的なシステムエラーとは異なります。" },
-            { id: 31, cat: "推論制御", q: "アクションの順序を確実に制御するテクニックは？", a: "A. モデル指定", b: "B. フィルター指定", c: "C. アクションの順序を指定", correct: "C", exp: "A：不正解。モデルの質は変えますが、アクションの順序自体を縛るものではありません。\nB：不正解。データの受け渡し用であり、プランニングを強制する直接的な解決策ではありません。\nC：正解。管理者が実行シーケンスを明示的に指定（固定）してプランナーを縛る機能です。" },
-            { id: 32, cat: "分析", q: "クエリパターンを特定できるダッシュボードは？", a: "A. ユーザー発話ダッシュボード", b: "B. イベントログ", c: "C. AI監査ダッシュボード", correct: "A", exp: "A：正解。ユーザーが入力した生のテキストを集計し、傾向や不足トピックを分析する専用ツールです。\nB：不正解。実行の成功/失敗など、システム寄りの記録を管理するものです。\nC：不正解。安全性監査やフィードバック集計用であり、質問内容の分析用ではありません。" },
-            { id: 33, cat: "制限", q: "取引先で活動リストを使えない理由は？", a: "A. ポリモーフィック項目だから", b: "B. 個人取引先", c: "C. 生成エラーリスク", correct: "A", exp: "A：正解。参照先が複数ある特殊な構造（ポリモーフィック）のため、現在直接参照できない制約があります。\nB：不正解。個人取引先設定が差し込み全般を不可にすることはありません。\nC：不正解。データがなければ「空」として扱われるだけで、生成が止まるわけではありません。" },
-            { id: 34, cat: "実行制御", q: "順序を確実に強制する実装アプローチは？", a: "A. 指示に番号順序を詳述", b: "B. 完了変数によるフィルター実装", c: "C. 優先度レベル設定", correct: "B", exp: "A：不正解。AIへのガイドであり、AIの解釈次第で順序が飛ぶリスクがあります。\nB：正解。次のアクション条件に前の完了フラグを設定し、論理的に順序を縛ります。\nC：不正解。優先度はヒントに過ぎず、決定論的な順序強制には不十分です。" },
-            { id: 35, cat: "アクション設定", q: "期待通り実行させるために最も確実な設定は？", a: "A. アクション名", b: "B. アクション入力", c: "C. アクション指示（Instruction）", correct: "C", exp: "A：不正解。管理用のラベルであり、AIに起動タイミングを教えるものではありません。\nB：不正解。データの箱の定義であり、AIに目的を伝えるものではありません。\nC：正解。AIに対する起動マニュアルであり、ここが実行タイミングを決定する鍵となります。" },
-            { id: 36, cat: "権限", q: "モデル管理とテンプレート作成の両方に必要な権限は？", a: "A. Template Manager/User", b: "B. DC管理者 ＋ Template Manager", c: "C. User ＋ DC管理者", correct: "B", exp: "A：不正解。Einstein Studio（モデル管理）用の権限が欠如しています。\nB：正解。DC管理者でモデル管理、Template Managerで作成業務がカバーできます。\nC：不正解。Template Userは実行のみで「作成」ができないため不適です。" },
-            { id: 37, cat: "検索", q: "リトリーバーでフィルターを適用する目的は？", a: "A. 関連性向上のための絞り込み", b: "B. 暗号化", c: "C. 出力集約", correct: "A", exp: "A：正解。参照範囲を事前に限定し、無関係な情報を除外して回答の質を上げるためです。\nB：不正解。Trust Layerの役割であり、リトリーバーのフィルター設定とは異なります。\nC：不正解。検索後のAIモデルによる処理の説明であり、フィルターの役割ではありません。" },
-            { id: 38, cat: "実装", q: "ガイドについて質問できるようにする最善の実装は？", a: "A. 専用テンプレート作成", b: "B. 回答用項目追加", c: "C. ナレッジ記事として公開", correct: "C", exp: "A：不正解。器を作るだけで、ガイドの内容自体をAIに教えられません。\nB：不正解。大量データを項目に入れるのは非効率で、検索性も低いです。\nC：正解。ナレッジ化により、AIが記事を検索し回答する標準機能を活用できます。" },
-            { id: 39, cat: "プロンプト手法", q: "応答を「共感的」にするための重要要素は？", a: "A. ペルソナ（役割）指示", b: "B. キーワードリスト", c: "C. 全やり取り包含", correct: "A", exp: "A：正解。「あなたは共感的な担当者です」と役割を与えることで、文面全体を誘導できます。\nB：不正解。語句は出せても、文章全体のトーンや雰囲気を作ることはできません。\nC：不正解。情報量が増えるだけで、トーンが共感的になることとは無関係です。" },
-            { id: 40, cat: "タイプ", q: "社内業務（ToDo等）を支援するエージェントは？", a: "A. 営業コーチ", b: "B. サービスエージェント", c: "C. 従業員エージェント", correct: "C", exp: "A：不正解。営業担当の成約率向上支援がメインであり、社内管理用ではありません。\nB：不正解。外部顧客の問い合わせ解決に特化したエージェントタイプです。\nC：正解。社内スタッフの業務効率化（内部データ検索等）に特化したエージェントです。" },
-            { id: 41, cat: "設定", q: "プレビューがグレーアウトしている原因は？", a: "A. テストレコード未選択", b: "B. 未有効化", c: "C. 差し込み項目なし", correct: "A", exp: "A：正解。コンテキストが必要なため、参照用レコードを選ばないとボタンは有効になりません。\nB：不正解。有効化していなくても、ドラフトの状態でプレビューテストは可能です。\nC：不正解。静的なプロンプトとして実行可能なため、ボタンが無効になる理由ではありません。" },
-            { id: 42, cat: "有効化", q: "営業チームがテンプレートを使えるようにする正しいステップは？", a: "A. User権限 ＋ 機能有効化", b: "B. Manager権限のみ", c: "C. DC管理者権限", correct: "A", exp: "A：正解。利用者に「User」権限を付与し、かつ組織設定で機能をオンにする必要があります。\nB：不正解。「Manager」は作成用で権限過剰であり、利用者用としては不適です。\nC：不正解。モデル管理用であり、標準機能の利用者には不要な権限です。" },
-            { id: 43, cat: "Data Cloud", q: "リトリーバーの有効なユースケースは？", a: "A. ベクトルDBから取得・拡張", b: "B. 外部サイトRAG検索", c: "C. データ変更", correct: "A", exp: "A：正解。DC内のベクトルデータを検索し、プロンプトを最新情報で補強（RAG）します。\nB：不正解。DC「内部」のデータを検索するもので、外部サイト用ではありません。\nC：不正解。リトリーバー（取得者）はその名の通り「取得」専用であり、更新はしません。" },
-            { id: 44, cat: "自動生成", q: "インデックス作成時に自動生成されるものは？", a: "A. 同名のリトリーバー", b: "B. 動的リトリーバー", c: "C. Apexクラス", correct: "A", exp: "A：正解。インデックスを作ると、AIがそのデータを呼ぶ口が同じ名前で自動作成されます。\nB：不正解。作成されるのは特定のインデックスに固定された標準的なものです。\nC：不正解。カスタムロジックが必要な際に開発者が「手動で」作るものです。" },
-            { id: 45, cat: "セキュリティ", q: "データマスキングルールの不整合。解決場所は？", a: "A. サンドボックス設定", b: "B. Einstein Trust Layer 設定", c: "C. LLM設定", correct: "B", exp: "A：不正解。リフレッシュ時用であり、リアルタイム通信用とは異なります。\nB：正解。AI通信時のセキュリティガードレール設定は全てここで管理します。\nC：不正解。データの送出「前」にSalesforce側のTrust Layerで処理する必要があります。" },
-            { id: 46, cat: "分析", q: "ユーザビリティ等のインサイトを提供する機能は？", a: "A. エージェントアナリティクス", b: "B. Agentforce アナリティクス", c: "C. エージェントスタジオ", correct: "B", exp: "A：不正解。一般的な名称であり、Salesforceの特定の機能名ではありません。\nB：正解。採用率、発話傾向、エラー等を監視するための専用標準ダッシュボードです。\nC：不正解。存在しない機能名です。" },
-            { id: 47, cat: "SDR", q: "24/365でのリード評価や予約自動化に適した機能は？", a: "A. SDRエージェント", b: "B. 営業コーチ", c: "C. コマースエージェント", correct: "A", exp: "A：正解。リードの初期対応、評価、予約設定の自動化に特化して設計されています。\nB：不正解。既存担当の商談支援用であり、新規リードへの初期対応用ではありません。\nC：不正解。ショッピングサイト等での購入支援に特化したタイプです。" },
-            { id: 48, cat: "検索改善", q: "古い記事を返さないようにする最も簡単な対処は？", a: "A. 過去1年以外削除", b: "B. カスタムリトリーバー作成", c: "C. デフォルトにフィルター追加", correct: "C", exp: "A：不正解。物理削除は、まだ必要な古い製品の解決策まで失うことになります。\nB：不正解。標準でフィルター機能があるため、わざわざカスタム作成は不要です。\nC：正解。標準リトリーバー設定で、古いバージョンを除外する条件を加えるのが正攻法です。" },
-            { id: 49, cat: "テスト", q: "隔離され、データ構造を保持しながらテストする環境は？", a: "A. 個人の開発者組織", b: "B. 本番組織", c: "C. 複製されたサンドボックス環境", correct: "C", exp: "A：不正解。本番の設定やデータ構造が再現されておらず、正確なテストができません。\nB：不正解。実際の顧客データが壊れる重大なリスクがあり不可です。\nC：正解。安全に隔離されつつ、本番に近い条件でテスト可能なため最適です。" },
-            { id: 50, cat: "制限", q: "プロンプトビルダーの制限事項として正しいのは？", a: "A. リッチテキスト全般不可", b: "B. 設定変更履歴に記録されない", c: "C. カスタムオブジェクト不可", correct: "B", exp: "A：不正解。完全に不可ではありませんが、形式により制約があるだけです。\nB：正解。現在の仕様上の重要な制約で、テンプレートの編集ログは履歴に残りません。\nC：不正解。Flexテンプレート以外でも、項目参照は可能です。" },
-            { id: 51, cat: "デプロイ", q: "デプロイしたフローがエラーになる最も多い原因は？", a: "A. 手動での有効化忘れ", b: "B. 権限不足", c: "C. Apex不足", correct: "A", exp: "A：正解。移行直後は無効状態であり、手動でオンにしないとAIが呼び出せません。\nB：不正解。可能性はありますが、デプロイ直後のミスとして最も頻度が高いのはAです。\nC：不正解。フロー完結型なら不足しません。まずフロー自体の有効化を確認すべきです。" },
-            { id: 52, cat: "権限", q: "ナレッジで回答しない際に確認すべき権限は？", a: "A. ナレッジ管理", b: "B. テンプレートアクセス", c: "C. Data Cloud ユーザー権限", correct: "C", exp: "A：不正解。参照するだけなら、作成・公開用の管理権限は不要です。\nB：不正解。プロンプトビルダーで動くなら、権限は正しく付与されています。\nC：正解。ナレッジ参照は裏側でDCの機能を使うため、実行ユーザーにこの権限が必要です。" },
-            { id: 53, cat: "LLM役割", q: "アクション実行におけるLLMの役割は？", a: "A. トピック検索", b: "B. トピック・順序の特定", c: "C. 権限決定", correct: "B", exp: "A：不正解。検索以上の「推論（プランニング）」こそがLLMの真骨頂です。\nB：正解。言葉から「何をすべきか」を判断し、実行順序を組み立てるのが核の役割です。\nC：不正解。セキュリティ（権限）はプラットフォーム側の役割です。" },
-            { id: 54, cat: "アクセス制限", q: "記事へのアクセスを制限する正しい方法は？", a: "A. ID列挙", b: "B. 項目フィルター", c: "C. データカテゴリの設定", correct: "C", exp: "A：不正解。指示ベースの制限は甘く、厳密なセキュリティにはなりません。\nB：不正解。可能ですが、ナレッジ専用の標準機能を使う方が効率的です。\nC：正解。ナレッジ標準の分類・表示制御機能を使うのが最も確実で標準的です。" },
-            { id: 55, cat: "アクセス手法", q: "プロンプトビルダーからDCデータにアクセスする手段は？", a: "A. DMO直接差し込み", b: "B. 関連リストまたはフロー", c: "C. 外部APIのみ", correct: "B", exp: "A：不正解。直接の項目参照は現在標準でサポートされていません。\nB：正解。画面上のリスト経由か、フローで動的に取得するのが標準的な手段です。\nC：不正解。「のみ」という限定が誤り。内部機能で十分に統合可能です。" },
-            { id: 56, cat: "標準アクション", q: "成功例に基づきメール下書きを作る標準アクションは？", a: "A. レコード要約", b: "B. 類似商談検索", c: "C. 営業メールの下書き作成", correct: "C", exp: "A：不正解。概要を短くまとめるだけで、メール文面をイチから作る機能ではありません。\nB：不正解。特徴の合うレコードを探すだけで、文章生成はしません。\nC：正解。メールのドラフト生成に特化して設計された専用の標準アクションです。" },
-            { id: 57, cat: "PDF", q: "PDFを回答根拠にするために最初に行うべきことは？", a: "A. データライブラリの設定", b: "B. スコープ拡大", c: "C. ファイルを置くだけ", correct: "A", exp: "A：正解。PDFをインデックス化し、AIが検索・理解できる状態にする基盤設定です。\nB：不正解。いくら範囲を広げても、PDFの中身は読み取れません。\nC：不正解。置くだけでは足りず、ライブラリとして構成する必要があります。" },
-            { id: 58, cat: "類似商談", q: "「似た商談を見せて」に対する最適な対応は？", a: "A. 標準のアクションを使用", b: "B. カスタムフロー", c: "C. カスタムApex", correct: "A", exp: "A：正解。「類似商談の検索」という標準アクションで要件をそのまま満たせます。\nB：不正解。標準機能が存在するため、わざわざカスタムで作る必要はありません。\nC：不正解。標準機能でカバーされているため、開発は不要です。" },
-            { id: 59, cat: "目的", q: "プロンプトビルダーの主な目的は？", a: "A. Apex支援", b: "B. 再利用可能なテンプレート作成", c: "C. リアルタイム誘導", correct: "B", exp: "A：不正解。開発支援用Copilotの役割であり、プロンプトビルダーの目的ではありません。\nB：正解。データを埋め込んだテンプレートを管理・再利用するためのツールです。\nC：不正解。それはNext Best Action等の役割であり、用途が異なります。" },
-            { id: 60, cat: "ベストプラクティス", q: "苦情解決を自動化するのに最適なエージェントは？", a: "A. 営業 AI", b: "B. カスタムエージェント", c: "C. サービスエージェント", correct: "C", exp: "A：不正解。商談やリード等の営業活動用であり、用途が不一致です。\nB：不正解。標準でサービスに特化したタイプがあるため、自作はベストではありません。\nC：正解。サービス関連のユースケースに最適化された標準エージェントを使うのが定石です。" },
-            { id: 61, cat: "プランニング", q: "リクエストに対するアクション特定プロセスは？", a: "A. LLMが意図を解釈しプランを生成", b: "B. 静的ルール", c: "C. ダイアログパターン", correct: "A", exp: "A：正解。意図を解釈し、何のアクションが必要かのプランをその場で立てて実行します。\nB：不正解。静的なルール照合は旧来のボットの動作です。\nC：不正解。固定ステップに強制的に従わせる説明は、LLMの推論プロセスとは異なります。" },
-            { id: 62, cat: "設定", q: "カスタム版で同じ結果を得るための再設定箇所は？", a: "A. パラメータの手動追加", b: "B. モデル設定作成", c: "C. 変更せず戻す", correct: "A", exp: "A：正解。温度等のパラメータはコピーされません。標準と同じ動作には手動での再設定が必要です。\nB：不正解。テンプレート本体にパラメータを保存・固定する場所ではないため不適です。\nC：不正解。カスタマイズを行いたいという本来の目的を放棄するものであり誤りです。" },
-            { id: 63, cat: "検索", q: "「条項番号」の完全一致を取得したい場合。", a: "A. キーワード検索", b: "B. ハイブリッド", c: "C. セマンティック", correct: "A", exp: "A：正解。条項番号のような固有の識別子を正確に見つけるには、キーワードの完全一致が最も確実です。\nB：不正解。汎用的には強力ですが、完全一致のみならキーワード検索が勝ります。\nC：不正解。番号に同義語は存在せず、意味を解釈しようとするこの方法は適しません。" },
-            { id: 64, cat: "プロンプト", q: "要約を項目入力し、人間が確認するプロセスに適したタイプは？", a: "A. 項目生成", b: "B. 営業メール", c: "C. レコードの要約", correct: "A", exp: "A：正解。AIが生成したテキストをレコード項目に入力し、人間が確認して保存するワークフロー用です。\nB：不正解。Eメールのドラフト作成用であり、データベースへの保存用途とは異なります。\nC：不正解。情報を表示することに重点を置いており、特定の項目への「保存」は主目的ではありません。" },
-            { id: 65, cat: "アクション", q: "カスタムアクションのコアコンポーネントは？", a: "A. トリガー", b: "B. インストラクション（指示）", c: "C. 出力タイプ", correct: "B", exp: "A：不正解。開始メカニズムであり、アクションそのものの「動作の定義」ではありません。\nB：正解。AIに「このアクションをいつ、何のために使うか」を教える設定の核（コア）です。\nC：不正解。重要な要素ですが、AIの動作や選択ロジックを左右する「指示」がより根本的です。" },
-
-            // --- 66-100 ---
-            { id: 66, cat: "設定", q: "カスタムアクションとして選択できるオプションは？", a: "A. Apexトリガー", b: "B. SOQL", c: "C. フロー", correct: "C", exp: "A：不正解。自動実行されるものであり、エージェントが呼び出す「アクション」そのものではありません。\nB：不正解。クエリ言語であり、アクションの「器」として設定できるものではありません。\nC：正解。主に「フロー（自動起動フロー）」を呼び出すように設計されており、ノーコードで定義可能です。" },
-            { id: 67, cat: "エラー", q: "トークン制限エラーが「ランダム」に発生する原因は？", a: "A. Flexへの切替", b: "B. レコードによりデータ長が異なる", c: "C. 需要変動", correct: "B", exp: "A：不正解。解決策の一つですが、エラーが「ランダム」に起きている根本原因の説明ではありません。\nB：正解。動的にデータを挿入するため、レコードごとの文字数が異なり、あるレコードでは制限を超えます。\nC：不正解。コンテキストウィンドウはモデルの仕様で決まる固定値であり、需要で変動しません。" },
-            { id: 68, cat: "SDR", q: "SDRエージェント実装時のチャネル考慮事項は？", a: "A. メッセージングチャネルへのデプロイ", b: "B. Eメールのみ", c: "C. Webサイトのみ", correct: "A", exp: "A：正解。リードとのリアルタイム対話は「メッセージングチャネル」を通じて行われるため必須です。\nB：不正解。チャット等の対話が主目的であり、Eメールのみに限定されるものではありません。\nC：不正解。Webサイトは公開場所の一つであり、技術的なデプロイ先の本質ではありません。" },
-            { id: 69, cat: "開発", q: "LWCから呼び出し可能なテンプレートタイプは？", a: "A. 項目生成", b: "B. 営業メール", c: "C. Flex", correct: "C", exp: "A：不正解。標準レコードページ上のUIコンポーネント用であり、LWCから自由に呼ぶ用ではありません。\nB：不正解。営業メール作成に特化した特殊なタイプであり、任意の目的で呼び出すことはできません。\nC：正解。オブジェクトに縛られない最も汎用的なタイプであり、Apexから呼び出すことが可能です。" },
-            { id: 70, cat: "理由", q: "ナレッジ使用の主な利点は何ですか？", a: "A. 承認済みの信頼できる情報", b: "B. 高速なだけ", correct: "A", exp: "A：正解。企業が検証した「信頼できる情報源」を根拠（グラウンディング）に使うことで回答を保証できます。\nB：不正解。ナレッジを使う本質的な利点は、パフォーマンスよりも情報の「信頼性・ガバナンス」にあります。" },
-            { id: 71, cat: "推論調整", q: "順序が正しくない場合、指示をどう調整すべき？", a: "A. API名で依存関係を指定", b: "B. 権限指定", c: "C. モデル指定", correct: "A", exp: "A：正解。インストラクション内で「アクションAのAPI名」を参照し、論理的な繋がりをAIに伝えます。\nB：不正解。セキュリティ設定であり、AIがアクションを実行する「順序」を制御するものではありません。\nC：不正解。モデルの種類を変えても、独自アクション間の「依存関係」までは自動認識できません。" },
-            { id: 72, cat: "設定", q: "アクションを割り当てる正しい手順は？", a: "A. エージェントビルダーでトピックに紐付ける", b: "B. プロファイル設定", correct: "A", exp: "A：正解。コパイロットの設定画面（ビルダー）にて、トピックに対して具体的なアクションを割り当てます。\nB：不正解。セキュリティ設定用であり、AIのトピック・アクション構成を行う場所ではありません。" },
-            { id: 73, cat: "デプロイ", q: "サンドボックスから本番へのデプロイ手段は？", a: "A. 送信変更セット", b: "B. 手動再作成", correct: "A", exp: "A：正解。Agentforceの設定はメタデータとして定義されており、変更セット等で一括移行するのが正しい方法です。\nB：不正解。時間がかかるだけでなく、設定ミスや不整合を招くリスクが非常に高いため非推奨です。" },
-            { id: 74, cat: "効率化", q: "入力時間と項目提案で後処理を同時に削減する組み合わせは？", a: "A. 返信おすすめとケース分類", b: "B. 要約パネルのみ", correct: "A", exp: "A：正解。対話中の定型回答提示（返信おすすめ）と、終了後の項目自動提案（分類）で前後を効率化します。\nB：不正解。要約のみでは「項目値の提案」という具体的な要件をカバーしていません。" },
-            { id: 75, cat: "設定", q: "類似ケースに基づき回答させたい。DCでの必須作業は？", a: "A. 非構造化UDMO作成とインデックス化", b: "B. DMOのみ", correct: "A", exp: "A：正解。ケースのテキストは「非構造化データ」のため、AIが意味検索するにはUDMOとして定義が必要です。\nB：不正解。DMOは数値等の構造化データ用であり、テキストの意味的類似性を検索するのには適しません。" },
-            { id: 76, cat: "外部モデル", q: "外部モデル(Databricks)の推奨を取り込む手順は？", a: "A. エンドポイント作成しモデルビルダーで設定", b: "B. Pythonコードのみ", correct: "A", exp: "A：正解。外部でAPI（エンドポイント）を公開し、Salesforceのモデルビルダーから接続設定を行うのが標準手順です。\nB：不正解。標準の管理ツールは「モデルビルダー」であり、コードのみでの運用は一般的ではありません。" },
-            { id: 77, cat: "プランナー", q: "プランナーサービスの主な機能は何ですか？", a: "A. アクションを特定しプランを作成", b: "B. 翻訳のみ", correct: "A", exp: "A：正解。ユーザーの言葉から「意図」を抽出し、解決のためにどのアクションを呼ぶべきかのプランを立てます。\nB：不正解。翻訳は別の変換ロジックの役割であり、推論とプランニングを司るプランナーの機能ではありません。" },
-            { id: 78, cat: "管理", q: "割り当てられたアクションを更新する場所は？", a: "A. コパイロットアクションページ", b: "B. ダッシュボード", correct: "A", exp: "A：正解。設定の[Einstein Copilot] > [コパイロットアクション]から定義や指示の更新が可能です。\nB：不正解。分析用であり、アクション自体の内容（指示やAPI名）を「更新」する場所ではありません。" },
-            { id: 79, cat: "自動生成", q: "データライブラリ保存後にDCで作成されるのは？", a: "A. ストリーム、検索インデックス、レトリーバー", b: "B. 分析のみ", correct: "A", exp: "A：正解。AIがデータを参照するためのバックエンドインフラ（取込・検索・呼出）がセットで自動生成されます。\nB：不正解。分析機能ではなく、AI検索を成立させるためのデータ構成要素が作られます。" },
-            { id: 80, cat: "統合", q: "外部予測モデルツールを利用しやすくする機能は？", a: "A. MCP（モデルコンテキストプロトコル）", b: "B. Hugging Face", correct: "A", exp: "A：正解。外部AIとデータを安全にやり取りするための標準化されたプロトコルです。\nB：不正解。プラットフォームの名前であり、外部モデルを統合するための「Salesforce側の機能」ではありません。" },
-            { id: 81, cat: "表示", q: "作成した項目生成テンプレートをユーザーに公開するには？", a: "A. ページ上の項目にテンプレートを関連付け", b: "B. 権限付与のみ", correct: "A", exp: "A：正解。Lightning アプリケーションビルダーでページを編集し、対象項目にテンプレートを紐付けます。\nB：不正解。権限だけではUIに表示されず、ユーザーが利用できるようになりません。" },
-            { id: 82, cat: "利点", q: "なぜパーソナライズメールのためにエージェントを使うべき？", a: "A. 各顧客に対し関連性の高いコンテンツを瞬時に生成できるため", b: "B. キャンペーン分析のみ", correct: "A", exp: "A：正解。個別の顧客データをリアルタイムで読み込み、その人に最適化された文章を「その場で生成」できるためです。\nB：不正解。分析はレポートの役割。エージェントは分析結果ではなく、データに基づいた「アクション（生成）」に価値があります。" },
-            { id: 83, cat: "グラウンディング", q: "グラウンディングでカスタムリッチテキスト項目を使う際の考慮事項。", a: "A. 文字列（String）およびテキストエリアタイプのみサポート", b: "B. システムモード動作", correct: "A", exp: "A：正解。HTMLタグを含むリッチテキストは現在サポート対象外であり、プレーンテキストを扱う項目のみが対象です。\nB：不正解。セキュリティ挙動の事項であり、リッチテキスト項目がサポートされるかどうかとは別次元の制約です。" },
-            { id: 84, cat: "プロンプト手法", q: "余計な会話を含めないようにプロンプトを構成するには？", a: "A. 明確な出力指示を使用し、望ましい出力例を提供する（Few-shot）", b: "B. 言葉で頼む", correct: "A", exp: "A：正解。「例」を示すことが、AIの出力を厳密に制御して余計なテキストを排除するための最も確実な手法です。\nB：不正解。言葉で頼むだけでは「はい、抽出しました：」等の枕詞が含まれるのを防ぎきれません。" },
-            { id: 85, cat: "アクション", q: "ナレッジに基づいて質問に答えるアクションの正式名称は？", a: "A. ナレッジで質問に回答する", b: "B. FAQ回答", correct: "A", exp: "A：正解。エージェントに標準搭載されている、グラウンディング用の標準アクション名称です。\nB：不正解。システムに定義された正確な名称ではありません。" },
-            { id: 86, cat: "エージェント", q: "部門効率化のための正しい割り当てはどれ？", a: "A. SDR、サービス、従業員の各専門エージェントを使い分ける", b: "B. 1人のサービスエージェント", correct: "A", exp: "A：正解。業務領域ごとに最適化された特化型エージェント（SDR/サービス/従業員）を分けるのが正しい設計です。\nB：不正解。ドメインの異なるタスクを1つに集約すると推論が混乱し、設計思想にも反します。" },
-            { id: 87, cat: "アクション", q: "（再掲）カスタムアクションとして選択できるオプションは？", a: "A. フロー", b: "B. SOQL", correct: "A", exp: "A：正解。Agentforceアクションは「フロー」を呼び出して実際のビジネスロジックを実行するよう設計されています。\nB：不正解。クエリ言語であり、ロジックを実行するアクションの「器」にはなり得ません。" },
-            { id: 88, cat: "オブジェクト", q: "サービスAIグラウンディングが標準サポートするペアは？", a: "A. ケースとナレッジ", b: "B. メモのみ", correct: "A", exp: "A：正解。サポート用途の標準設定において、AIの回答根拠として公式にサポートされている主要な2つです。\nB：不正解。標準のグラウンディング対象リストには含まれていません。" },
-            { id: 89, cat: "外部データ", q: "外部PDFをノーコードで使わせるための手順は？", a: "A. Agentforce データライブラリにPDFをファイルソースとしてアップロード", b: "B. リンクのみ", correct: "A", exp: "A：正解。非構造化ドキュメントをAIの検索・回答根拠として公開するための最も標準的なノーコード方法です。\nB：不正解。リンクだけではAIは外部サイトへアクセスして中身を読むことができないため、根拠になりません。" },
-            { id: 90, cat: "Slack", q: "SlackでAgentforceを有効にする必須ステップ。", a: "A. 接続設定、エージェントインストール、権限付与", b: "B. チャネル作成のみ", correct: "A", exp: "A：正解。Slackとの接続、専用アプリの導入、ユーザーへのアクセス割り当てという一連のデプロイ作業が必須です。\nB：不正解。チャネル作成だけでは使えるようになる「デフォルト設定」は存在しません。" },
-            { id: 91, cat: "検索ランキング", q: "最新記事を優先させるためのDC設定項目は？", a: "A. LastModifiedDate に基づく最新性ランキング要素追加", b: "B. インデックス削除", correct: "A", exp: "A：正解。最終更新日を重み付け要素として加えることで、AIはより新しい情報を優先的に参照するようになります。\nB：不正解。データを消すのではなく、表示の順位付け（ランキング）のロジックで解決すべきです。" },
-            { id: 92, cat: "デプロイ", q: "複数のトピックを持つエージェントの本番移行で重要なのは？", a: "A. 依存関係の包含、カバレッジ、事後有効化計画の確認", b: "B. 個別移行", correct: "A", exp: "A：正解。依存フローの包含、Apexの75%カバレッジ、そしてデプロイ後の有効化までをセットで計画するのが定石です。\nB：不正解。バラバラにデプロイすると、本番環境で参照エラーが発生しエージェントが機能しません。" },
-            { id: 93, cat: "監査", q: "マスクされたデータを監査するために使用する機能は？", a: "A. Data Cloud の監査証跡を利用", b: "B. エクスポートのみ", correct: "A", exp: "A：正解。Trust LayerはLLMとのやり取りを監査証跡としてキャプチャし、Data Cloudに保存する機能を提供しています。\nB：不正解。単なるエクスポートではなく、DCを通じて安全にログを追跡・表示する仕組みです。" },
-            { id: 94, cat: "制限", q: "データソースの変更について正しいのはどれですか？", a: "A. 一度選択されると変更できない（新規作成が必要）", b: "B. いつでも可能", correct: "A", exp: "A：正解。仕様上、データライブラリは特定のソースに紐付いて作成されるため、保存後にソースのみを差し替えることはできません。\nB：不正解。現状、変更するための口は用意されておらず、新しい構成を作る必要があります。" },
-            { id: 95, cat: "デバッグ", q: "正しい要約が得られない不満に対し、何を調査すべき？", a: "A. インストラクション（指示）が各アクションで固有（ユニーク）か確認", b: "B. 入力形式のみ", correct: "A", exp: "A：正解。指示が似ているとAIがアクションを区別できず、誤ったものを呼ぶため、指示の「固有性」を疑うべきです。\nB：不正解。形式ミスは実行エラーにはなりますが、「間違ったものが選ばれる（順序の誤り）」の直接原因ではありません。" },
-            { id: 96, cat: "営業 AI", q: "営業エージェント活用の核心的なユースケースは？", a: "A. 自然言語により、データに基づいた営業タスクを呼び出す", b: "B. 固定の入力ガイド表示", correct: "A", exp: "A：正解。ユーザーが自由に指示を出し、それを受けたAIが自律的にデータに基づいたアクション（要約等）をすることが本質です。\nB：不正解。画面フローのようなルールベースの機能説明であり、AIエージェントの価値とは異なります。" },
-            { id: 97, cat: "検索", q: "企業がハイブリッド検索を好む最大の理由は？", a: "A. リテラルなキーワード一致とセマンティックリコールの両方をサポートしているため", b: "B. 高速なだけ", correct: "A", exp: "A：正解。正確な単語（製品番号等）の一致と、「壊れた」等の曖昧な意図の理解を両立できるからです。\nB：不正解。ハイブリッド検索はむしろ処理は複雑になります。メリットは速度ではなく「精度の高さ」です。" },
-            { id: 98, cat: "要約", q: "最新の製品詳細から詳細な製品説明を作るのに適したタイプは？", a: "A. レコードの要約", b: "B. 項目生成", correct: "A", exp: "A：正解。対象レコードの全項目をコンテキストとして取得し、包括的な説明文を作るのに最適な設計だからです。\nB：不正解。単一の項目にAI出力を入力するためのもので、レコード全体の包括的説明を作るには「レコードの要約」が勝ります。" },
-            { id: 99, cat: "調整", q: "ドラフトをカジュアルにするための事前定義オプションは？", a: "A. カジュアルにする", b: "B. 分かりやすくする", correct: "A", exp: "A：正解。トーンを日常的な口調に変更するための専用の調整メニュー名称です。\nB：不正解。文を簡潔にしたり単純化したりする「明確さ」の向上のための調整です。" },
-            { id: 100, cat: "RAG / PII", q: "PII漏洩を防ぐためのインデックス作成時のベストプラクティスは？", a: "A. 機密項目をマスクし、PII 以外のデータのみをインデックス化する", b: "B. プロンプト指示のみ", correct: "A", exp: "A：正解。物理的に検索対象（インデックス）からPIIを除外しておくことが、情報漏洩を防ぐ最も確実な安全策です。\nB：不正解。AIへの指示だけではプロンプトインジェクション等で漏洩するリスクを排除しきれません。" }
-        ];
-
-        const quizApp = {
-            currentPool: [], currentIndex: 0, score: 0, failedList: [],
-            sessionStats: { total: 0, correct: 0 }, catStats: {}, isReviewMode: false,
-            init() { this.renderCategoryList(); this.updateUI(); },
-            renderCategoryList() {
-                const cats = {}; RAW_DATA.forEach(q => cats[q.cat] = (cats[q.cat] || 0) + 1);
-                const container = document.getElementById('category-list-container');
-                container.innerHTML = '';
-                Object.keys(cats).sort().forEach(cat => {
-                    const div = document.createElement('div');
-                    div.className = "bg-white border-2 border-slate-100 p-5 rounded-3xl flex justify-between items-center cursor-pointer transition hover:border-blue-400 group shadow-sm active:scale-95";
-                    div.innerHTML = `<div class='flex flex-col'><span class='text-[10px] font-black text-slate-400 uppercase'>${cats[cat]} Questions</span><span class='text-sm font-bold text-slate-700'>${cat}</span></div><div class='w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-all'><i class='fas fa-play text-[10px]'></i></div>`;
-                    div.onclick = () => this.startByCategory(cat);
-                    container.appendChild(div);
-                });
-            },
-            start(random) { this.isReviewMode = false; this.currentPool = random ? [...RAW_DATA].sort(()=>Math.random()-0.5) : [...RAW_DATA]; this.launch("Standard Course"); },
-            startByCategory(cat) { this.isReviewMode = false; this.currentPool = RAW_DATA.filter(q => q.cat === cat); this.launch(`Category: ${cat}`); },
-            startReview() { if(!this.failedList.length) return; this.isReviewMode = true; this.currentPool = [...this.failedList].sort(()=>Math.random()-0.5); this.launch("Review Mode"); },
-            launch(mode) { this.currentIndex = 0; this.score = 0; document.getElementById('quiz-mode-label').innerText = mode; this.showScreen('quiz-screen'); this.loadQuestion(); },
-            showQuitModal() { document.getElementById('quit-modal').classList.remove('hidden'); },
-            hideQuitModal() { document.getElementById('quit-modal').classList.add('hidden'); },
-            quitQuiz() { this.hideQuitModal(); this.showScreen('selection-screen'); this.updateUI(); },
-            loadQuestion() {
-                const q = this.currentPool[this.currentIndex]; this.answered = false;
-                document.getElementById('progress-bar').style.width = `${((this.currentIndex+1)/this.currentPool.length)*100}%`;
-                document.getElementById('progress-text').innerText = `QUESTION ${this.currentIndex+1}/${this.currentPool.length}`;
-                document.getElementById('score-text').innerText = `${Math.round((this.score/(this.currentIndex||1))*100)}%`;
-                document.getElementById('category-badge').innerText = q.cat;
-                document.getElementById('question-text').innerText = q.q;
-                const container = document.getElementById('options-container'); container.innerHTML = '';
-                ['A','B','C','D'].forEach(key => {
-                    if(q[key.toLowerCase()]) {
-                        const btn = document.createElement('button');
-                        btn.className = "option-btn w-full text-left p-6 rounded-2xl border-2 border-slate-100 hover:border-blue-400 hover:bg-blue-50 transition flex items-start group bg-white shadow-sm transform active:scale-[0.98]";
-                        btn.innerHTML = `<span class='inline-block w-10 h-10 rounded-xl bg-slate-100 text-slate-400 font-black text-center leading-10 mr-6 group-hover:bg-blue-600 group-hover:text-white transition flex-shrink-0'>${key}</span><span class='text-slate-700 font-bold text-lg pt-1 leading-tight'>${q[key.toLowerCase()]}</span>`;
-                        btn.onclick = () => this.handleAnswer(key, btn);
-                        container.appendChild(btn);
-                    }
-                });
-                document.getElementById('explanation-container').classList.add('hidden');
-                document.getElementById('next-btn').innerText = (this.currentIndex === this.currentPool.length - 1) ? '結果を見る' : '次の問題へ';
-            },
-            handleAnswer(choice, btn) {
-                if(this.answered) return; this.answered = true;
-                const q = this.currentPool[this.currentIndex]; const isCorrect = q.correct === choice;
-                this.sessionStats.total++; if(!this.catStats[q.cat]) this.catStats[q.cat] = {correct:0, total:0}; this.catStats[q.cat].total++;
-                if(isCorrect) { this.score++; this.sessionStats.correct++; this.catStats[q.cat].correct++; if(this.isReviewMode) this.failedList = this.failedList.filter(item=>item.id!==q.id); }
-                else if(!this.failedList.find(i=>i.id===q.id)) { this.failedList.push(q); }
-                document.querySelectorAll('.option-btn').forEach(b => { b.disabled = true; if(b.querySelector('span').innerText === q.correct) b.classList.add('border-green-500','bg-green-50'); });
-                if(!isCorrect) btn.classList.add('border-red-500','bg-red-50');
-                document.getElementById('result-badge').className = `flex items-center p-6 rounded-2xl mb-6 font-black text-lg ${isCorrect?'bg-green-100 text-green-700':'bg-red-100 text-red-700'}`;
-                document.getElementById('result-badge').innerHTML = isCorrect ? "<i class='fas fa-check-circle mr-3 text-2xl'></i> 正解です！" : `<i class='fas fa-times-circle mr-3 text-2xl'></i> 不正解です (正解: ${q.correct})`;
-                document.getElementById('explanation-text').innerText = q.exp;
-                document.getElementById('explanation-container').classList.remove('hidden');
-                setTimeout(() => { document.getElementById('explanation-container').scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 100);
-                this.updateUI();
-            },
-            nextQuestion() { this.currentIndex++; if(this.currentIndex < this.currentPool.length) this.loadQuestion(); else this.showResult(); },
-            showResult() {
-                this.showScreen('result-screen'); const percent = Math.round((this.score/this.currentPool.length)*100);
-                document.getElementById('final-score').innerText = `${percent}%`;
-                document.getElementById('final-stats').innerText = `${this.currentPool.length}問中 ${this.score}問正解`;
-                const table = document.getElementById('analysis-table-body'); table.innerHTML = '';
-                Object.keys(this.catStats).forEach(cat => {
-                    const s = this.catStats[cat]; const catPerc = Math.round((s.correct/s.total)*100);
-                    let judge = catPerc>=80?"Master":(catPerc>=60?"Standard":"Weak"); let cls = catPerc>=80?"text-green-600 bg-green-50 border-green-100":(catPerc>=60?"text-yellow-600 bg-yellow-50 border-yellow-100":"text-red-500 bg-red-50 border-red-100");
-                    table.innerHTML += `<tr class='group hover:bg-slate-50 transition'><td class='p-4 font-bold text-slate-700'>${cat}</td><td class='p-4 text-right'><span class='px-4 py-1.5 rounded-full text-[10px] font-black uppercase border ${cls}'>${judge} (${catPerc}%)</span></td></tr>`;
-                });
-                document.getElementById('final-emoji').innerText = percent>=80?"🏆":(percent>=60?"📚":"⏳");
-            },
-            updateUI() {
-                const wrong = this.failedList.length; const total = this.sessionStats.total;
-                const acc = total>0?Math.round((this.sessionStats.correct/total)*100):0;
-                document.getElementById('header-wrong-count').innerText = wrong;
-                document.getElementById('dash-total-attempts').innerText = total;
-                document.getElementById('dash-overall-accuracy').innerText = `${acc}%`;
-                document.getElementById('failed-count-display').innerText = wrong;
-                document.getElementById('review-section').classList.toggle('hidden', wrong === 0);
-            },
-            showScreen(id) { ['selection-screen', 'quiz-screen', 'result-screen'].forEach(s => document.getElementById(s).classList.add('hidden')); document.getElementById(id).classList.remove('hidden'); window.scrollTo(0,0); }
-        };
-        window.onload = () => quizApp.init();
-    </script>
+    <script src="questions-data.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
