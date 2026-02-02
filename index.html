@@ -3,41 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Salesforce Admin Study App</title>
+    <title>Salesforce Admin 200問ノック</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .option-btn.selected { border-color: #4f46e5; background-color: #eef2ff; }
         .option-btn.correct { border-color: #10b981; background-color: #ecfdf5; color: #065f46; }
         .option-btn.wrong { border-color: #ef4444; background-color: #fef2f2; color: #991b1b; }
+        .transition-all { transition: all 0.3s ease; }
     </style>
 </head>
-<body class="bg-slate-50 min-h-screen p-4 md:p-8">
+<body class="bg-slate-50 min-h-screen p-4 md:p-8 text-slate-900">
     <div class="max-w-3xl mx-auto space-y-6">
-        <div class="bg-white p-6 rounded-2xl shadow-sm flex flex-wrap gap-4 items-center">
-            <select id="category-filter" class="border p-2 rounded-lg bg-white text-sm">
-                <option value="All">すべてのカテゴリ</option>
-            </select>
-            <button id="random-btn" class="border px-4 py-2 rounded-lg text-sm bg-white hover:bg-slate-50">🔄 番号順</button>
-            <input type="text" id="search-input" placeholder="問題を検索..." class="border p-2 rounded-lg flex-1 text-sm">
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
+            <div class="flex justify-between items-center">
+                <h1 class="text-xl font-black text-indigo-600">SF Admin Quiz</h1>
+                <div id="stats-display" class="text-sm font-bold text-slate-500">
+                    正答率: <span id="accuracy-rate" class="text-indigo-600">0%</span>
+                </div>
+            </div>
+            <div class="flex flex-wrap gap-2">
+                <select id="category-filter" class="border p-2 rounded-lg bg-white text-xs"></select>
+                <button id="random-btn" class="border px-4 py-2 rounded-lg text-xs bg-white hover:bg-slate-50">🔄 番号順</button>
+                <input type="text" id="search-input" placeholder="検索..." class="border p-2 rounded-lg flex-1 text-xs">
+            </div>
         </div>
 
         <div class="bg-white p-6 md:p-10 rounded-3xl shadow-xl border border-slate-200">
-            <div class="flex justify-between items-center mb-6">
+            <div class="flex justify-between items-center mb-2">
                 <span id="progress-badge" class="bg-indigo-100 text-indigo-700 text-xs font-bold px-3 py-1 rounded-full"></span>
             </div>
+            <div class="w-full bg-slate-100 h-2 rounded-full mb-8 overflow-hidden">
+                <div id="progress-fill" class="bg-indigo-500 h-full transition-all" style="width: 0%"></div>
+            </div>
             
-            <h2 id="question-text" class="text-xl font-bold text-slate-800 leading-relaxed mb-8"></h2>
-            <div id="options-container" class="grid gap-4 mb-8"></div>
+            <h2 id="question-text" class="text-lg md:text-xl font-bold leading-relaxed mb-8"></h2>
+            <div id="options-container" class="grid gap-3 mb-8"></div>
 
-            <button id="submit-btn" class="w-full bg-indigo-600 text-white py-4 rounded-2xl font-bold shadow-lg hover:bg-indigo-700 transition-all disabled:opacity-30">回答を確定する</button>
+            <button id="submit-btn" class="w-full bg-indigo-600 text-white py-4 rounded-2xl font-bold shadow-lg hover:bg-indigo-700 transition-all disabled:opacity-30 disabled:cursor-not-allowed">回答を確定する</button>
 
-            <div id="explanation-box" class="hidden mt-6 p-6 rounded-2xl border-2 border-emerald-100 bg-emerald-50">
+            <div id="explanation-box" class="hidden mt-6 p-6 rounded-2xl border-2 border-emerald-100 bg-emerald-50 shadow-inner">
                 <p class="font-black text-emerald-800 mb-2">💡 解説</p>
-                <p id="explanation-text" class="text-emerald-700 leading-relaxed"></p>
+                <p id="explanation-text" class="text-emerald-700 leading-relaxed text-sm"></p>
             </div>
 
             <div class="flex justify-between items-center mt-10 pt-6 border-t border-slate-100">
-                <button id="prev-btn" class="text-slate-400 font-bold hover:text-indigo-600 transition-colors">← 前の問題</button>
+                <button id="prev-btn" class="text-slate-400 font-bold hover:text-indigo-600 transition-colors px-4 py-2">← 前へ</button>
                 <button id="next-btn" class="bg-slate-800 text-white px-8 py-2 rounded-xl font-bold hover:bg-slate-700 transition-all">次へ</button>
             </div>
         </div>
