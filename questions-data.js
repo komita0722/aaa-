@@ -1,206 +1,2617 @@
-/* =======================================================
-   Salesforce 認定アドミニストレーター 200問データ
-   ======================================================= */
+/**
+ * Salesforce 認定アドミニストレーター 試験対策 200問
+ * 全ての問題文、選択肢、解説を提示されたテキスト通りに収録しています。
+ */
 
 const FULL_QUESTIONS = [
-  { id: 1, question: "新しい見込み客は、見込み客の住所に基づいて正しい営業担当者にルーティングする必要があります。管理者はこの要件をどのように構成する必要がありますか？", options: [{ label: "A", text: "数式項目を作成する。" }, { label: "B", text: "リードの割り当てルールを使用する。" }, { label: "C", text: "エスカレーションルールを割り当てる。" }, { label: "D", text: "入力規則を構成する。" }], correctAnswer: ["B"], explanation: "割り当てルールは、レコード作成時の項目値をもとに所有者を変更します。エスカレーションルールは作成後XX時間後に再割り当てを行うものです。", category: "割り当て・ルーティング", difficulty: "easy" },
-  { id: 2, question: "Universal Containers では、商談が成立した場合、同じ取引先の他のすべての進行中の商談を不成立としてマークする必要があります。管理者は、この要件を実装するためにどの自動化ソリューションを使用すべきですか？", options: [{ label: "A", text: "クイックアクション" }, { label: "B", text: "ワークフロールール" }, { label: "C", text: "Flow Builder" }, { label: "D", text: "アウトバウンドメッセージ" }], correctAnswer: ["C"], explanation: "ワークフロールールやプロセスビルダーは非推奨となり、現在の自動化処理はFlow Builderに集約されています。", category: "自動化", difficulty: "easy" },
-  { id: 3, question: "Northern Trail Outfitters は、商談の主要なステークホルダーである取引先責任者のROI(投資収益率)を追跡したいと考えています。これらの要件を満たすために、管理者はどのオプションを構成すべきですか？ 2つ選んでください。", options: [{ label: "A", text: "キャンペーンメンバーのロールをカスタマイズします。" }, { label: "B", text: "[キャンペーンメンバー] 関連リストを商談ページ レイアウトに追加します。" }, { label: "C", text: "キャンペーンの役割をカスタマイズします。" }, { label: "D", text: "商談の取引先責任者のロールをカスタマイズします。" }, { label: "E", text: "商談の取引先責任者のロール関連リストを商談ページ レイアウトに追加します。" }], correctAnswer: ["D", "E"], explanation: "商談に「取引先責任者のロール関連リスト」を表示し、役割をカスタマイズすることで特定のステークホルダーに関連付けることができます。", category: "オブジェクト・項目", difficulty: "medium" },
-  { id: 4, question: "Ursa Major Solarは、どのマーケティング活動がチームの商談獲得に役立っているかを知りたがっています。これらの情報を提供するために、管理者は何を設定する必要がありますか？", options: [{ label: "A", text: "キャンペーン階層" }, { label: "B", text: "キャンペーンインフルエンス" }, { label: "C", text: "カスタムリード項目のマッピング" }, { label: "D", text: "リストメール" }], correctAnswer: ["B"], explanation: "各キャンペーンの影響度を分析できる「キャンペーンインフルエンス」が正解です。", category: "キャンペーン・マーケティング", difficulty: "easy" },
-  { id: 5, question: "DreamHouse Realty では、今年中にハウスショーをスケジュールする必要があります。「表示日」に今年の日付しか入力できないようにするには、どうすればよいでしょうか？", options: [{ label: "A", text: "カレンダー同期とフィルター" }, { label: "B", text: "最新表示のレポート作成" }, { label: "C", text: "ヘルプテキストの追加" }, { label: "D", text: "入力規則の作成" }], correctAnswer: ["D"], explanation: "入力規則は、管理者が定義した基準を満たさない場合にエラーを表示し、保存を阻止する機能です。", category: "データ管理", difficulty: "easy" },
-  { id: 6, question: "Aw Computingは、商談が失われクローズされた時、リッチテキスト項目で損失の理由を確認する必要があります。管理者はこの要件をどのように構成すべきですか？", options: [{ label: "A", text: "ページレイアウトで要件チェック" }, { label: "B", text: "フェーズがクローズ時に理由が空白ならエラーの入力規則" }, { label: "C", text: "項目設定で必須チェック" }, { label: "D", text: "ワークフロールール" }], correctAnswer: ["B"], explanation: "特定の条件（クローズ時のみ）において項目の入力を強制するには、入力規則が最適です。", category: "データ管理", difficulty: "medium" },
-  { id: 7, question: "靴オブジェクトについて、組織全体の共有の既定値が非公開に設定されています。営業マネージャーがチーム全員のレコードをレポートで表示するために必要な項目はどれですか？3つ選択してください。", options: [{ label: "A", text: "レポート購読" }, { label: "B", text: "ロール階層" }, { label: "C", text: "項目レベルセキュリティ" }, { label: "D", text: "カスタムレポートタイプ" }, { label: "E", text: "フォルダ アクセス" }], correctAnswer: ["B", "C", "E"], explanation: "レコードアクセス権（ロール階層）、項目の参照権限（セキュリティ）、レポート自体への権限（フォルダ）の3つが必要です。", category: "レポート・ダッシュボード", difficulty: "medium" },
-  { id: 8, question: "マーケティングチームは、「キャンペーンメンバーの状況」項目に新しい選択リスト値を追加したいと考えています。管理者が使用すべき設定を2つ選んでください。", options: [{ label: "A", text: "関連リストをページ レイアウトに追加" }, { label: "B", text: "関連リストを一括変更" }, { label: "C", text: "関連リストの選択リスト値を変更" }, { label: "D", text: "オブジェクトマネージャで編集" }], correctAnswer: ["A", "C"], explanation: "キャンペーンメンバーの状況は、オブジェクトマネージャではなく、キャンペーンの関連リストから直接編集します。", category: "キャンペーン・マーケティング", difficulty: "medium" },
-  { id: 9, question: "Universal Containerは、サービスチームが取引レコードにアクセスできないようにしたいと考えています。アクセスを完全に制限するには、管理者は何を設定する必要がありますか？", options: [{ label: "A", text: "検索インデックス" }, { label: "B", text: "権限とタブの表示" }, { label: "C", text: "検索用語" }, { label: "D", text: "項目レベルセキュリティ" }], correctAnswer: ["B"], explanation: "プロファイル等でオブジェクト参照権限を削除し、タブを非表示にすることで完全にアクセスを制限できます。", category: "共有・セキュリティ", difficulty: "easy" },
-  { id: 10, question: "取引先責任者階層に関して管理者が考慮すべき点は何ですか？", options: [{ label: "A", text: "ユーザーによるレコードレベルのアクセスに制限されている" }, { label: "B", text: "一度に 3000 件に制限されている" }, { label: "C", text: "最近表示されたリストが変わる" }, { label: "D", text: "共有設定が無視される" }], correctAnswer: ["A"], explanation: "階層に表示される内容は、ユーザーが持っている共有アクセス権限に依存します。", category: "オブジェクト・項目", difficulty: "medium" },
-  { id: 11, question: "承認プロセスの一部として追加できる自動化されたアクションを2つ選択してください。", options: [{ label: "A", text: "Chatter投稿" }, { label: "B", text: "項目更新" }, { label: "C", text: "自動起動フロー" }, { label: "D", text: "メールアラート" }], correctAnswer: ["B", "D"], explanation: "承認プロセスでは、Todo、メールアラート、項目自動更新、送信メッセージの4つが追加可能です。", category: "自動化", difficulty: "easy" },
-  { id: 12, question: "リードのカスタム選択リスト項目が、変換時に取引先に表示されません。管理者が行う必要がある項目はどれですか？2つ回答してください。", options: [{ label: "A", text: "取引先でカスタム選択リスト項目を作成" }, { label: "B", text: "入力規則で更新" }, { label: "C", text: "リード項目を取引先にマッピング" }, { label: "D", text: "リード側で必須設定" }], correctAnswer: ["A", "C"], explanation: "カスタム項目は自動マッピングされないため、移行先での項目作成とマッピング設定が必要です。", category: "データ管理", difficulty: "medium" },
-  { id: 13, question: "商談成立時にフォローアップタスクをトリガーし、60日後に別の確認タスクをトリガーしたい。どの2つのツールを使用すべきですか？", options: [{ label: "A", text: "プロセスビルダー" }, { label: "B", text: "ワークフロールール" }, { label: "C", text: "項目更新" }, { label: "D", text: "アウトバウンドメッセージ" }], correctAnswer: ["A", "B"], explanation: "旧設問の形式ですが、時間ベースの処理にはこれらのツールが利用されていました。", category: "自動化", difficulty: "medium" },
-  { id: 14, question: "プロファイル設定で、どのアプリでも特定のタブを表示できないようにするのはどれですか?", options: [{ label: "A", text: "オブジェクト権限" }, { label: "B", text: "アプリ権限" }, { label: "C", text: "組織全体のデフォルト" }, { label: "D", text: "タブ設定" }], correctAnswer: ["D"], explanation: "プロファイルの「タブ設定」で表示・非表示を制御します。", category: "レコードタイプ・レイアウト", difficulty: "easy" },
-  { id: 15, question: "会社の設定（Company Settings）を構成する際、含まれる2つのオプションはどれですか？", options: [{ label: "A", text: "通貨ロケール" }, { label: "B", text: "デフォルト言語" }, { label: "C", text: "パスワードポリシー" }, { label: "D", text: "ログイン時間" }], correctAnswer: ["A", "B"], explanation: "ロケールや言語は会社情報の設定ですが、パスワードやログイン時間はプロファイルの設定です。", category: "ユーザー・権限", difficulty: "easy" },
-  { id: 16, question: "ダッシュボードとレポートで詳細の値が異なる事象が発生する可能性が高い2つの理由を選択してください。", options: [{ label: "A", text: "レポート更新が必要" }, { label: "B", text: "ダッシュボード更新が必要" }, { label: "C", text: "フォルダアクセス権" }, { label: "D", text: "実行ユーザーと閲覧者の権限違い" }], correctAnswer: ["B", "D"], explanation: "ダッシュボードは手動更新が必要な点と、実行ユーザーの権限で集計される点が原因になります。", category: "レポート・ダッシュボード", difficulty: "medium" },
-  { id: 17, question: "Web-to-Leadにおいて、リード業界の項目値に基づいて異なるメッセージを送信したい。何を構成すべきですか？", options: [{ label: "A", text: "ワークフロー" }, { label: "B", text: "自動レスポンスルール" }, { label: "C", text: "プロセス ビルダー" }, { label: "D", text: "割り当てルール" }], correctAnswer: ["B"], explanation: "リード作成時の自動返信には「自動レスポンスルール」を使用します。", category: "自動化", difficulty: "easy" },
-  { id: 18, question: "顧客が公開ホームページから独自のケースを作成できるようにする機能は何ですか？", options: [{ label: "A", text: "SMS 応答" }, { label: "B", text: "Web-to-ケース" }, { label: "C", text: "メール-to-ケース" }, { label: "D", text: "オムニチャネル" }], correctAnswer: ["B"], explanation: "Webサイトのフォームからケースを自動生成するのは「Web-to-ケース」です。", category: "データ管理", difficulty: "easy" },
-  { id: 19, question: "取引先年間収益項目を負の値または 1000億ドルを超える金額に更新できないようにするには?", options: [{ label: "A", text: "入力規則を作成する" }, { label: "B", text: "定期レポート" }, { label: "C", text: "レイアウト必須" }, { label: "D", text: "設定で制限" }], correctAnswer: ["A"], explanation: "データの論理的なチェックと保存の阻止には入力規則が最適です。", category: "データ管理", difficulty: "easy" },
-  { id: 20, question: "2月1日に始まる12か月の会計年度をレポートに表示したい。どう対処すべきですか？", options: [{ label: "A", text: "カスタム/2月" }, { label: "B", text: "カスタム/4四半期" }, { label: "C", text: "標準/12か月" }, { label: "D", text: "標準/開始2月" }], correctAnswer: ["D"], explanation: "標準会計年度の設定で、開始月を2月に指定することで実現可能です。", category: "レポート・ダッシュボード", difficulty: "medium" },
-  { id: 21, question: "退職した営業担当者の全取引先と商談を新しい担当者に再割り当てするためのツールはどれですか？", options: [{ label: "A", text: "データローダ" }, { label: "B", text: "一括移行ツール" }, { label: "C", text: "インポートウィザード" }, { label: "D", text: "Dataloader.io" }], correctAnswer: ["B"], explanation: "「レコードの一括移行」ツールを使用すると、所有権を簡単に再割り当てできます。", category: "データ管理", difficulty: "easy" },
-  { id: 22, question: "ケースをクローズしようとしても「状況」選択リストに 「クローズ」がない。原因は何ですか？", options: [{ label: "A", text: "値がない" }, { label: "B", text: "レイアウト変更" }, { label: "C", text: "デフォルト設定" }, { label: "D", text: "サポートプロセスで省略されている" }], correctAnswer: ["D"], explanation: "ケースの状況値は「サポートプロセス」の設定で定義されます。", category: "オブジェクト・項目", difficulty: "medium" },
-  { id: 23, question: "ワークフロールールを置き換え、10倍速いレコード更新を可能にするツールはどれですか?", options: [{ label: "A", text: "クイックアクション" }, { label: "B", text: "保存前更新を実行するフロー" }, { label: "C", text: "スケジュールフロー" }, { label: "D", text: "画面フロー" }], correctAnswer: ["B"], explanation: "Before-saveトリガーを使用する「高速項目更新」フローのことです。", category: "自動化", difficulty: "medium" },
-  { id: 24, question: "定義外の選択リスト値がエラーなしで登録されてしまった。なぜですか？", options: [{ label: "A", text: "「値セットで制限」チェックがオフ" }, { label: "B", text: "項目レベルセキュリティ" }, { label: "C", text: "グローバル値セット" }, { label: "D", text: "レコードタイプ" }], correctAnswer: ["A"], explanation: "このチェックがオフの場合、API等を経由して定義外の値も登録可能になります。", category: "オブジェクト・項目", difficulty: "medium" },
-  { id: 25, question: "チームが分割リストビューを使用できるようにするには何を構成すべきですか?", options: [{ label: "A", text: "フィルタ" }, { label: "B", text: "ナビゲーションバーにタブを含める" }, { label: "C", text: "標準限定" }, { label: "D", text: "管理権限" }], correctAnswer: ["B"], explanation: "該当オブジェクトのタブがバーに含まれていれば、分割ビューは利用可能です。", category: "レコードタイプ・レイアウト", difficulty: "easy" },
-  { id: 26, question: "2週間ごとに繰り返されるタスクを作成したい。何をすべきですか？", options: [{ label: "A", text: "繰り返しToDoの作成を有効化" }, { label: "B", text: "フロー" }, { label: "C", text: "ワークフロー" }, { label: "D", text: "定期的な活動オン" }], correctAnswer: ["A"], explanation: "標準機能の「繰り返しToDo」を有効にすることで対応できます。", category: "自動化", difficulty: "easy" },
-  { id: 27, question: "セッションの脆弱性を特定して修正するために使用すべきツールはどれですか？", options: [{ label: "A", text: "項目履歴" }, { label: "B", text: "監査証跡" }, { label: "C", text: "セキュリティ状態チェック" }, { label: "D", text: "OWD" }], correctAnswer: ["C"], explanation: "「Health Check（状態チェック）」を使用して脆弱性を特定・修正します。", category: "共有・セキュリティ", difficulty: "easy" },
-  { id: 28, question: "「靴」レコードの孤立を防ぐために作成すべきリレーションは何ですか?", options: [{ label: "A", text: "間接参照関係" }, { label: "B", text: "暗号化参照" }, { label: "C", text: "階層関係" }, { label: "D", text: "主従関係" }], correctAnswer: ["D"], explanation: "主従関係は親レコードが必須であり、親が消えると子も消えるため孤立を防げます。", category: "オブジェクト・項目", difficulty: "medium" },
-  { id: 29, question: "ケース作成後2時間以上応答がない場合、マネージャーに自動通知したい。何を使用して作成しますか？", options: [{ label: "A", text: "割り当てルール" }, { label: "B", text: "ケースエスカレーションルール" }, { label: "C", text: "オムニチャネル" }, { label: "D", text: "数式項目" }], correctAnswer: ["B"], explanation: "時間経過に基づく再割り当てや通知には、エスカレーションルールを使用します。", category: "割り当て・ルーティング", difficulty: "easy" },
-  { id: 30, question: "各マーケティングキャンペーンで生成された収益を計算したい。どう提供すべきですか？", options: [{ label: "A", text: "標準レポートに「キャンペーンの成立商談金額」項目を追加" }, { label: "B", text: "定期的なデータジョブ" }, { label: "C", text: "積み上げ集計項目" }, { label: "D", text: "ワークフローによる更新" }], correctAnswer: ["A"], explanation: "キャンペーンオブジェクトには、商談と連動する標準の集計項目が存在します。", category: "キャンペーン・マーケティング", difficulty: "medium" },
-  { id: 31, question: "カスタム選択リストの項目タイプを変更しようとしたが、変更できない理由は？", options: [{ label: "A", text: "数式項目で参照中" }, { label: "B", text: "レコードタイプ" }, { label: "C", text: "Visualforce" }, { label: "D", text: "Javascript" }], correctAnswer: ["A"], explanation: "数式やフロー等で参照されている場合、項目タイプの変更は制限されます。", category: "オブジェクト・項目", difficulty: "medium" },
-  { id: 32, question: "サポートチームを支援するために、キューに関して使用すべき2つのオプションは？", options: [{ label: "A", text: "フロー" }, { label: "B", text: "割り当てルールでキューを所有者に設定" }, { label: "C", text: "既存キューにケースを追加" }, { label: "D", text: "新しいキュー作成" }], correctAnswer: ["B", "C"], explanation: "キューにオブジェクトを許可し、割り当てルールで自動振り分けを行います。", category: "割り当て・ルーティング", difficulty: "medium" },
-  { id: 33, question: "顧客保証ケース用の新しいレコード タイプをユーザに表示するために必要な割り当ては？", options: [{ label: "A", text: "プロファイルの割り当て" }, { label: "B", text: "ロールの割り当て" }, { label: "C", text: "アプリ マネージャー" }, { label: "D", text: "ページレイアウトの割り当て" }], correctAnswer: ["A", "D"], explanation: "権限（プロファイル）と外見（レイアウト）の両方を割り当てる必要があります。", category: "レコードタイプ・レイアウト", difficulty: "easy" },
-  { id: 34, question: "モバイルナビゲーションメニューで使用できる項目を3つ選択してください。", options: [{ label: "A", text: "Lightningアプリケーションページ" }, { label: "B", text: "Lightningホームページ" }, { label: "C", text: "Chatter" }, { label: "D", text: "ユーティリティバー" }, { label: "E", text: "ダッシュボード" }], correctAnswer: ["A", "C", "E"], explanation: "ホームページとユーティリティバーはデスクトップ専用です。", category: "レコードタイプ・レイアウト", difficulty: "medium" },
-  { id: 35, question: "データプライバシー情報を追跡するための「個人」項目を使用できるページレイアウトはどれですか?", options: [{ label: "A", text: "ケースと商談" }, { label: "B", text: "取引先とユーザー" }, { label: "C", text: "リード、取引先責任者、および個人取引先" }, { label: "D", text: "個人、ユーザー、および取引先" }], correctAnswer: ["C"], explanation: "プライバシー情報の追跡（Individualオブジェクト連携）はこれらに対応しています。", category: "オブジェクト・項目", difficulty: "medium" },
-  { id: 36, question: "住所変更時に、未処理の注文を選択して一括更新させるソリューションは？", options: [{ label: "A", text: "オープン注文の自動起動フロー" }, { label: "B", text: "取引先ページの自動起動フロー" }, { label: "C", text: "注文ページの画面フロー" }, { label: "D", text: "取引先ページの画面フロー" }], correctAnswer: ["D"], explanation: "ユーザーがレコードを選択するUIが必要なため、画面フローが正解です。", category: "自動化", difficulty: "hard" },
-  { id: 37, question: "画面フロー上に2つ設問があるが、一度に必要なのは1つだけ。どう完了すべきですか?", options: [{ label: "A", text: "新バージョンの使用" }, { label: "B", text: "決定要素と新しい画面" }, { label: "C", text: "条件付き表示" }, { label: "D", text: "画面上での分岐" }], correctAnswer: ["C"], explanation: "画面要素の「条件付き表示」設定で、必要時のみ項目を出せます。", category: "自動化", difficulty: "medium" },
-  { id: 38, question: "顧客側からケースを作成するためのセルフサービスオプションを2つ選べ。", options: [{ label: "A", text: "Web-to-ケース" }, { label: "B", text: "ケースエスカレーション" }, { label: "C", text: "メール-to-ケース" }, { label: "D", text: "ケースキュー" }], correctAnswer: ["A", "C"], explanation: "外部の顧客アクションから直接ケースを生成する標準機能です。", category: "データ管理", difficulty: "easy" },
-  { id: 39, question: "Lightningアプリケーションビルダーを使用して、作成およびカスタマイズできるページタイプはどれですか？2つ回答してください。", options: [{ label: "A", text: "ユーザーページ" }, { label: "B", text: "ダッシュボードページ" }, { label: "C", text: "アプリケーションページ" }, { label: "D", text: "レコードページ" }], correctAnswer: ["C", "D"], explanation: "アプリページ、レコードページ、ホームページの3種類を編集できます。", category: "レコードタイプ・レイアウト", difficulty: "medium" },
-  { id: 40, question: "エージェントのキャパシティとスキルセットをより簡単に割り当てる機能を有効にするには？", options: [{ label: "A", text: "ナレッジ マネジメント" }, { label: "B", text: "オムニチャネル" }, { label: "C", text: "エスカレーション ルール" }, { label: "D", text: "テリトリー管理" }], correctAnswer: ["B"], explanation: "スキルベースルーティングやキャパシティ管理はオムニチャネルの機能です。", category: "割り当て・ルーティング", difficulty: "medium" },
-  { id: 41, question: "チーム内だけでフィードバックを共有するためのスペース。何を活用すべきですか？", options: [{ label: "A", text: "クイック アクション" }, { label: "B", text: "Chatter非公開グループ" }, { label: "C", text: "Chatter公開グループ" }, { label: "D", text: "活動履歴" }], correctAnswer: ["B"], explanation: "クローズドな環境で会話するには「Chatter非公開グループ」が最適です。", category: "その他", difficulty: "easy" },
-  { id: 42, question: "権限セットグループに削除権限が含まれているが、ユーザーに削除させたくない。何をすべきですか？", options: [{ label: "A", text: "ミュート権限セットを使用してミュートする" }, { label: "B", text: "削除権限なしの新しい権限セット" }, { label: "C", text: "新しいロール" }, { label: "D", text: "プロファイル編集" }], correctAnswer: ["A"], explanation: "権限セットグループ内の特定の権限だけを打ち消すには「ミュート」を使います。", category: "ユーザー・権限", difficulty: "medium" },
-  { id: 43, question: "ステータス値10個は多すぎる。ケースの種類に応じて5つに絞るには？", options: [{ label: "A", text: "ステータス値を5つに削除" }, { label: "B", text: "画面フローとユーティリティバー" }, { label: "C", text: "必要となる各サポートプロセスを作成" }, { label: "D", text: "レコードタイプで直接編集" }], correctAnswer: ["C"], explanation: "サポートプロセスで選択肢を定義し、レコードタイプに紐付けます。", category: "オブジェクト・項目", difficulty: "medium" },
-  { id: 44, question: "保存時に、製品タイプかチェックボックスのどちらかを入力強制するには？", options: [{ label: "A", text: "保存前更新フロー" }, { label: "B", text: "入力規則" }, { label: "C", text: "ワークフロールール" }, { label: "D", text: "項目必須" }], correctAnswer: ["B"], explanation: "複雑な条件付きの入力制約には、入力規則を使用します。", category: "データ管理", difficulty: "medium" },
-  { id: 45, question: "エクスペリエンスクラウドで、検査結果を提出するフォームを配置するには？", options: [{ label: "A", text: "関連リスト" }, { label: "B", text: "自動起動フロー" }, { label: "C", text: "レコードの詳細" }, { label: "D", text: "画面フロー" }], correctAnswer: ["D"], explanation: "フォーム（画面入力）の作成は、画面フローの役割です。", category: "自動化", difficulty: "easy" },
-  { id: 46, question: "主従関係において、親に子レコードの訪問者数を追跡するためのフィールドは？", options: [{ label: "A", text: "積み上げ集計項目" }, { label: "B", text: "複数選択リスト" }, { label: "C", text: "クロス数式" }, { label: "D", text: "間接参照" }], correctAnswer: ["A"], explanation: "主従関係において、子側の集計値を親に出す機能です。", category: "オブジェクト・項目", difficulty: "medium" },
-  { id: 47, question: "リードのカスタム項目を、変換時に商談の一部にするためのアクションは?", options: [{ label: "A", text: "製品にマッピング" }, { label: "B", text: "ワークフロー" }, { label: "C", text: "商談にカスタム項目を作成しマッピング" }, { label: "D", text: "ピックリスト設定" }], correctAnswer: ["C"], explanation: "カスタム項目を移行させるには、移行先にも項目を作成して紐付けが必要です。", category: "データ管理", difficulty: "medium" },
-  { id: 48, question: "月別およびシリーズ別のキャンペーンROIを簡素化してレポートするには？", options: [{ label: "A", text: "別レコードタイプ" }, { label: "B", text: "同じ名前の個別作成" }, { label: "C", text: "ステータス構成" }, { label: "D", text: "キャンペーン階層を使用する" }], correctAnswer: ["D"], explanation: "階層構造により、親キャンペーンで子の値をロールアップ集計できます。", category: "キャンペーン・マーケティング", difficulty: "medium" },
-  { id: 49, question: "管理者が構成する必要がある3つのパスワードポリシーはどれですか？", options: [{ label: "A", text: "PWマネージャ使用強制" }, { label: "B", text: "複雑さの要件" }, { label: "C", text: "有効期限日数" }, { label: "D", text: "無効な試行回数" }, { label: "E", text: "禁止PW値" }], correctAnswer: ["B", "C", "D"], explanation: "プロファイルごとに設定可能な標準のセキュリティ要件です。", category: "ユーザー・権限", difficulty: "medium" },
-  { id: 50, question: "リセラーパートナーに、彼らが購入する製品の割引価格を提供するための設定は？", options: [{ label: "A", text: "割引項目追加" }, { label: "B", text: "別製品構築" }, { label: "C", text: "レコードタイプ" }, { label: "D", text: "リセラーパートナー用に別の価格表を作成する" }], correctAnswer: ["D"], explanation: "グループごとに価格を出し分けるには「価格表」を使い分けます。", category: "その他", difficulty: "medium" },
-  { id: 51, question: "商談が$500,000に達したときにアラートを出す簡単な方法は？", options: [{ label: "A", text: "大規模商談アラート" }, { label: "B", text: "リマインダー" }, { label: "C", text: "かんばん警告" }, { label: "D", text: "主要取引コンポ" }], correctAnswer: ["A"], explanation: "一定の金額と確度を満たした時に自動通知する標準機能です。", category: "自動化", difficulty: "easy" },
-  { id: 52, question: "重要な更新（リリース更新）の有効化をどのように進めるべきですか？", options: [{ label: "A", text: "サンドボックスで重要な更新をアクティブ化します" }, { label: "B", text: "自動有効化を許可" }, { label: "C", text: "本番でアクティブ化" }, { label: "D", text: "サンドボックス自動" }], correctAnswer: ["A"], explanation: "本番への影響を避けるため、まずSandboxで事前検証を行うのが鉄則です。", category: "ユーザー・権限", difficulty: "easy" },
-  { id: 53, question: "Salesforceに新しいユーザーを追加できない原因は何ですか?", options: [{ label: "A", text: "メール形式違い" }, { label: "B", text: "文字数制限" }, { label: "C", text: "偽メール" }, { label: "D", text: "ユーザー名は既に使用されています" }], correctAnswer: ["D"], explanation: "ユーザー名は全組織を通じて一意である必要があります。", category: "ユーザー・権限", difficulty: "easy" },
-  { id: 54, question: "特定のフェーズで金額必須とし、マネージャには免除するには？", options: [{ label: "A", text: "全員必須" }, { label: "B", text: "数式" }, { label: "C", text: "管理者プロファイル" }, { label: "D", text: "条件を満たすように入力規則を設定する" }], correctAnswer: ["D"], explanation: "プロファイル等に基づいた条件付きの必須化には、入力規則を使います。", category: "データ管理", difficulty: "medium" },
-  { id: 55, question: "受信メールでケースを自動生成し、正しいキューに送信するには？", options: [{ label: "A", text: "フロー" }, { label: "B", text: "カスタムメールサービス" }, { label: "C", text: "エスカレーション" }, { label: "D", text: "メール-to-ケースを設定する" }], correctAnswer: ["D"], explanation: "「メール-to-ケース」の設定で自動生成と初期割り当てが可能です。", category: "割り当て・ルーティング", difficulty: "easy" },
-  { id: 56, question: "コンドミニアムのレコード作成時にのみ、追加の手順が表示されるようにするには？", options: [{ label: "A", text: "1レイアウトとレコードタイプ" }, { label: "B", text: "1レイアウトとビジネスプロセス" }, { label: "C", text: "2項目" }, { label: "D", text: "2ページ レイアウトとレコードタイプ" }], correctAnswer: ["D"], explanation: "レコードタイプごとに別のページレイアウトを割り当てて項目を出し分けます。", category: "レコードタイプ・レイアウト", difficulty: "medium" },
-  { id: 57, question: "カスタムレポート上で、関連付けられた取引先レコードから項目を参照して表示するには？", options: [{ label: "A", text: "数式項目" }, { label: "B", text: "カスタムレポートタイプを編集し、ルックアップで項目追加" }, { label: "C", text: "新しいレポートタイプ" }, { label: "D", text: "ダッシュボードフィルタ" }], correctAnswer: ["B"], explanation: "カスタムレポートタイプの設定で、参照先の項目を追加できます。", category: "レポート・ダッシュボード", difficulty: "medium" },
-  { id: 58, question: "ケースエスカレーションルールで実行可能な2つのアクションは?", options: [{ label: "A", text: "再オープン" }, { label: "B", text: "メール通知" }, { label: "C", text: "優先度変更" }, { label: "D", text: "ケースを再割り当て" }], correctAnswer: ["B", "D"], explanation: "所有者の変更（再割り当て）と、通知メールの送信が主なアクションです。", category: "割り当て・ルーティング", difficulty: "easy" },
-  { id: 59, question: "役割ごとにケース関連リストの表示項目（列）を変えたい。何を使用すべきですか?", options: [{ label: "A", text: "ルックアップ検索条件" }, { label: "B", text: "コンパクトレイアウト" }, { label: "C", text: "ページレイアウトエディタ" }, { label: "D", text: "検索レイアウト" }], correctAnswer: ["C"], explanation: "関連リストの列設定は、ページレイアウト上で行います。", category: "レコードタイプ・レイアウト", difficulty: "medium" },
-  { id: 60, question: "販売用とマーケティング用で異なる選択リスト値を表示するための2つの構成案は？", options: [{ label: "A", text: "1レイアウト、2レコードタイプ、1選択リスト" }, { label: "B", text: "2レイアウト、1レコードタイプ、2選択リスト" }, { label: "C", text: "2権限セット" }, { label: "D", text: "2プロファイル" }], correctAnswer: ["A", "B"], explanation: "レコードタイプ、または異なる項目を配置したレイアウトで制御します。", category: "レコードタイプ・レイアウト", difficulty: "medium" },
-  { id: 61, question: "複数オブジェクトで一貫した選択リスト値を使うための機能は？", options: [{ label: "A", text: "依存選択リスト" }, { label: "B", text: "グローバル選択リスト" }, { label: "C", text: "複数選択" }, { label: "D", text: "カスタム選択リスト" }], correctAnswer: ["B", "D"], explanation: "グローバル値セットを使用して、複数のカスタム項目を作成します。", category: "オブジェクト・項目", difficulty: "medium" },
-  { id: 62, question: "主従関係の特徴はどれですか？（3つ）", options: [{ label: "A", text: "主は標準orカスタム可" }, { label: "B", text: "子権限は個別設定" }, { label: "C", text: "最大5つ" }, { label: "D", text: "積み上げ集計可" }, { label: "E", text: "子の所有者は親と同一" }], correctAnswer: ["A", "D", "E"], explanation: "親子が密接に連動し、集計や権限が共通化されるリレーションです。", category: "オブジェクト・項目", difficulty: "medium" },
-  { id: 63, question: "作成したレポートにどのユーザーもアクセスできない。なぜですか?（2つ）", options: [{ label: "A", text: "カスタムレポートタイプが開発中" }, { label: "B", text: "プロファイル権限不足" }, { label: "C", text: "制限超過" }, { label: "D", text: "プライベートフォルダーに保存されている" }], correctAnswer: ["A", "D"], explanation: "リリース状態が「開発中」か、保存場所の共有設定が原因です。", category: "レポート・ダッシュボード", difficulty: "medium" },
-  { id: 64, question: "商談の完了予定日を過去の日付に変更できないようにするには？", options: [{ label: "A", text: "割り当てルール" }, { label: "B", text: "入力規則" }, { label: "C", text: "項目レベルセキュリティ" }, { label: "D", text: "承認プロセス" }], correctAnswer: ["B"], explanation: "日付の論理チェックを行い保存を制御するのは入力規則です。", category: "データ管理", difficulty: "easy" },
-  { id: 65, question: "1つの取引先責任者に複数の会社（取引先）を紐付けたい。何を使用すべきですか？", options: [{ label: "A", text: "パートナーコミュニティ" }, { label: "B", text: "別々のレコード" }, { label: "C", text: "ジャンクションオブジェクト" }, { label: "D", text: "取引先責任者-to-複数取引先を有効化" }], correctAnswer: ["D"], explanation: "標準機能で複数の取引先とのリレーションを保持できます。", category: "オブジェクト・項目", difficulty: "medium" },
-  { id: 66, question: "製品を削除しても、靴のデザインは削除されないようにする関係は？", options: [{ label: "A", text: "靴のデザイン用カスタムオブジェクト作成" }, { label: "B", text: "カスタム参照関係項目を構成" }, { label: "C", text: "カスタム主従関係項目" }, { label: "D", text: "デザインに標準オブジェクト" }], correctAnswer: ["A", "B"], explanation: "連動削除されない「参照関係」を使用し、カスタムオブジェクト化します。", category: "オブジェクト・項目", difficulty: "medium" },
-  { id: 67, question: "コンソールごとに別のLightningページ（取引先表示時）を出したい。どう満たすべきですか？", options: [{ label: "A", text: "レイアウト割り当て更新" }, { label: "B", text: "複数レコードタイプ" }, { label: "C", text: "Lightningページをアプリのデフォルトとして割り当てる" }, { label: "D", text: "異なるプロファイル" }], correctAnswer: ["C"], explanation: "特定のアプリケーション単位でLightningページを指定できます。", category: "レコードタイプ・レイアウト", difficulty: "medium" },
-  { id: 68, question: "「営業ユーザー」かつ「携帯電話」時のみコンポを表示したい。2つの設定は？", options: [{ label: "A", text: "プロファイル名でフィルタ" }, { label: "B", text: "フォーム要素 = 電話 でフィルタ" }, { label: "C", text: "ビュー = 携帯電話" }, { label: "D", text: "ロール名でフィルタ" }], correctAnswer: ["A", "B"], explanation: "ユーザー属性（プロファイル）とデバイス（フォーム要素）での絞り込みです。", category: "レコードタイプ・レイアウト", difficulty: "medium" },
-  { id: 69, question: "商談フェーズの更新プロセスを簡素化するために推奨する2つのオプションは？", options: [{ label: "A", text: "レコードページにパスを追加" }, { label: "B", text: "かんばんリストビューを使用" }, { label: "C", text: "自動起動フロー" }, { label: "D", text: "シンプルページレイアウト" }], correctAnswer: ["A", "B"], explanation: "視覚的かつ直感的にフェーズを動かせるパスやかんばんを活用します。", category: "レコードタイプ・レイアウト", difficulty: "medium" },
-  { id: 70, question: "優先順位を付けてより多くの商談を成約させるために役立つEinstein機能は？", options: [{ label: "A", text: "Einstein 商談スコアリング" }, { label: "B", text: "Einstein リードスコアリング" }, { label: "C", text: "Einstein 検索" }, { label: "D", text: "Einstein 活動キャプチャ" }], correctAnswer: ["A"], explanation: "AIが商談の成約率をスコアリングし、優先順位付けを支援します。", category: "その他", difficulty: "easy" },
-  { id: 71, question: "画面フローで、不明瞭なエラーの代わりにより良い指示を出す方法は？", options: [{ label: "A", text: "入力規則削除" }, { label: "B", text: "権限セット作成" }, { label: "C", text: "障害コネクタ（Fault）を使用して説明画面を表示" }, { label: "D", text: "エラーボックスのチェック外す" }], correctAnswer: ["C"], explanation: "エラー発生時の分岐（障害パス）を作り、ユーザーへ指示を出せます。", category: "自動化", difficulty: "medium" },
-  { id: 72, question: "2つの異なる販売プロセス。各要件を満たすために何を構成すべきですか？", options: [{ label: "A", text: "入力規則" }, { label: "B", text: "異なるページレイアウト" }, { label: "C", text: "公開グループ" }, { label: "D", text: "商談の種類ごとにレコードタイプと販売プロセスを分ける" }], correctAnswer: ["D"], explanation: "プロセスとレコードタイプを紐付けて、選択肢やレイアウトを制御します。", category: "レコードタイプ・レイアウト", difficulty: "medium" },
-  { id: 73, question: "ソースレポートが変更されないよう整合性を維持するための2つのアクションは?", options: [{ label: "A", text: "プライベートフォルダへ移動" }, { label: "B", text: "表示アクセス権（閲覧のみ）のみ持つレポートフォルダー作成" }, { label: "C", text: "表示専用フォルダに移動" }, { label: "D", text: "動的ダッシュボード" }], correctAnswer: ["B", "C"], explanation: "閲覧権限のみのフォルダに格納することで、編集をブロックします。", category: "レポート・ダッシュボード", difficulty: "medium" },
-  { id: 74, question: "割引率に応じて承認者を変える承認プロセス設定。事前確認すべき2要素は？", options: [{ label: "A", text: "商談にカスタム割引項目作成" }, { label: "B", text: "マネージャー標準項目への入力" }, { label: "C", text: "個別の承認プロセス" }, { label: "D", text: "手動選択の許可" }], correctAnswer: ["A", "B"], explanation: "条件判定用の項目と、承認ルート（マネージャ）の情報が必要です。", category: "自動化", difficulty: "medium" },
-  { id: 75, question: "Salesforceオブジェクトの考慮事項で正しいものは？（2つ）", options: [{ label: "A", text: "標準のみ主従サポート" }, { label: "B", text: "Salesforceには標準オブジェクトが含まれている" }, { label: "C", text: "カスタム/標準ともに標準項目がある" }, { label: "D", text: "新しい標準を作成できる" }], correctAnswer: ["B", "C"], explanation: "標準であらかじめ用意されており、基本項目を最初から持っています。", category: "オブジェクト・項目", difficulty: "easy" },
-  { id: 76, question: "ボタンクリックで簡単な割引計算画面を起動するための自動化ツールは？", options: [{ label: "A", text: "Flow Builder" }, { label: "B", text: "ワークフロールール" }, { label: "C", text: "プラットフォームイベント" }, { label: "D", text: "プロセスビルダー" }], correctAnswer: ["A"], explanation: "入力UIを伴う処理（ウィザード形式）には画面フローを使います。", category: "自動化", difficulty: "easy" },
-  { id: 77, question: "ユーザーだけが出ているエラーを管理者が検証する最も確実な方法は？", options: [{ label: "A", text: "ページレイアウト編集" }, { label: "B", text: "監査証跡の表示" }, { label: "C", text: "他のユーザーとしてログインする" }, { label: "D", text: "共有モデル確認" }], correctAnswer: ["C"], explanation: "「代理ログイン」でユーザーと同じ権限で挙動を再現させます。", category: "ユーザー・権限", difficulty: "easy" },
-  { id: 78, question: "再雇用後、以前作業していたレコードが表示できなくなった。考えられる原因は？", options: [{ label: "A", text: "不成立に変更" }, { label: "B", text: "権限セット削除" }, { label: "C", text: "レコードタイプ変更" }, { label: "D", text: "レコードは手動でユーザーと共有されました" }], correctAnswer: ["D"], explanation: "手動共有による権限は、ユーザーを無効化すると破棄されます。", category: "共有・セキュリティ", difficulty: "medium" },
-  { id: 79, question: "サポート・ヘルプデスク・R&Dのフォルダ階層。共有する方法は？（2つ）", options: [{ label: "A", text: "R&Dフォルダを編集共有" }, { label: "B", text: "ヘルプデスクフォルダを表示共有" }, { label: "C", text: "サポートレポートフォルダを編集共有" }, { label: "D", text: "サポートレポートを表示共有" }], correctAnswer: ["B", "C"], explanation: "個別に、または上位階層から権限を継承させて共有します。", category: "レポート・ダッシュボード", difficulty: "medium" },
-  { id: 80, question: "生産性向上のためにホームページに追加すべき3つの営業標準コンポは？", options: [{ label: "A", text: "アクティビティ" }, { label: "B", text: "パス" }, { label: "C", text: "アシスタント" }, { label: "D", text: "主要な商談" }, { label: "E", text: "パフォーマンスチャート" }], correctAnswer: ["C", "D", "E"], explanation: "これらはホームページに配置可能な標準の営業支援パーツです。", category: "レコードタイプ・レイアウト", difficulty: "medium" },
-  { id: 81, question: "ライセンスの種類と利用可能な数を確認するための場所は？", options: [{ label: "A", text: "検索バー" }, { label: "B", text: "組織情報のユーザーライセンス関連リスト" }, { label: "C", text: "ユーザー管理設定" }, { label: "D", text: "会社情報の使用資格" }], correctAnswer: ["B"], explanation: "会社情報の「組織情報」メニュー内の関連リストで確認します。", category: "ユーザー・権限", difficulty: "easy" },
-  { id: 82, question: "オブジェクトマネージャで項目を必須にする際の考慮事項は？（2つ）", options: [{ label: "A", text: "API不要" }, { label: "B", text: "保存には普遍的に必要" }, { label: "C", text: "すべてのレイアウトに追加される" }, { label: "D", text: "Webからはオプション" }], correctAnswer: ["B", "C"], explanation: "項目自体の設定で必須にすると、全レイアウトで強制されます。", category: "オブジェクト・項目", difficulty: "medium" },
-  { id: 83, question: "VIP顧客からのケースが5時間以内に転送されるよう構成するには？", options: [{ label: "A", text: "割り当てルール" }, { label: "B", text: "営業時間" }, { label: "C", text: "ケースキュー" }, { label: "D", text: "エスカレーションルール" }], correctAnswer: ["D"], explanation: "時間経過に基づく自動的な所有者の変更にはエスカレーションを使用します。", category: "割り当て・ルーティング", difficulty: "easy" },
-  { id: 84, question: "低予算かつ短期間でテンプレートプロセス（計算機等）を作成するのに役立つのは？", options: [{ label: "A", text: "Lightningデータ" }, { label: "B", text: "Lightningコミュニティ" }, { label: "C", text: "Flowソリューション" }, { label: "D", text: "Boltsソリューション" }], correctAnswer: ["C"], explanation: "AppExchangeから既存のフローの型を導入して活用します。", category: "その他", difficulty: "easy" },
-  { id: 85, question: "「期待収益」項目に誤った値が表示されている場合、何を修正すべきですか？", options: [{ label: "A", text: "予想収益" }, { label: "B", text: "予測カテゴリ" }, { label: "C", text: "成約額" }, { label: "D", text: "確度" }], correctAnswer: ["D"], explanation: "「金額×確度」で計算されるため、確度の値を確認・修正します。", category: "オブジェクト・項目", difficulty: "medium" },
-  { id: 86, question: "マネージャがスタッフからのフィードバックレコードを参照できないようにするには？", options: [{ label: "A", text: "「階層を使用したアクセス許可」のチェックを外す" }, { label: "B", text: "条件共有ルール" }, { label: "C", text: "外部アクセスプライベート" }, { label: "D", text: "所有者共有ルール" }], correctAnswer: ["A"], explanation: "OWD（非公開）に加え、ロール階層による上位への参照継承をオフにします。", category: "共有・セキュリティ", difficulty: "medium" },
-  { id: 87, question: "即時確認、割り当て、4時間後のエスカレーションを実現するツールセットは？", options: [{ label: "A", text: "応答、マクロ、資格" }, { label: "B", text: "応答、キュー、マクロ" }, { label: "C", text: "自動応答ルール、キュー、エスカレーション ルール" }, { label: "D", text: "応答、資格、エスカレーション" }], correctAnswer: ["C"], explanation: "返信、所有者（グループ）、時間ベースのルールの組み合わせです。", category: "割り当て・ルーティング", difficulty: "medium" },
-  { id: 88, question: "商談の段階に基づいて重要な価値（項目）を明らかにするために実装できるツールは？", options: [{ label: "A", text: "商談プロセス" }, { label: "B", text: "動的フォーム" }, { label: "C", text: "パスの重要な項目" }, { label: "D", text: "ワークフロールール" }], correctAnswer: ["C"], explanation: "パスの設定により、フェーズごとに役立つ項目を表示できます。", category: "レコードタイプ・レイアウト", difficulty: "easy" },
-  { id: 89, question: "300の取引先と取引先責任者をSalesforceに一括インポートするための最適なツールは？", options: [{ label: "A", text: "Dataloader.io" }, { label: "B", text: "データローダ" }, { label: "C", text: "手動インポート" }, { label: "D", text: "データインポートウィザード" }], correctAnswer: ["D"], explanation: "標準オブジェクトの同時インポートを最も簡易に行えます。", category: "データ管理", difficulty: "easy" },
-  { id: 90, question: "「リードソース」が選択されている場合のみフェーズで「成立」を選択可能にするには？", options: [{ label: "A", text: "連動選択リスト" }, { label: "B", text: "入力規則" }, { label: "C", text: "読み取り専用" }, { label: "D", text: "依存ピックリスト" }], correctAnswer: ["B"], explanation: "特定フェーズかつ未入力の場合にエラーを出す入力規則を作成します。", category: "データ管理", difficulty: "medium" },
-  { id: 91, question: "項目タイプを複数選択リストから選択リストに変更する際の2つの手順は?", options: [{ label: "A", text: "再度有効" }, { label: "B", text: "チェックオン" }, { label: "C", text: "既存の値のバックアップ" }, { label: "D", text: "項目タイプを変更する" }], correctAnswer: ["C", "D"], explanation: "データ消失リスクの回避と、実際の型変更操作です。", category: "オブジェクト・項目", difficulty: "medium" },
-  { id: 92, question: "パス上でエージェントがケースを以前のステータスに戻すことを禁止するには？", options: [{ label: "A", text: "事前定義値" }, { label: "B", text: "グローバル値" }, { label: "C", text: "連動" }, { label: "D", text: "入力規則" }], correctAnswer: ["D"], explanation: "値の変遷（順序）をロジックで判定して制限をかけます。", category: "データ管理", difficulty: "medium" },
-  { id: 93, question: "作成した画面フローをケースから表示できるようにするには?", options: [{ label: "A", text: "ページレイアウト" }, { label: "B", text: "コンポフィルター" }, { label: "C", text: "Lightningページ" }, { label: "D", text: "ホームページ" }], correctAnswer: ["C"], explanation: "Lightningレコードページ上にフローコンポーネントを配置します。", category: "自動化", difficulty: "easy" },
-  { id: 94, question: "取引先が削除されても、出荷データが残るように確立すべき関係は?", options: [{ label: "A", text: "取引先への参照関係" }, { label: "B", text: "出荷への参照関係" }, { label: "C", text: "取引先への主従関係" }, { label: "D", text: "出荷への主従関係" }], correctAnswer: ["A"], explanation: "親削除時も子が残る「参照関係」を選択します。", category: "オブジェクト・項目", difficulty: "medium" },
-  { id: 95, question: "厳格なユーザーパスワードを要求するために構成すべき2つは？", options: [{ label: "A", text: "ユーザー名違い" }, { label: "B", text: "一般ワード禁止" }, { label: "C", text: "パスワードの最小長" }, { label: "D", text: "パスワードの複雑さ" }], correctAnswer: ["C", "D"], explanation: "プロファイルのパスワードポリシーで文字数や複雑さを設定します。", category: "ユーザー・権限", difficulty: "easy" },
-  { id: 96, question: "Salesforceモバイルアプリでクイックアクションを利用可能にするには?", options: [{ label: "A", text: "カスタムアプリ作成" }, { label: "B", text: "コンパクトレイアウト" }, { label: "C", text: "ナビメニュー含める" }, { label: "D", text: "ページレイアウトの「アクション」セクションに追加" }], correctAnswer: ["D"], explanation: "レイアウト上のモバイルおよびLightningアクション欄への配置が必要です。", category: "レコードタイプ・レイアウト", difficulty: "easy" },
-  { id: 97, question: "営業担当者が重要な顧客と話す際に注意（警告）を出すための2オプションは？", options: [{ label: "A", text: "カスタムコンポーネント" }, { label: "B", text: "強調パネル" }, { label: "C", text: "アクションと推奨事項" }, { label: "D", text: "表示フィルター" }, { label: "E", text: "リッチテキスト" }], correctAnswer: ["A", "C"], explanation: "独自UIやガイド付きアクションで注意を促します。", category: "レコードタイプ・レイアウト", difficulty: "medium" },
-  { id: 98, question: "入力規則を作成するときに管理者が使用する必要がある2つの機能は？", options: [{ label: "A", text: "戻り型" }, { label: "B", text: "エラー条件式" }, { label: "C", text: "エラーメッセージの場所" }, { label: "D", text: "有効日" }], correctAnswer: ["B", "C"], explanation: "「いつ（条件式）」と「どこに何（メッセージ）」が出るか、の定義です。", category: "データ管理", difficulty: "easy" },
-  { id: 99, question: "2時間以上オープンな未割り当てケースを緊急キューへ送る機能は？", options: [{ label: "A", text: "スケジュールレポート" }, { label: "B", text: "ダッシュボード更新" }, { label: "C", text: "ケースエスカレーションルール" }, { label: "D", text: "ケース割り当てルール" }], correctAnswer: ["C"], explanation: "時間経過に基づくルールの発動はエスカレーションの役割です。", category: "割り当て・ルーティング", difficulty: "easy" },
-  { id: 100, question: "強調表示パネルに特定のカスタム項目を表示させるための手順は？", options: [{ label: "A", text: "新レイアウトセクション" }, { label: "B", text: "カスタムコンパクトレイアウトを作成" }, { label: "C", text: "パネルに直接ドラッグ" }, { label: "D", text: "必須設定" }], correctAnswer: ["B"], explanation: "パネルの内容は「コンパクトレイアウト」の設定に依存します。", category: "レコードタイプ・レイアウト", difficulty: "medium" },
-  { id: 101, question: "作成経路に関わらず、優先度に基づいてケースを自動ルーティングするツールは?", options: [{ label: "A", text: "メール-to" }, { label: "B", text: "割り当てルール" }, { label: "C", text: "自動応答" }, { label: "D", text: "Web-to" }], correctAnswer: ["B"], explanation: "作成時の項目値をトリガーに、担当者を決定します。", category: "割り当て・ルーティング", difficulty: "easy" },
-  { id: 102, question: "全売上高と目標までの進捗を一つの値として効果的に表示するコンポーネントは？", options: [{ label: "A", text: "テーブル" }, { label: "B", text: "積棒" }, { label: "C", text: "ドーナツ" }, { label: "D", text: "ゲージ" }], correctAnswer: ["D"], explanation: "針の動きで目標への到達度（%等）を可視化するのに適しています。", category: "レポート・ダッシュボード", difficulty: "easy" },
-  { id: 103, question: "特定のソースの時だけ特定の選択リストを出し、それ以外は隠すフローの設定は？", options: [{ label: "A", text: "決定要素で分岐" }, { label: "B", text: "割り当て要素" }, { label: "C", text: "フローの「条件付き表示」設定" }, { label: "D", text: "入力規則" }], correctAnswer: ["C"], explanation: "画面コンポーネント自体に表示条件を設定できます。", category: "自動化", difficulty: "medium" },
-  { id: 104, question: "外部システムから収集する項目を、全レコードで必ず入力させるには？", options: [{ label: "A", text: "項目を必須に設定する" }, { label: "B", text: "プロセスビルダー" }, { label: "C", text: "承認プロセス" }, { label: "D", text: "レコードタイプで必須" }], correctAnswer: ["A"], explanation: "API経由等を含め、全経路で必須化するのは項目の必須設定です。", category: "データ管理", difficulty: "easy" },
-  { id: 105, question: "管理者が、組織で行われた最近の「設定」の変更を確認するツールは？", options: [{ label: "A", text: "リリース更新" }, { label: "B", text: "デバッグログ" }, { label: "C", text: "設定変更履歴" }, { label: "D", text: "項目履歴管理" }], correctAnswer: ["C"], explanation: "システム管理者がセットアップで行った操作（Audit Trail）の履歴です。", category: "ユーザー・権限", difficulty: "easy" },
-  { id: 106, question: "作成されたリードを、住所に基づいて正しい担当者に自動的にルーティングするには？", options: [{ label: "A", text: "入力規則" }, { label: "B", text: "リードの割り当てルール" }, { label: "C", text: "数式項目" }, { label: "D", text: "エスカレーションルール" }], correctAnswer: ["B"], explanation: "初期割り当て（作成時の振り分け）の基本機能です。", category: "割り当て・ルーティング", difficulty: "easy" },
-  { id: 107, question: "App Exchangeアプリを試す際に、管理者が提案すべき2つのオプションは？", options: [{ label: "A", text: "本番テスト" }, { label: "B", text: "サンドボックスにインストール" }, { label: "C", text: "Playground" }, { label: "D", text: "エディション互換性確認" }], correctAnswer: ["B", "D"], explanation: "検証環境の使用と、スペック上の制限の確認が推奨されます。", category: "その他", difficulty: "easy" },
-  { id: 108, question: "努力のレベルに基づいて各メンバーに収益の功績を認めたい。使用する機能は？", options: [{ label: "A", text: "フェーズ" }, { label: "B", text: "商談分割" }, { label: "C", text: "キュー" }, { label: "D", text: "リストビュー" }], correctAnswer: ["B"], explanation: "「Opportunity Splits」により、商談の金額をメンバーで分配できます。", category: "その他", difficulty: "medium" },
-  { id: 109, question: "特定項目がtrueの場合に画面をスキップさせる決定要素の構成は?", options: [{ label: "A", text: "equals 演算子と {!$GlobalConstant.True}" }, { label: "B", text: "equals と項目名" }, { label: "C", text: "contains と {!$GlobalConstant.False}" }, { label: "D", text: "contains と項目名" }], correctAnswer: ["A"], explanation: "論理値（True/False）との完全一致判定を行います。", category: "自動化", difficulty: "medium" },
-  { id: 110, question: "発生元やステータス別でドリルダウンできるダッシュボードにするために追加すべきなのは？", options: [{ label: "A", text: "ダッシュボードフィルター" }, { label: "B", text: "バケット列" }, { label: "C", text: "ダッシュボードコンポーネント" }, { label: "D", text: "組み合わせグラフ" }], correctAnswer: ["A"], explanation: "ダッシュボード全体に適用される動的な検索条件です。", category: "レポート・ダッシュボード", difficulty: "medium" },
-  { id: 111, question: "製品カテゴリー（3種）に基づいて適切なリードソースのみを表示させるには？", options: [{ label: "A", text: "ページレイアウト" }, { label: "B", text: "依存関係作成" }, { label: "C", text: "3カテゴリごとにビジネスプロセスとレコードタイプ作成" }, { label: "D", text: "単一プロセス、3レコードタイプ" }], correctAnswer: ["C"], explanation: "各プロセスに紐付けたレコードタイプで、選択肢を制限します。", category: "レコードタイプ・レイアウト", difficulty: "hard" },
-  { id: 112, question: "Salesforce上で、割り当てられたライセンスと権限セットを追跡する機能はどれですか？", options: [{ label: "A", text: "権限セットグループ" }, { label: "B", text: "ログイン履歴" }, { label: "C", text: "ユーザーレポート" }, { label: "D", text: "Lightning利用状況" }], correctAnswer: ["D"], explanation: "利用状況統計（Lightning Usage App）でこれらを確認できます。", category: "ユーザー・権限", difficulty: "easy" },
-  { id: 113, question: "共有設定変更なしで、全社の商談を表示するダッシュボードを見せるための設定は？", options: [{ label: "A", text: "マネージャーロール" }, { label: "B", text: "所有者フィルタ" }, { label: "C", text: "個別ダッシュボード" }, { label: "D", text: "実行ユーザー設定を高権限者に指定" }], correctAnswer: ["D"], explanation: "閲覧者の権限ではなく、指定したユーザーの権限で集計表示させます。", category: "レポート・ダッシュボード", difficulty: "medium" },
-  { id: 114, question: "新入社員が取引先オブジェクトに全くアクセスできない。考えられる原因は？", options: [{ label: "A", text: "共有ルール" }, { label: "B", text: "プロファイルでのオブジェクトアクセス許可の欠如" }, { label: "C", text: "役割下位" }, { label: "D", text: "OWD非公開" }], correctAnswer: ["B"], explanation: "レコード権限以前に、オブジェクト自体の基本権限が必要です。", category: "ユーザー・権限", difficulty: "easy" },
-  { id: 115, question: "手動作成ケースの所有者が管理者になってしまう。何を調査すべきですか？", options: [{ label: "A", text: "エスカレーションルール" }, { label: "B", text: "「割り当てルール」チェックボックスがデフォルト選択" }, { label: "C", text: "別の割り当て" }, { label: "D", text: "所有者項目の欠落" }], correctAnswer: ["B"], explanation: "作成画面上のチェックがオンだと、手動でもルールが適用されます。", category: "割り当て・ルーティング", difficulty: "medium" },
-  { id: 116, question: "Sandboxに管理パッケージをインストールする際の2つの考慮事項は？", options: [{ label: "A", text: "再作成" }, { label: "B", text: "インストールリンクの変更（test.salesforce.com）" }, { label: "C", text: "管理者のみ" }, { label: "D", text: "Sandbox更新時に削除される" }], correctAnswer: ["B", "D"], explanation: "ログインURLの変更と、Sandboxリフレッシュ時の動作についてです。", category: "その他", difficulty: "medium" },
-  { id: 117, question: "特定の2名に、特定レコードへの読み書きアクセスを自動付与するための要件は？", options: [{ label: "A", text: "共有ルール作成" }, { label: "B", text: "定義済みのケースチームと割り当てルールの併用" }, { label: "C", text: "手動ケースチーム" }, { label: "D", text: "自動応答ルール" }], correctAnswer: ["B"], explanation: "チームを事前定義し、割り当てルールでそのチームをレコードへ紐付けます。", category: "割り当て・ルーティング", difficulty: "medium" },
-  { id: 118, question: "担当者が、ダッシュボード経由で予想以上に広範囲のケースデータを閲覧できている原因は？", options: [{ label: "A", text: "ダッシュボードフィルタ" }, { label: "B", text: "登録機能" }, { label: "C", text: "動的ダッシュボード（実行者の権限）" }, { label: "D", text: "公開ダッシュボード" }], correctAnswer: ["C"], explanation: "実行ユーザーの設定が原因で、閲覧者に本来以上の権限が移っています。", category: "レポート・ダッシュボード", difficulty: "medium" },
-  { id: 119, question: "未解決ケースを週1回カウントしてカウントする自動化プロセスの推奨は？", options: [{ label: "A", text: "アウトバウンドメッセージ" }, { label: "B", text: "プロセスビルダー" }, { label: "C", text: "Flow Builder でスケジュールトリガフローを設定" }, { label: "D", text: "編集時更新プロセス" }], correctAnswer: ["C"], explanation: "時間指定（週1回等）で実行するバッチ処理には、スケジュールフローを使います。", category: "自動化", difficulty: "medium" },
-  { id: 120, question: "読み、作り、編集は必要だが、削除は制限したい。何をすべきですか？", options: [{ label: "A", text: "管理者プロファイル" }, { label: "B", text: "すべて表示" }, { label: "C", text: "削除権限を外したカスタムプロファイルを作成" }, { label: "D", text: "権限セット作成" }], correctAnswer: ["C"], explanation: "削除権限は個別の付与よりも、プロファイルで制限するのが確実です。", category: "ユーザー・権限", difficulty: "medium" },
-  { id: 121, question: "新オブジェクトへのアクセス権を複数ユーザーに付与する2つの手段は?", options: [{ label: "A", text: "権限セット作成" }, { label: "B", text: "手動共有" }, { label: "C", text: "権限セットグループ割り当て" }, { label: "D", text: "OWD編集" }], correctAnswer: ["A", "C"], explanation: "プロファイル以外に、権限を柔軟に拡張するための手段です。", category: "ユーザー・権限", difficulty: "easy" },
-  { id: 122, question: "ユーザーのパスワードをリセットする際に考慮すべき2つの事項は?", options: [{ label: "A", text: "ポリシー変更" }, { label: "B", text: "SSO" }, { label: "C", text: "リセットによりロックアウトが自動解除される" }, { label: "D", text: "ログインにデバイス有効化が必要な場合がある" }], correctAnswer: ["C", "D"], explanation: "リセットに伴うロック解除の動作と、セキュリティ要件についてです。", category: "ユーザー・権限", difficulty: "medium" },
-  { id: 123, question: "データローダを使用して新しいAPI経由で一括インポートするために必要なことは?", options: [{ label: "A", text: "権限セット追加" }, { label: "B", text: "パスワード末尾にセキュリティトークンを追加してログイン" }, { label: "C", text: "カスタム一括" }, { label: "D", text: "PWリセット" }], correctAnswer: ["B"], explanation: "APIアクセスのための基本的なログイン認証手順です。", category: "データ管理", difficulty: "easy" },
-  { id: 124, question: "過去90日間の特定商談項目のみをエクスポートするための最適なツールは?", options: [{ label: "A", text: "エクスポートウィザード" }, { label: "B", text: "インポートウィザード" }, { label: "C", text: "エクスポートサービス" }, { label: "D", text: "データローダ" }], correctAnswer: ["D"], explanation: "条件（SOQL）を指定してデータを自在に抽出できます。", category: "データ管理", difficulty: "easy" },
-  { id: 125, question: "クローズ済み案件の「平均ステージ滞在期間」を知るための最短ルートは？", options: [{ label: "A", text: "プロセスビルダー" }, { label: "B", text: "数式項目追加" }, { label: "C", text: "商談フェーズ期間レポートを実行" }, { label: "D", text: "レポートスナップショット" }], correctAnswer: ["C"], explanation: "標準で滞在日数を集計できるレポートタイプが存在します。", category: "レポート・ダッシュボード", difficulty: "medium" },
-  { id: 126, question: "取引先の「業種」を商談ページ上で参照させるために作成すべき項目は？", options: [{ label: "A", text: "カスタム取引先項目" }, { label: "B", text: "標準項目" }, { label: "C", text: "クロスオブジェクト数式項目" }, { label: "D", text: "主従関係項目" }], correctAnswer: ["C"], explanation: "親レコード（取引先）の値を数式で引っ張って表示させます。", category: "オブジェクト・項目", difficulty: "medium" },
-  { id: 127, question: "システムセキュリティの監査で、脆弱性の概要を特定するために行うべきことは?", options: [{ label: "A", text: "OWD非公開化" }, { label: "B", text: "イベント監視" }, { label: "C", text: "ログインデータDL" }, { label: "D", text: "ヘルスチェック（Health Check）実行" }], correctAnswer: ["D"], explanation: "組織のセキュリティ設定レベルを数値化して特定・改善する機能です。", category: "共有・セキュリティ", difficulty: "easy" },
-  { id: 128, question: "項目が多すぎて雑然とした取引先作成プロセスを簡素化するためのツールは？", options: [{ label: "A", text: "承認プロセス" }, { label: "B", text: "ワークフロールール" }, { label: "C", text: "Flow Builder" }, { label: "D", text: "入力規則" }], correctAnswer: ["C"], explanation: "画面フロー（ウィザード）で、必要な情報を順次入力させるよう構成します。", category: "自動化", difficulty: "easy" },
-  { id: 129, question: "取引先のランク（金銀/プラチナ）に応じて、ケースを異なるキューへ割り当てるには？", options: [{ label: "A", text: "割り当てルール" }, { label: "B", text: "入力規則" }, { label: "C", text: "ワークフロールール" }, { label: "D", text: "エスカレーションルール" }], correctAnswer: ["A"], explanation: "作成時の条件に基づいて、所有者（キュー）を自動決定します。", category: "割り当て・ルーティング", difficulty: "easy" },
-  { id: 130, question: "リードの特定項目を、取引先に変換した後も「定期的に」コピー・同期させるには？", options: [{ label: "A", text: "マッピング設定" }, { label: "B", text: "同じ名前の項目作成" }, { label: "C", text: "入力規則" }, { label: "D", text: "レコードトリガーフローを作成" }], correctAnswer: ["D"], explanation: "変換後のデータ更新を監視してコピーを続けるには、フローが必要です。", category: "データ管理", difficulty: "medium" },
-  { id: 131, question: "ネットワーク外からアクセスできないように構成する際の2つの考慮事項は？", options: [{ label: "A", text: "制限はプロファイルか組織全体で設定" }, { label: "B", text: "U2F制限" }, { label: "C", text: "「すべての要求で制限を適用」設定が必要" }, { label: "D", text: "SSO権限セット" }], correctAnswer: ["A", "C"], explanation: "プロファイルでのIP制限の仕組みと、セッション設定の有効化についてです。", category: "共有・セキュリティ", difficulty: "medium" },
-  { id: 132, question: "同じプロファイル内の2チーム。特定チームに関連リストを制限したい時の手段は？", options: [{ label: "A", text: "共有設定" }, { label: "B", text: "ページレイアウト" }, { label: "C", text: "コンポーネントの表示設定（表示フィルター）" }, { label: "D", text: "レコードタイプ" }], correctAnswer: ["C"], explanation: "Lightningページのコンポ自体に表示条件を付与できます。", category: "レコードタイプ・レイアウト", difficulty: "medium" },
-  { id: 133, question: "経費報告書の提出、ルーティング、承認のガイド付きプロセスを作る2つのツールは？", options: [{ label: "A", text: "入力規則" }, { label: "B", text: "Flow Builder" }, { label: "C", text: "承認プロセス" }, { label: "D", text: "クイックアクション" }], correctAnswer: ["B", "C"], explanation: "画面フロー（ウィザード）と、承認ワークフローの併用です。", category: "自動化", difficulty: "medium" },
-  { id: 134, question: "ユーザーの無効化を妨げる2つの理由は何ですか？", options: [{ label: "A", text: "テリトリー" }, { label: "B", text: "カスタム階層項目での参照" }, { label: "C", text: "メールアラートの受信者に割り当て" }, { label: "D", text: "ロール階層の最上位" }], correctAnswer: ["B", "C"], explanation: "ハード参照（特定の自動化や項目での指定）がある場合は削除・無効化できません。", category: "ユーザー・権限", difficulty: "medium" },
-  { id: 135, question: "本番環境で、レコードを作成するフローが動かない。考えられる問題は？", options: [{ label: "A", text: "読み取り専用" }, { label: "B", text: "フローが非アクティブ" }, { label: "C", text: "URL無効" }, { label: "D", text: "トリガーなし" }], correctAnswer: ["B"], explanation: "フローは作成・保存しただけでは動かず、アクティブ化が必要です。", category: "自動化", difficulty: "easy" },
-  { id: 136, question: "100万ドル超の商談獲得見込み時に通知を受けたい。最適な機能は？", options: [{ label: "A", text: "重要な取引" }, { label: "B", text: "大規模商談アラート" }, { label: "C", text: "活動タイムライン" }, { label: "D", text: "パフォーマンス" }], correctAnswer: ["B"], explanation: "一定の金額と確度の商談を自動的に一斉通知する機能です。", category: "自動化", difficulty: "easy" },
-  { id: 137, question: "3部門×2チーム（計6通りの表示項目）。最適な構成方法は？", options: [{ label: "A", text: "2タイプ3レイアウト" }, { label: "B", text: "1タイプ6レイアウト" }, { label: "C", text: "3レコードタイプ×2ページレイアウト" }, { label: "D", text: "6レコードタイプ×1レイアウト" }], correctAnswer: ["C"], explanation: "部門でレコードタイプ、チーム（役割）でレイアウトを割り当てます。", category: "レコードタイプ・レイアウト", difficulty: "hard" },
-  { id: 138, question: "重要項目見逃し防止、逆行防止を実現する3オプションは？", options: [{ label: "A", text: "ガイダンス付きパス" }, { label: "B", text: "入力規則" }, { label: "C", text: "商談パス" }, { label: "D", text: "フロー必須" }, { label: "E", text: "レイアウト必須" }], correctAnswer: ["A", "B", "C"], explanation: "パスによるプロセスの可視化と、入力規則による論理チェックです。", category: "レコードタイプ・レイアウト", difficulty: "medium" },
-  { id: 139, question: "カスタム項目を削除した際、データはどうなりますか？", options: [{ label: "A", text: "20日間保存" }, { label: "B", text: "完全に削除" }, { label: "C", text: "必須" }, { label: "D", text: "15日間ごみ箱から復元できる" }], correctAnswer: ["D"], explanation: "15日間はシステム内に保持され、復元が可能です。", category: "オブジェクト・項目", difficulty: "easy" },
-  { id: 140, question: "CEO役職の責任者作成時に、取引先を自動更新させるためのツールは？", options: [{ label: "A", text: "Flow Builder" }, { label: "B", text: "ワークフロールール" }, { label: "C", text: "プロセスビルダー" }, { label: "D", text: "入力規則" }], correctAnswer: ["A"], explanation: "現在は、レコード連動の自動更新にはFlowが推奨されます。", category: "自動化", difficulty: "easy" },
-  { id: 141, question: "キャンペーン履歴を保持しつつ、リードを変換する際の手順は？", options: [{ label: "A", text: "削除と新規" }, { label: "B", text: "リード複製" }, { label: "C", text: "キャンペーンメンバー詳細ページからリードを変換" }, { label: "D", text: "責任者追加" }], correctAnswer: ["C"], explanation: "正しい関連から変換を行うことで、キャンペーン履歴を引き継げます。", category: "キャンペーン・マーケティング", difficulty: "medium" },
-  { id: 142, question: "既存リードとインターンが追加した新リードを識別する方法は？", options: [{ label: "A", text: "Lightningアプリ" }, { label: "B", text: "レコードタイプを定義し割り当てる" }, { label: "C", text: "Web-to-Lead" }, { label: "D", text: "割り当てルール" }], correctAnswer: ["B"], explanation: "レコードタイプで属性を分けることで、容易にフィルタリングできます。", category: "レコードタイプ・レイアウト", difficulty: "easy" },
-  { id: 143, question: "「適格」ステータス移行時に、予算項目の入力を強制するためのツールは？", options: [{ label: "A", text: "コンバージョン" }, { label: "B", text: "必須項目" }, { label: "C", text: "ワークフロールール" }, { label: "D", text: "入力規則" }], correctAnswer: ["D"], explanation: "特定の状態変化に応じた入力制約（条件付き必須化）は入力規則です。", category: "データ管理", difficulty: "medium" },
-  { id: 144, question: "ケースページを、役割に応じた動的なものにするための手段は？", options: [{ label: "A", text: "コンポーネントの可視性フィルタ（表示フィルター）" }, { label: "B", text: "詳細削除" }, { label: "C", text: "余分コンポ削除" }, { label: "D", text: "タブコンポ" }], correctAnswer: ["A"], explanation: "閲覧者の役割やレコード値に応じたコンポの出し分けです。", category: "レコードタイプ・レイアウト", difficulty: "medium" },
-  { id: 145, question: "条件を満たすレコードを検索し、値を変数に保存して後で使用する要素は？", options: [{ label: "A", text: "割り当て" }, { label: "B", text: "レコードを取得（Get Records）" }, { label: "C", text: "レコードを作成" }, { label: "D", text: "レコードを更新" }], correctAnswer: ["B"], explanation: "フロー内でデータベースから情報を引き抜くアクションです。", category: "自動化", difficulty: "medium" },
-  { id: 146, question: "Salesforceへの不正アクセスを防ぐために管理者がすべきことは?", options: [{ label: "A", text: "TLS無効化" }, { label: "B", text: "多要素認証（MFA）を有効化" }, { label: "C", text: "OWDカスタム" }, { label: "D", text: "キャッシュ有効" }], correctAnswer: ["B"], explanation: "ログイン時の本人確認を強化する、現在の標準セキュリティ要件です。", category: "共有・セキュリティ", difficulty: "easy" },
-  { id: 147, question: "「顧客」と「パートナー」でページレイアウトを使い分ける構成案は?", options: [{ label: "A", text: "共有ルール" }, { label: "B", text: "取引先チーム" }, { label: "C", text: "プロファイルアクセス権" }, { label: "D", text: "顧客用とパートナー用にそれぞれレコードタイプを作成" }], correctAnswer: ["D"], explanation: "レコードタイプごとにレイアウトを割り当てて管理します。", category: "レコードタイプ・レイアウト", difficulty: "medium" },
-  { id: 148, question: "詳細、関連リスト、Chatterを「別々のタブ」に表示するページ種別は？", options: [{ label: "A", text: "アプリケーションページ" }, { label: "B", text: "Lightningページタブ" }, { label: "C", text: "Lightningレコードページ" }, { label: "D", text: "ページコンポーネント" }], correctAnswer: ["C"], explanation: "レコード画面の構成を「タブ」コンポーネントで定義したページです。", category: "レコードタイプ・レイアウト", difficulty: "medium" },
-  { id: 149, question: "送信メッセージを自動化するために利用すべきツールは?", options: [{ label: "A", text: "プロセスビルダー" }, { label: "B", text: "タスクの割り当て" }, { label: "C", text: "ワークフロールール" }, { label: "D", text: "Flow Builder" }], correctAnswer: ["D"], explanation: "自動化ロジック（Outbound Message等）はFlowで構築します。", category: "自動化", difficulty: "easy" },
-  { id: 150, question: "セールスフェーズ設定フローでカスタマイズできる2つのオブジェクトは？", options: [{ label: "A", text: "リード" }, { label: "B", text: "キャンペーン" }, { label: "C", text: "商談" }, { label: "D", text: "キャンペーンメンバー" }], correctAnswer: ["A", "C"], explanation: "商談化までのプロセスの主要な対象です。", category: "レコードタイプ・レイアウト", difficulty: "easy" },
-  { id: 151, question: "ツールボックスに「割り当て・決定・取得・ループ」の4要素のみ表示される原因は？", options: [{ label: "A", text: "画面フロー" }, { label: "B", text: "非アクティブ" }, { label: "C", text: "フローが保存前更新フロー（高速項目更新）" }, { label: "D", text: "アクティブ" }], correctAnswer: ["C"], explanation: "Before-saveトリガーには、サポートされる要素に制限があります。", category: "自動化", difficulty: "medium" },
-  { id: 152, question: "サポートのユースケースで使用できる標準オブジェクト3つは？", options: [{ label: "A", text: "契約" }, { label: "B", text: "ケース" }, { label: "C", text: "チケット" }, { label: "D", text: "リクエスト" }, { label: "E", text: "取引先" }], correctAnswer: ["A", "B", "E"], explanation: "契約・ケース・取引先は、標準でサービス連携が可能です。", category: "オブジェクト・項目", difficulty: "easy" },
-  { id: 153, question: "「ウィザード」形式（失った理由等を入力する画面）を構築するのに最適なツールは？", options: [{ label: "A", text: "プロセスビルダー" }, { label: "B", text: "承認プロセス" }, { label: "C", text: "アウトバウンド" }, { label: "D", text: "Flow Builder" }], correctAnswer: ["D"], explanation: "対話形式のフロー（画面フロー）での構築が最適です。", category: "自動化", difficulty: "easy" },
-  { id: 154, question: "90日以内完了案件を「すばやく表示・編集（ドラッグ可）」するための推奨策は？", options: [{ label: "A", text: "カスタムレポート" }, { label: "B", text: "セールスコンソール" }, { label: "C", text: "リストビューを作成し、表示を「かんばん」に切り替える" }, { label: "D", text: "営業ダッシュボード" }], correctAnswer: ["C"], explanation: "かんばんビューなら、条件合致したものを手軽にフェーズ更新できます。", category: "レコードタイプ・レイアウト", difficulty: "medium" },
-  { id: 155, question: "削除したカスタム項目の「削除を取り消す（復元）」際の考慮事項は？", options: [{ label: "A", text: "レポート再追加" }, { label: "B", text: "履歴削除" }, { label: "C", text: "ごみ箱から復元が必要" }, { label: "D", text: "ページレイアウト再追加" }], correctAnswer: ["C"], explanation: "削除後一定期間はごみ箱に保管されており、そこから戻せます。", category: "オブジェクト・項目", difficulty: "easy" },
-  { id: 156, question: "関連するすべての子レコードを親レコードに表示・強制させたいリレーションは?", options: [{ label: "A", text: "積み上げ集計項目" }, { label: "B", text: "数式項目" }, { label: "C", text: "主従関係" }, { label: "D", text: "参照関係" }], correctAnswer: ["C"], explanation: "親が見えれば子が見える、強固なリレーションです。", category: "オブジェクト・項目", difficulty: "medium" },
-  { id: 157, question: "営業担当者が「優先順位を付けて」商談を管理するのを支援するEinstein設定は？", options: [{ label: "A", text: "活動キャプチャ" }, { label: "B", text: "Einstein 商談スコアリング" }, { label: "C", text: "検索パーソナライズ" }, { label: "D", text: "リードスコアリング" }], correctAnswer: ["B"], explanation: "成約可能性を数値化し、注力すべき商談を提示します。", category: "その他", difficulty: "easy" },
-  { id: 158, question: "「自動採番」から「テキスト項目」に変更する前の注意点は?", options: [{ label: "A", text: "既存の項目値は変更されない" }, { label: "B", text: "変換される" }, { label: "C", text: "削除される" }, { label: "D", text: "変更不可" }], correctAnswer: ["A"], explanation: "型変更後も、それまで採番された値はそのまま残ります。", category: "オブジェクト・項目", difficulty: "medium" },
-  { id: 159, question: "画面フローをテストするための2つの重要なコンポーネントは？", options: [{ label: "A", text: "インタビュー設定" }, { label: "B", text: "レコード作成実行" }, { label: "C", text: "フロービルダーの「デバッグ」機能" }, { label: "D", text: "サンドボックスでのテスト" }], correctAnswer: ["C", "D"], explanation: "ビルダー上での擬似実行（デバッグ）と、安全な検証環境の使用です。", category: "自動化", difficulty: "easy" },
-  { id: 160, question: "ユーザーがログインできない原因（パスワード間違い等）を特定するためにすべきことは?", options: [{ label: "A", text: "ユーザーの「ログイン履歴」を確認" }, { label: "B", text: "監査証跡" }, { label: "C", text: "パスワード履歴" }, { label: "D", text: "トークンリセット" }], correctAnswer: ["A"], explanation: "ログイン失敗の具体的な理由がログに記録されます。", category: "ユーザー・権限", difficulty: "easy" },
-  { id: 161, question: "特定条件でのメッセージ太字表示と、親の「業種」のすばやい更新を叶える2コンポは？", options: [{ label: "A", text: "関連リスト" }, { label: "B", text: "関連レコード" }, { label: "C", text: "レコード詳細" }, { label: "D", text: "リッチテキスト" }], correctAnswer: ["B", "D"], explanation: "「関連レコード」で親（取引先）を編集し、「リッチテキスト」で強調表示します。", category: "レコードタイプ・レイアウト", difficulty: "medium" },
-  { id: 162, question: "ロックアウトされた人を助ける（ログインさせる）ための2つの操作は？", options: [{ label: "A", text: "代理ログイン" }, { label: "B", text: "ポリシーリセット" }, { label: "C", text: "レコード詳細でのパスワードをリセット" }, { label: "D", text: "レコード詳細での「ロック解除」ボタン" }], correctAnswer: ["C", "D"], explanation: "管理者による強制的なロック解除または再設定です。", category: "ユーザー・権限", difficulty: "easy" },
-  { id: 163, question: "退職者分のライセンスを解放し、新しいユーザーに割り当てるための操作は？", options: [{ label: "A", text: "元従業員のユーザーレコードを「無効」にする" }, { label: "B", text: "削除" }, { label: "C", text: "凍結" }, { label: "D", text: "レコード変更" }], correctAnswer: ["A"], explanation: "ユーザーは削除できないため、無効化により枠を空けます。", category: "ユーザー・権限", difficulty: "easy" },
-  { id: 164, question: "組織へのブランド設定（テーマ）追加における考慮事項は？（2つ）", options: [{ label: "A", text: "アクティブにできるのは常に1つのみ" }, { label: "B", text: "Classic/モバイル適用" }, { label: "C", text: "最大150個" }, { label: "D", text: "Chatter外部ユーザーには組み込みテーマのみ表示" }], correctAnswer: ["A", "D"], explanation: "一度に有効化できる数と、外部公開用テーマの制約についてです。", category: "その他", difficulty: "medium" },
-  { id: 165, question: "「外部システム」からレコードをインポート/更新する際に識別子として使う項目は？", options: [{ label: "A", text: "リッチテキスト" }, { label: "B", text: "レコードID" }, { label: "C", text: "自動採番" }, { label: "D", text: "外部ID（External ID）" }], correctAnswer: ["D"], explanation: "外部のキーとSalesforceを紐付けるための専用項目です。", category: "データ管理", difficulty: "easy" },
-  { id: 166, question: "主従関係から参照関係への変更を「妨げる」シナリオはどれですか？", options: [{ label: "A", text: "連結オブジェクト" }, { label: "B", text: "ルックアップ値あり" }, { label: "C", text: "参照必須" }, { label: "D", text: "主（親）オブジェクトの積み上げ集計項目" }], correctAnswer: ["D"], explanation: "積み上げ項目は主従に依存するため、先に削除が必要です。", category: "オブジェクト・項目", difficulty: "medium" },
-  { id: 167, question: "取引先ページで、ケース関連リストの表示列（作成日等）をカスタマイズする2つの設定は？", options: [{ label: "A", text: "ページレイアウトで「拡張リスト」に変更" }, { label: "B", text: "関連リストを選択" }, { label: "C", text: "拡張リストを選択" }, { label: "D", text: "ページレイアウトエディタで列を含める" }], correctAnswer: ["A", "D"], explanation: "レイアウト上の関連リスト設定で、表示項目と形式を調整します。", category: "レコードタイプ・レイアウト", difficulty: "medium" },
-  { id: 168, question: "「ステータス変更時に今日の日付で自動更新」を実現するツールは？", options: [{ label: "A", text: "承認プロセス" }, { label: "B", text: "数式項目" }, { label: "C", text: "Flow Builder" }, { label: "D", text: "入力規則" }], correctAnswer: ["C"], explanation: "項目値を動的に自動更新（Update Records）するのはFlowです。", category: "自動化", difficulty: "easy" },
-  { id: 169, question: "マーケティングチームがキャンペーンメンバーのステータスを自分達で追加するために必要な権限2つは?", options: [{ label: "A", text: "作成と編集" }, { label: "B", text: "マーケティングユーザー機能ライセンス" }, { label: "C", text: "アプリのアクセス許可カスタマイズ" }, { label: "D", text: "キャンペーンの「編集」権限" }], correctAnswer: ["B", "D"], explanation: "機能ライセンスと、親（キャンペーン）を触る権限が必要です。", category: "キャンペーン・マーケティング", difficulty: "medium" },
-  { id: 170, question: "レポートで、契約金額に応じて「小・中・大」と分類するための機能は？", options: [{ label: "A", text: "詳細列" }, { label: "B", text: "バケット列（Bucket Column）" }, { label: "C", text: "グループ化" }, { label: "D", text: "フィルタロジック" }], correctAnswer: ["B"], explanation: "数値を任意の範囲で「バケツ（分類）」分けする機能です。", category: "レポート・ダッシュボード", difficulty: "medium" },
-  { id: 171, question: "複数オブジェクト（取引先/ケース）で一貫した「値」を使うための構成要素は？（2つ）", options: [{ label: "A", text: "複数選択" }, { label: "B", text: "連動" }, { label: "C", text: "グローバル選択リスト" }, { label: "D", text: "カスタム選択リスト" }], correctAnswer: ["C", "D"], explanation: "グローバル値セットを利用したカスタム項目の実装です。", category: "オブジェクト・項目", difficulty: "medium" },
-  { id: 172, question: "UI経由でログインするときにシステムがチェックする2つの設定はどれですか？", options: [{ label: "A", text: "APIログインMFA" }, { label: "B", text: "ロールのIP制限" }, { label: "C", text: "ユーザープロファイルのログイン時間の制限" }, { label: "D", text: "ユーザーインターフェイスログインに対する2要素認証（MFA）" }], correctAnswer: ["C", "D"], explanation: "プロファイルの時間制約と、現在のログイン必須要件（MFA）です。", category: "共有・セキュリティ", difficulty: "medium" },
-  { id: 173, question: "予算も時間もないが、ダッシュボードを間に合わせるための最良の手段は？", options: [{ label: "A", text: "トレーニング" }, { label: "B", text: "AppExchange で、ビルド済みのソリューションを確認" }, { label: "C", text: "コンサル雇う" }, { label: "D", text: "手動構築" }], correctAnswer: ["B"], explanation: "既存パッケージを導入して、カスタマイズする時間を省きます。", category: "その他", difficulty: "easy" },
-  { id: 174, question: "一貫性を持たせ、カテゴリーに応じて適切なメッセージを自動返信するための推奨策は?", options: [{ label: "A", text: "クイックテキスト" }, { label: "B", text: "テンプレート" }, { label: "C", text: "フローテンプレート" }, { label: "D", text: "事前構築済みの自動レスポンスルール" }], correctAnswer: ["D"], explanation: "チャネル（メール/Web）からのケースに条件付きで自動返信します。", category: "自動化", difficulty: "medium" },
-  { id: 175, question: "管理者がカスタマイズ「できる」標準項目はどれですか？（3つ）", options: [{ label: "A", text: "選択リスト項目の値" }, { label: "B", text: "ヘルプテキスト" }, { label: "C", text: "項目履歴の追跡" }, { label: "D", text: "小数桁" }, { label: "E", text: "項目名" }], correctAnswer: ["A", "B", "C"], explanation: "値の追加、文言修正、履歴保持の設定は標準項目でも可能です。", category: "オブジェクト・項目", difficulty: "medium" },
-  { id: 176, question: "型をテキストから選択リストに変更する際のデータ損失考慮事項2つは？", options: [{ label: "A", text: "グローバルは安全" }, { label: "B", text: "割り当て/エスカレーションルールへの影響" }, { label: "C", text: "Visualforce自動更新" }, { label: "D", text: "その項目に基づくリストビューの削除" }], correctAnswer: ["B", "D"], explanation: "依存している機能（ルールやビュー）が動作しなくなるリスクです。", category: "オブジェクト・項目", difficulty: "medium" },
-  { id: 177, question: "商談の種類によって、選択リストの「選択肢」自体を変えるには?", options: [{ label: "A", text: "項目と関係" }, { label: "B", text: "ルックアップフィルタ" }, { label: "C", text: "レコードタイプ" }, { label: "D", text: "グローバル値セット" }], correctAnswer: ["C"], explanation: "レコードタイプごとに使用する選択肢を指定します。", category: "レコードタイプ・レイアウト", difficulty: "easy" },
-  { id: 178, question: "保留中のアクションがある中で、レコードが条件を満たさなくなった場合はどうなる？", options: [{ label: "A", text: "保留中のChatter投稿はキャンセルされる" }, { label: "B", text: "10日に送信" }, { label: "C", text: "一時停止" }, { label: "D", text: "30日後送信" }], correctAnswer: ["A"], explanation: "タイムトリガーは、実行時点で条件を満たしていないと破棄されます。", category: "自動化", difficulty: "medium" },
-  { id: 179, question: "変換されたリードを編集するためにアクセスする2つの方法は?", options: [{ label: "A", text: "グローバル検索" }, { label: "B", text: "「関連レコード」コンポーネント" }, { label: "C", text: "ステータス「変換済み」のリストビュー" }, { label: "D", text: "インポートウィザード" }], correctAnswer: ["B", "C"], explanation: "適切な表示設定を行えば、変換後のリードも参照・編集可能です。", category: "データ管理", difficulty: "medium" },
-  { id: 180, question: "商談終了（クローズ）時に自動更新する処理を作るツールは？", options: [{ label: "A", text: "承認プロセス" }, { label: "B", text: "Flow Builder" }, { label: "C", text: "ワークフロールール" }, { label: "D", text: "プロセスビルダー" }], correctAnswer: ["B"], explanation: "終了をトリガーとした後続処理はFlowで行います。", category: "自動化", difficulty: "easy" },
-  { id: 181, question: "特定タイプの商談を専門家チームに自動共有するための設定は？", options: [{ label: "A", text: "対象分野の専門家を公開グループに追加し、「条件に基づく共有ルール」を使用" }, { label: "B", text: "OWD公開化" }, { label: "C", text: "テリトリー管理" }, { label: "D", text: "レコード所有者共有" }], correctAnswer: ["A"], explanation: "「商談種別=クロスセル」等の条件に基づく共有ルールです。", category: "共有・セキュリティ", difficulty: "medium" },
-  { id: 182, question: "レコードをチームで共有し、共同作業するためのChatter構成上の2つの考慮事項は？", options: [{ label: "A", text: "自動作成" }, { label: "B", text: "「グループ」関連リストをレイアウトに含める必要" }, { label: "C", text: "パブリッシャーに「レコードの追加」アクションが必要" }, { label: "D", text: "管理者によるグループ作成" }], correctAnswer: ["B", "C"], explanation: "UI（関連リスト）の配置と、パブリッシャーへの機能追加が必要です。", category: "その他", difficulty: "medium" },
-  { id: 183, question: "「設置日」に基づき、1年後の「保証有効期限」を自動表示させるには？", options: [{ label: "A", text: "保証有効期限項目のデフォルト値として数式を使用" }, { label: "B", text: "1年表示数式項目" }, { label: "C", text: "入力規則" }, { label: "D", text: "モバイルレイアウト" }], correctAnswer: ["A"], explanation: "日付計算を行い、初期値として表示させる数式です。", category: "オブジェクト・項目", difficulty: "medium" },
-  { id: 184, question: "親は見えるが、子へのアクセスが制限されている1対多の関係を作るには?", options: [{ label: "A", text: "積み上げ" }, { label: "B", text: "主従関係項目" }, { label: "C", text: "クロス数式" }, { label: "D", text: "参照関係項目" }], correctAnswer: ["D"], explanation: "参照関係は権限が親に依存せず独立（疎結合）しています。", category: "オブジェクト・項目", difficulty: "medium" },
-  { id: 185, question: "パス（Path）構成において正しい考慮事項はどれですか？", options: [{ label: "A", text: "手動構成" }, { label: "B", text: "所有者パネル編集" }, { label: "C", text: "お祝い不可" }, { label: "D", text: "パスには各フェーズに「ガイダンス」と「重要な項目」を含められる" }], correctAnswer: ["D"], explanation: "フェーズごとに、成功のためのアドバイスや必須項目を提示できます。", category: "レコードタイプ・レイアウト", difficulty: "easy" },
-  { id: 186, question: "今後数四半期の売上を予測可能にするために構成すべき2つは？", options: [{ label: "A", text: "見積もり" }, { label: "B", text: "リストビュー" }, { label: "C", text: "売上予測（Forecast）" }, { label: "D", text: "商談ステージ" }], correctAnswer: ["C", "D"], explanation: "Forecast機能の有効化と、ステージ（確度）との紐付けです。", category: "レポート・ダッシュボード", difficulty: "medium" },
-  { id: 187, question: "「紹介日」が更新された時、親の「紹介」レコードも更新するためのツールは？", options: [{ label: "A", text: "LWC" }, { label: "B", text: "承認" }, { label: "C", text: "ワークフロー" }, { label: "D", text: "Flow Builder" }], correctAnswer: ["D"], explanation: "連動したレコード更新はFlowの得意分野です。", category: "自動化", difficulty: "easy" },
-  { id: 188, question: "24時間経過したケースを、次の層のキューへ自動で再割り当てする機能は？", options: [{ label: "A", text: "ケース ルーティング" }, { label: "B", text: "自動応答" }, { label: "C", text: "ケース割り当てルール" }, { label: "D", text: "ケースエスカレーションルール" }], correctAnswer: ["D"], explanation: "時間ベースのルール発動により、再割り当てを行います。", category: "割り当て・ルーティング", difficulty: "easy" },
-  { id: 189, question: "特定の値に基づいて「レコードを削除」する自動化ソリューションは？", options: [{ label: "A", text: "ワークフロー" }, { label: "B", text: "プロセスビルダー" }, { label: "C", text: "Flow Builder" }, { label: "D", text: "オートメーションスタジオ" }], correctAnswer: ["C"], explanation: "削除アクションを標準でサポートしている自動化ツールです。", category: "自動化", difficulty: "easy" },
-  { id: 190, question: "階層項目に属するユーザーのアクセスを「直ちに」削除するためにすべきことは?", options: [{ label: "A", text: "ユーザーを「凍結」し、参照を外す" }, { label: "B", text: "無効化とレコード削除" }, { label: "C", text: "読み取り専用プロファイル" }, { label: "D", text: "ユーザー削除" }], correctAnswer: ["A"], explanation: "参照があるため即時の無効化ができない場合、凍結が最速です。", category: "ユーザー・権限", difficulty: "medium" },
-  { id: 191, question: "他者の投稿を制限し、管理者だけが最新情報を投稿できるChatterグループは？", options: [{ label: "A", text: "ストリーム" }, { label: "B", text: "Chatter ブロードキャストグループ" }, { label: "C", text: "おすすめ" }, { label: "D", text: "非公開" }], correctAnswer: ["B"], explanation: "一斉周知（アナウンス）専用のグループ形式です。", category: "その他", difficulty: "medium" },
-  { id: 192, question: "商談の段階に基づいて重要な価値（項目）を出すツールは？", options: [{ label: "A", text: "動的フォーム" }, { label: "B", text: "パスの重要な項目" }, { label: "C", text: "商談プロセス" }, { label: "D", text: "ワークフロールール" }], correctAnswer: ["B"], explanation: "パス（Path）コンポーネントの提供機能です。", category: "レコードタイプ・レイアウト", difficulty: "easy" },
-  { id: 193, question: "作成した画面フローを表示（呼び出し可能）にする2つの方法は？", options: [{ label: "A", text: "タブ" }, { label: "B", text: "フロー要素を使用してレコードページに追加" }, { label: "C", text: "コンソールのユーティリティバーにフローを追加" }, { label: "D", text: "AppExchange" }], correctAnswer: ["B", "C"], explanation: "ページ上への配置、または全画面から使えるバーへの配置です。", category: "自動化", difficulty: "medium" },
-  { id: 194, question: "同じ上司を持つ2つの営業チーム間で、レコードを共有するための設定は？", options: [{ label: "A", text: "階層共有" }, { label: "B", text: "手動共有" }, { label: "C", text: "条件共有" }, { label: "D", text: "「レコード所有者に基づく」共有ルール" }], correctAnswer: ["D"], explanation: "所有チーム単位でのデータのやり取りを定義するルールです。", category: "共有・セキュリティ", difficulty: "medium" },
-  { id: 195, question: "コンソール以外でケースレコードにナレッジアクセス機能を追加するには？", options: [{ label: "A", text: "ナレッジ コンポーネントをページ レイアウトに追加" }, { label: "B", text: "コンポリスト追加" }, { label: "C", text: "関連リスト追加" }, { label: "D", text: "関連リストレコードページ" }], correctAnswer: ["A"], explanation: "レコードページ上に「ナレッジ」検索パーツを配置します。", category: "レコードタイプ・レイアウト", difficulty: "easy" },
-  { id: 196, question: "ユーザーに「繰り返しToDo」を追加可能にする2つのソリューションは？", options: [{ label: "A", text: "活動設定でTodoの繰り返し作成を有効にする" }, { label: "B", text: "アクティビティ無効" }, { label: "C", text: "レイアウトに「一連のToDoの繰り返し作成」項目を追加" }, { label: "D", text: "タスク通知オン" }], correctAnswer: ["A", "C"], explanation: "機能自体の有効化と、UI（レイアウト）への表示設定です。", category: "自動化", difficulty: "medium" },
-  { id: 197, question: "データエクスポートサービスでスケジュールする際の2つの考慮事項は？", options: [{ label: "A", text: "Sandbox間隔" }, { label: "B", text: "エクスポート間隔（毎週または毎月）の制限" }, { label: "C", text: "Sandbox実行" }, { label: "D", text: "メタデータバックアップは別のプロセスが必要" }], correctAnswer: ["B", "D"], explanation: "標準機能でのデータ取得頻度と、対象（データのみ）の制約です。", category: "データ管理", difficulty: "medium" },
-  { id: 198, question: "6つのチーム。常に同じメンバー。取引先と簡単にコラボレーションするための構成は？", options: [{ label: "A", text: "商談分割" }, { label: "B", text: "取引先チームを有効化し、デフォルトの取引先チームを設定" }, { label: "C", text: "キュー作成" }, { label: "D", text: "手動共有" }], correctAnswer: ["B"], explanation: "「Account Teams」を活用して役割とアクセス権を固定化します。", category: "共有・セキュリティ", difficulty: "medium" },
-  { id: 199, question: "製品の出荷追跡で、緯度経度の「座標」を取得するために使う項目タイプは？", options: [{ label: "A", text: "地理位置情報" }, { label: "B", text: "ジオフェンス" }, { label: "C", text: "カスタムアドレス" }, { label: "D", text: "外部参照" }], correctAnswer: ["A"], explanation: "位置情報を扱うための専用のデータ型です。", category: "オブジェクト・項目", difficulty: "easy" },
-  { id: 200, question: "誤ってインポートしたレコードを元に戻す（削除する）ための2つのツールは？", options: [{ label: "A", text: "データエクスポート" }, { label: "B", text: "レコードの一括削除" }, { label: "C", text: "データローダ" }, { label: "D", text: "データインポートウィザード" }], correctAnswer: ["B", "C"], explanation: "レコードの削除アクションを実行できる標準・外部ツールです。", category: "データ管理", difficulty: "easy" }
+  {
+    id: 1,
+    question: "新しい見込み客は、見込み客の住所に基づいて正しい営業担当者にルーティングする必要があります。管理者はこの要件をどのように構成する必要がありますか？",
+    options: [
+      { label: "A", text: "数式項目を作成する。" },
+      { label: "B", text: "リードの割り当てルールを使用する。" },
+      { label: "C", text: "エスカレーションルールを割り当てる。" },
+      { label: "D", text: "入力規則を構成する。" }
+    ],
+    correctAnswer: ["B"],
+    explanation: "B.リードの割り当てルールを使用する。\n数式項目・入力規則ではルーティングができません。Salesforce試験において、エスカレーションルールと割り当てルールの違いは以下となっておりますので、時間経過で割り当てるのか、作成時に自動で割り当てるのかで判断するとよいかと思います。\n\n■エスカレーションルール : レコード作成後XX時間後に起動し、別のユーザーやキューに再割り当てする。\n■割り当てルール : レコード作成時の項目値をもとに所有者を変更する。\n\n本設問では、作成時に割り当てるため、Bが正解です。",
+    category: "割り当て・ルーティング"
+  },
+  {
+    id: 2,
+    question: "Universal Containers では、商談が成立した場合、同じ取引先の他のすべての進行中の商談を不成立としてマークする必要があります。管理者は、この要件を実装するためにどの自動化ソリューションを使用すべきですか？",
+    options: [
+      { label: "A", text: "クイックアクション" },
+      { label: "B", text: "ワークフロールール" },
+      { label: "C", text: "Flow Builder" },
+      { label: "D", text: "アウトバウンドメッセージ" }
+    ],
+    correctAnswer: ["C"],
+    explanation: "C. Flow Builder\nクイックアクション・アウトバウンドメッセージでは、要件を満たす設定はできません。ワークフロールール及び、プロセスビルダーは、2024年3月にサポートの廃止が決定しました。上記2つの自動化ソリューションは、Flow Builderに移行することをお勧めされているため、Salesforce試験においても、項目更新等の自動化処理はFlow Builderを選択しましょう。従って、Cが正解です。ワークフロールール&プロセスビルダーのサポート廃止",
+    category: "自動化"
+  },
+  {
+    id: 3,
+    question: "Northern Trail Outfitters は、商談の主要なステークホルダーである取引先責任者のROI(投資収益率)を追跡したいと考えています。営業担当副社長は、この情報を商談でアクセスでき、レポート作成に利用できるようにしたいと考えています。これらの要件を満たすために、管理者はどのオプションを構成すべきですか？ 2つ選んでください。",
+    options: [
+      { label: "A", text: "キャンペーンメンバーのロールをカスタマイズします。" },
+      { label: "B", text: "[キャンペーンメンバー] 関連リストを商談ページ レイアウトに追加します。" },
+      { label: "C", text: "キャンペーンの役割をカスタマイズします。" },
+      { label: "D", text: "商談の取引先責任者のロールをカスタマイズします。" },
+      { label: "E", text: "商談の取引先責任者のロール関連リストを商談ページ レイアウトに追加します。" }
+    ],
+    correctAnswer: ["D", "E"],
+    explanation: "D. 商談の取引先責任者の役割をカスタマイズします。\nE. 商談の取引先責任者の役割関連リストを商談ページ レイアウトに追加します。\n「キャンペーン・キャンペーンメンバーの役割」をカスタマイズするといった操作はありませんので、A,Cは不正解です。商談に「取引先責任者のロール関連リスト」を表示し、取引先責任者のロールを作成・特定のステークホルダーに関連付けることで、問題文の要件を満たすことができるため、D,Eが正解です。取引先責任者を商談に関連付ける",
+    category: "オブジェクト・項目"
+  },
+  {
+    id: 4,
+    question: "Ursa Major Solarは、どのマーケティング活動がチームの商談獲得に役立っているかを知りたがっています。これらの情報を提供するために、管理者は何を設定する必要がありますか？",
+    options: [
+      { label: "A", text: "キャンペーン階層" },
+      { label: "B", text: "キャンペーンインフルエンス" },
+      { label: "C", text: "カスタムリード項目のマッピング" },
+      { label: "D", text: "リストメール" }
+    ],
+    correctAnswer: ["B"],
+    explanation: "B. キャンペーンインフルエンス\n各キャンペーン(マーケティング活動)の影響度を分析できる、キャンペーンインフルエンスが正解です。キャンペーン階層は、各キャンペーンを階層構造で管理するための機能ですが、各マーケティング活動の影響度を分析するための機能ではないため、不正解です。リストメールは、対象者に一括でメールを送信できますが、本問題文の趣旨とは異なるため、不正解です。カスタムリード項目のマッピングも本問題文の趣旨とは異なるため、不正解です。",
+    category: "キャンペーン・マーケティング"
+  },
+  {
+    id: 5,
+    question: "DreamHouse Realty では、将来のショーが多すぎないように、今年中にハウスショーをスケジュールする必要があります。「表示日」に今年の日付しか入力できないようにするには、どうすればよいでしょうか？",
+    options: [
+      { label: "A", text: "ユーザーの表示カレンダーをSalesforceに同期し、今年だけを表示するようにフィルターします。" },
+      { label: "B", text: "現在の年に予定されていない上映日を最新のものに表示するレポートを作成します。" },
+      { label: "C", text: "ヘルプテキストを追加して、現在の年内の上映日のみを追加するようにします。" },
+      { label: "D", text: "現在の年内の日付が表示日付に含まれていることを確認する入力規則を作成します。" }
+    ],
+    correctAnswer: ["D"],
+    explanation: "D. 現在の年内の日付が表示日付に含まれていることを確認する入力規則を作成します。\n入力規則は、管理者がデータ入力やインポート操作の基準を定義し、その基準を満たさない場合にエラーメッセージを表示する機能です。入力規則は、本問題の要件と合致するため、Dが正解です。その他の選択肢では、要件を満たすことができないため、不正解となります。",
+    category: "データ管理"
+  },
+  {
+    id: 6,
+    question: "Aw Computingは、商談が失われクローズされた時、リッチテキスト項目で損失の理由を確認する必要があります。管理者はこの要件をどのように構成する必要がありますか？",
+    options: [
+      { label: "A", text: "ページレイアウトの損失の理由項目の横にある要件チェックボックスを選択します。" },
+      { label: "B", text: "フェーズがクローズされた時、損失の理由が空白の場合にエラーを表示する入力規則を作成します。" },
+      { label: "C", text: "オブジェクトマネージャの損失の理由項目で必須のチェックボックスをオンにします。" },
+      { label: "D", text: "損失の理由項目が空白の場合に、エラーを表示するようワークフロールールを構成する。" }
+    ],
+    correctAnswer: ["B"],
+    explanation: "B. フェーズがクローズされた時、損失の理由が空白の場合にエラーを表示する入力規則を作成します。\n問題文の要件は、「クローズされた時のみ「損失の理由」項目を、空白の状態で保存できないようにする」ですので、Bが正解です。C,Dは上記の条件以外でも動作しまうため、不正解です。Aは要件に合致しないため、不正解です。",
+    category: "データ管理"
+  },
+  {
+    id: 7,
+    question: "Cloud kicks では、靴オブジェクトについて、組織全体の共有の既定値が非公開に設定されています。 営業マネージャーは、チームのすべての営業担当者の靴のレコードを含むレポートを表示できる必要があります。レポートへの適切なアクセスを提供するために管理者が構成する必要がある項目はどれですか？3つ選択してください。",
+    options: [
+      { label: "A", text: "レポート購読" },
+      { label: "B", text: "ロール階層" },
+      { label: "C", text: "項目レベルセキュリティ" },
+      { label: "D", text: "カスタムレポートタイプ" },
+      { label: "E", text: "フォルダ アクセス" }
+    ],
+    correctAnswer: ["B", "C", "E"],
+    explanation: "B. ロール階層\nC. 項目レベルのセキュリティ\nE. フォルダ アクセス\n問題文の要件は、「組織全体の共有設定が非公開に設定されている靴オブジェクトについて、営業マネージャーが全営業担当者の靴レコードをレポートで表示できるようにしたい」です。レポートはオブジェクト参照権限、レコードアクセス権によって表示レコードが制御されるため、B,Eが正解です。また、営業マネージャーに項目レベルが割り当たっていないと、レポート上で該当の項目が参照できないので、Cが正解です。「レポート購読(サブスクライブ)」のような機能はありませんので、Aは誤りです。カスタムレポートタイプの特徴としては以下となりますので、Dは今回の要件とは合致しません。・関連オブジェクトを設定可能 ・表示項目の指定、表示名の変更 ・一度作成したカスタムレポートタイプは流用可",
+    category: "レポート・ダッシュボード"
+  },
+  {
+    id: 8,
+    question: "マーケティングチームは、アップセルプロモーションキャンペーンの 「キャンペーンメンバーの状況」項目に新しい選択リスト値を追加したいと考えています。管理者が選択リスト項目の値を変更するために使用する必要がある設定を2つの選んでください。",
+    options: [
+      { label: "A", text: "「キャンペーンメンバーの状況」関連リストをページ レイアウトに追加します。" },
+      { label: "B", text: "「キャンペーンメンバーの状況」 関連リストを一括変更する。" },
+      { label: "C", text: "「キャンペーンメンバーの状況」 関連リストの選択リストの値を変更する" },
+      { label: "D", text: "オブジェクトマネージャでキャンペーンステータスの選択リスト値を編集します。" }
+    ],
+    correctAnswer: ["A", "C"],
+    explanation: "A. 「キャンペーンメンバーの状況」関連リストをページ レイアウトに追加します。\nC. 「キャンペーンメンバーの状況」 関連リストの選択リストの値を変更する\n「キャンペーンメンバーの状況」項目の選択リストは、関連リストから編集します。① キャンペーンのページレイアウト上に、「キャンペーンメンバーの状況」関連リストを追加 ②「キャンペーンメンバーの状況」関連リストより、選択リスト値を追加・修正。そのため、A,Cが正解となります。",
+    category: "キャンペーン・マーケティング"
+  },
+  {
+    id: 9,
+    question: "Universal Containerは、サービスチームが取引レコードにアクセスできないようにしたいと考えています。サービスユーザーは、取引リストビューにアクセスできませんが、検索によって取引レコードを見つけることができます。アクセスを完全に制限するには、管理者は設定をする必要がありますか？",
+    options: [
+      { label: "A", text: "レコード設定と検索インデックス" },
+      { label: "B", text: "権限とタブの表示" },
+      { label: "C", text: "アプリケーション権限と検索用語" },
+      { label: "D", text: "ページレイアウトと項目レベルセキュリティ" }
+    ],
+    correctAnswer: ["B"],
+    explanation: "B. 権限とタブの表示\nレコードのアクセスを完全に制限するには、プロファイル及び権限セットでのオブジェクト参照権限変更となります。従って、Bが正解です。Dは項目レベルの話で、レコードに対して完全にアクセスを制限できるわけではないので誤りです。",
+    category: "共有・セキュリティ"
+  },
+  {
+    id: 10,
+    question: "Northern Trail Outfitterは、取引先責任者の関連付け、または表示に取引先責任者階層を使用したいと考えています。管理者は取引先責任者階層に関して何を考慮する必要がありますか？",
+    options: [
+      { label: "A", text: "取引先責任者階層の取引先責任者は、ユーザーによるレコードレベルのアクセスに制限されています。" },
+      { label: "B", text: "取引先責任者階層は、一度に 3000 件の取引先に制限されています。" },
+      { label: "C", text: "階層列をカスタマイズすると、最近表示された連絡先リストビューが変更されます。" },
+      { label: "D", text: "共有設定は、取引先責任者階層に表示される連絡先によって無視されます。" }
+    ],
+    correctAnswer: ["A"],
+    explanation: "A. 取引先責任者階層の取引先責任者は、ユーザーによるレコードレベルのアクセスに制限されています。\n表示される取引先責任者はユーザーのアクセス権限に依存するため、Aが正解です。ちなみに、Bは3,000件ではなく、2,000件が正解です。取引先責任者階層を使用する場合の考慮事項",
+    category: "オブジェクト・項目"
+  },
+  {
+    id: 11,
+    question: "Cloud Kicksの管理者は、休暇申請の承認プロセスを作成しました。承認プロセスの一部として追加できる自動化されたアクションを2つ選択してください。",
+    options: [
+      { label: "A", text: "Chatter投稿" },
+      { label: "B", text: "項目更新" },
+      { label: "C", text: "自動起動フロー" },
+      { label: "D", text: "メールアラート" }
+    ],
+    correctAnswer: ["B", "D"],
+    explanation: "B. 項目更新\nD. メールアラート\n承認プロセスに対して、以下4つの自動アクションが追加可能です。そのため、B,Dが正解です。・Todo : 指定したユーザーにTodoを割り当てる。 ・メールアラート : 指定したメールテンプレートを使用して、指定した受信者にメールを送信。 ・項目自動更新 : 選択した項目の値を変更。 ・送信メッセージ : 指定したエンドポイントにメッセージを送信。",
+    category: "自動化"
+  },
+  {
+    id: 12,
+    question: "Cloud Kicksの管理者は、リードにカスタム選択リスト項目を持っていますが、リードが変換されたときに取引先に表示されません。これらの値が入力されていることを確認するために、管理者が行う必要がある項目はどれですか？2つ回答してください。",
+    options: [
+      { label: "A", text: "取引先でカスタム選択リスト項目を作成します。" },
+      { label: "B", text: "入力規則で選択リスト項目を更新します。" },
+      { label: "C", text: "リードの選択リスト項目を取引先にマッピングします。" },
+      { label: "D", text: "リードオブジェクトで選択リスト項目が必須になるように設定します。" }
+    ],
+    correctAnswer: ["A", "C"],
+    explanation: "A. 取引先でカスタム選択リスト項目を作成します。\nC. リードの選択リスト項目を取引先にマッピングします。\nこの設問の問題点としては、「リードにカスタム選択リスト項目を持っているのに、取引先に変換した際にマッピング(対応付け)されない」という点です。「リード」→「取引先」変換時に自動的にマッピング(対応付け)されるのは、標準の項目のみです。(姓・名・住所項目等) カスタム項目のマッピング(対応付け)は管理者が設定してあげる必要があるので、A,Cが正解となります。※リードから変換できるテーブルは取引先責任者・取引先・個人取引先・商談ですが、こちらも試験に出題されることがありますので覚えておきましょう。",
+    category: "データ管理"
+  },
+  {
+    id: 13,
+    question: "管理者は、商談の所有者が商談を成立としてクローズしたときにフォローアップタスクをトリガーし、60日後に顧客に確認する別のタスクをトリガーしたいと考えています。管理者はどの2つの自動化ツールを使用する必要がありますか?",
+    options: [
+      { label: "A", text: "プロセスビルダー" },
+      { label: "B", text: "ワークフロールール" },
+      { label: "C", text: "項目更新" },
+      { label: "D", text: "アウトバウンドメッセージ" }
+    ],
+    correctAnswer: ["A", "B"],
+    explanation: "A. プロセスビルダー\nB. ワークフロールール\nプロセスビルダーとワークフロールールは廃止が決定しているため、当問題が出題される可能性は低いですが、念のためピックアップしております。ワークフロールール&プロセスビルダーのサポート廃止",
+    category: "自動化"
+  },
+  {
+    id: 14,
+    question: "「すべてのタブ」ページでタブにアクセスできないようにする、またはどのアプリでもタブを表示できないようにするプロファイルの設定はどれですか?",
+    options: [
+      { label: "A", text: "オブジェクト権限" },
+      { label: "B", text: "アプリ権限" },
+      { label: "C", text: "組織全体のデフォルト" },
+      { label: "D", text: "タブ設定" }
+    ],
+    correctAnswer: ["D"],
+    explanation: "D. タブ設定\nタブ設定で「タブを隠す」または「デフォルトで非表示」にすることで、アクセスを制御します。",
+    category: "レコードタイプ・レイアウト"
+  },
+  {
+    id: 15,
+    question: "Salesforce ユーザーのグローバルチームをサポートする管理者は、会社の設定を構成するように依頼されました。2つのオプションを選択してください。",
+    options: [
+      { label: "A", text: "通貨ロケール" },
+      { label: "B", text: "デフォルト言語" },
+      { label: "C", text: "パスワードポリシー" },
+      { label: "D", text: "ログイン時間" }
+    ],
+    correctAnswer: ["A", "B"],
+    explanation: "A. 通貨ロケール\nB. デフォルト言語\nSalesforceの会社の設定は多岐にわたりますが、言語・通貨ロケール・タイムゾーンの設定項目が存在するため、A,Bが正解です。C,Dはプロファイルにて設定する項目ですので、誤りです。Salesforceでの会社の設定",
+    category: "ユーザー・権限"
+  },
+  {
+    id: 16,
+    question: "ユーザーは、ダッシュボードでレポートをクリックしてレポートの詳細を表示すると、レポートの値がダッシュボードに表示される値と異なることに気付きました。上記の事象が発生する可能性が高い2つの理由を選択してください。",
+    options: [
+      { label: "A", text: "レポートを更新する必要がある。" },
+      { label: "B", text: "ダッシュボードを更新する必要がある。" },
+      { label: "C", text: "現在のユーザーは、レポートフォルダーへのアクセス権を持っていない。" },
+      { label: "D", text: "実行中のダッシュボードユーザーと閲覧者は異なる権限を持っている。" }
+    ],
+    correctAnswer: ["B", "D"],
+    explanation: "B. ダッシュボードを更新する必要がある。\nD. 実行中のダッシュボードユーザーと閲覧者は異なる権限を持っている。\nダッシュボードは最新の情報を確認するためには、更新ボタンの押下が必要となるため、Bが正解です。また、ダッシュボードは〇〇ユーザーの権限で表示するという、「実行ユーザー設定」が可能ですので、レポートとダッシュボードで表示される値が異なる場合があるため、Dが正解です。",
+    category: "レポート・ダッシュボード"
+  },
+  {
+    id: 17,
+    question: "Ursa Major Solarのマーケティングチームは、見込み客がWebサイトの「Web-to-Lead」フォームに入力するたびに、パーソナライズされたメールを送信したいと考えています。彼らは、リード業界の項目値に基づいて異なるメッセージを送信したいと考えています。この要件を満たすために、管理者は何を構成する必要がありますか？",
+    options: [
+      { label: "A", text: "入力規則を使用してワークフローをトリガーし、見込み客に電子メールを送信します。" },
+      { label: "B", text: "リードに電子メールを送信する自動レスポンスルールを構成します。" },
+      { label: "C", text: "公開グループとプロセス ビルダーを追加して、リードにメールを送信する。" },
+      { label: "D", text: "リードにメールを送信する割り当てルールを作成する" }
+    ],
+    correctAnswer: ["B"],
+    explanation: "B.リードに電子メールを送信する自動応答ルールを構成します。\n「Web-to-Lead」はWebから入力された値をもとに、自動でリード項目を作成する機能となります。そのため、設問の要件を実現するためには「リードの作成時、登録された電子メール宛てにメールを送信する」機能を作成する必要がありますので、Ｂが正解となります。自動レスポンスルールは限られた場合のみに作成が可能です。",
+    category: "自動化"
+  },
+  {
+    id: 18,
+    question: "Cloud Kicksは、顧客が公開ホームページにアクセスしながら独自のケースを作成できるようにしたいと考えています。管理者は何を推奨する必要がありますか？",
+    options: [
+      { label: "A", text: "SMS 応答" },
+      { label: "B", text: "Web-to-ケース" },
+      { label: "C", text: "メール-to-ケース" },
+      { label: "D", text: "オムニチャネル" }
+    ],
+    correctAnswer: ["B"],
+    explanation: "B. Web-to-ケース\nWebサイトから顧客が直接入力し、ケースを作成することができる機能が「Web-to-ケース」となりますので、Bが正解となります。※仕組みとしては、お問い合わせフォームを想像していただけるとわかりやすいと思います。",
+    category: "データ管理"
+  },
+  {
+    id: 19,
+    question: "AWコンピューティングでは、ユーザーが取引先年間収益項目を負の値または 1000億ドルを超える金額に更新できないようにしたいと考えています。管理者はこの要求をどのように達成する必要がありますか?",
+    options: [
+      { label: "A", text: "取引先年間集収益項目が 0 未満または 1000 億を超える場合にエラーを表示する入力規則を作成します。" },
+      { label: "B", text: "取引先収益がマイナスまたは 1000 億を超える取引先を表示する定期レポートを作成します。" },
+      { label: "C", text: "ページレイアウトで取引先収益項目を必須にする。" },
+      { label: "D", text: "設定で取引先収益制限を有効にします。最小は 0 、最大は 1000 億です。" }
+    ],
+    correctAnswer: ["A"],
+    explanation: "A. 取引先の収益が 0 未満または 1000 億を超える場合にエラーを表示する入力規則を作成します。\n「更新できないようにしたい」ので、保存時に条件に合致しない場合、エラーを表示できる入力規則が最適なため、Aが正解です。",
+    category: "データ管理"
+  },
+  {
+    id: 20,
+    question: "Cloud Kicksは、2月1日に始まる12か月の会計年度をレポートに表示することを望んでいます。管理者はこの要件に対し、どのように対処する必要がありますか？",
+    options: [
+      { label: "A", text: "会計年度をカスタムに設定し、開始月を2月に設定します。" },
+      { label: "B", text: "会計年度をカスタムに設定し、期間を4 四半期に設定します。" },
+      { label: "C", text: "会計年度を標準に設定し、期間を12か月に設定します。" },
+      { label: "D", text: "会計年度を標準に設定し、開始月を2月に設定します。" }
+    ],
+    correctAnswer: ["D"],
+    explanation: "D. 会計年度を標準に設定し、開始月を2月に設定します。\nまず、「会計年度の開始日を2月に設定する」ことが必要なので、B,Cは誤りです。カスタム会計年度は一度有効化にすると元に戻せなかったり、かなり特殊な状況で使用する設定ですので、標準を使用できるなら標準で設定します。今回の場合、標準で実装可能ですので、Dが正解です。",
+    category: "レポート・ダッシュボード"
+  },
+  {
+    id: 21,
+    question: "営業担当者が退職し、管理者はすべての取引先と商談を新しい営業担当者に再割り当てし、チームをそのまま維持するよう求められました。管理者はこれを行うためにどのツールを使用する必要がありますか？",
+    options: [
+      { label: "A", text: "データローダ" },
+      { label: "B", text: "一括移行ツール" },
+      { label: "C", text: "データ インポート ウィザード" },
+      { label: "D", text: "Dataloader.io" }
+    ],
+    correctAnswer: ["B"],
+    explanation: "B. 一括移行ツール\n取引先・サービス契約・リード・カスタムオブジェクトの所有権を一括移行できる「一括移行ツール」が存在します。取引先に紐づく商談のみ、移行対象に選ぶことができますが、今回の要件は左記機能で満たせますので、Bが正解です。※データローダでも上記要件は満たせますが、より簡単に操作できるBを正解としております。",
+    category: "データ管理"
+  },
+  {
+    id: 22,
+    question: "Cloud Kicks (CK)のサポート担当者は、ケースをクローズしようとすると、「状況」選択リストに 「クローズ」がないことを報告しています。Support担当者が、「状況」選択リスト項目の「クローズ」を表示できないのはなぜですか？",
+    options: [
+      { label: "A", text: "ケースのレコードタイプに、選択リストの値として「クローズ済み」が存在しない。" },
+      { label: "B", text: "ケースを閉じるには、「クローズケース」ページレイアウトを使用する必要があります。" },
+      { label: "C", text: "「クローズケースの状況項目を表示」チェックボックスがデフォルトに設定されている。" },
+      { label: "D", text: "使用されているサポートプロセスは、ステータスの選択肢としてクローズドを省略しています。" }
+    ],
+    correctAnswer: ["D"],
+    explanation: "D. 使用されているサポートプロセスは、ステータスの選択肢としてクローズドを省略しています。\nこの問題の原因は、組織のサポートプロセスのケースの[状況]の選択肢に「クローズ」がないことですので、Dが正解です。",
+    category: "オブジェクト・項目"
+  },
+  {
+    id: 23,
+    question: "Cloud Kicks の管理者は、処理時間を改善するために、リードが作成されたときに単純な項目更新を行う 2 つの古いワークフロールールを置き換えるように依頼されました。管理者はどのツールを使用する必要がありますか?",
+    options: [
+      { label: "A", text: "クイックアクションフロー" },
+      { label: "B", text: "保存前更新を実行するフロー" },
+      { label: "C", text: "スケジュールトリガフロー" },
+      { label: "D", text: "画面フロー" }
+    ],
+    correctAnswer: ["B"],
+    explanation: "B. 保存前更新を実行するフロー\n保存前更新を実行するフローとは、「レコードの作成または更新により自動起動フローをトリガーし、追加の更新をレコードに加えてからレコードをデータベースに保存」できるフローのことです。これにより、通常のレコード変更プロセスよりも10倍速くSalesforceレコードを更新できるため、Bが正解です。",
+    category: "自動化"
+  },
+  {
+    id: 24,
+    question: "標準のリード評価項目には、「Hot・Warm・Cold」選択リスト項目値があります。いくつかのレコードの 「評価」項目の値が 「未評価」であったにもかかわらず登録されました。これらのレコードはどのようにしてエラーなしで追加されましたか？",
+    options: [
+      { label: "A", text: "「値セットで定義された値に選択リストを制限します」チェックボックスがオフになっていました。" },
+      { label: "B", text: "項目 レベルのセキュリティは、すべてのプロファイルで 「表示」に設定されています。" },
+      { label: "C", text: "ピックリストの入力にグローバルピックリスト値セットが使用された。" },
+      { label: "D", text: "「すべてのレコード タイプに追加」チェックボックスが選択されている。" }
+    ],
+    correctAnswer: ["A"],
+    explanation: "A. 「値セットで定義された値に選択リストを制限します」チェックボックスがオフになっていました。\n本設問は「評価選択リストの選択肢はHot,Warm,Coldの3種類のはずなのに、なんで未評価という値で登録されてるのか？」という問題です。Salesforceでは、制限付き選択リストでない限り、API等から定義外の値を登録できてしまいます。",
+    category: "オブジェクト・項目"
+  },
+  {
+    id: 25,
+    question: "Ursa Major Solarのサポートチームは、ケースのホームページで分割リストビューを使用することを好みます。チームが分割リストビューを使用できるようにするには、管理者は何を構成する必要がありますか?",
+    options: [
+      { label: "A", text: "リストビューで単一の出荷レコードタイプでフィルタリングします。" },
+      { label: "B", text: "アプリのナビゲーション バーに 「出荷」タブを含めます。" },
+      { label: "C", text: "分割ビューは、標準オブジェクトでのみ使用できます。" },
+      { label: "D", text: "サポートユーザーにリスト ビューの管理権限を追加します。" }
+    ],
+    correctAnswer: ["B"],
+    explanation: "B. アプリのナビゲーション バーに 「出荷」タブを含めます。\n分割リストビュー(分割ビュー)とは、レコードリストとレコード編集画面を同時に表示する設定のことです。該当オブジェクトがナビゲーションバーに追加されていれば使用可能ですので、Bが正解です。",
+    category: "レコードタイプ・レイアウト"
+  },
+  {
+    id: 26,
+    question: "Cloud Kicksのユーザーは、2週間ごとに繰り返されるタスクが作成されることを望んでいます。要件を満たすために管理者は何をすべきですか？",
+    options: [
+      { label: "A", text: "繰り返しToDoの作成を有効にします。" },
+      { label: "B", text: "定期的なタスクを作成するフロー。" },
+      { label: "C", text: "定期的なタスクを作成するためのワークフロールール。" },
+      { label: "D", text: "定期的な活動をオンにします。" }
+    ],
+    correctAnswer: ["A"],
+    explanation: "A. 繰り返しToDoの作成を有効にします。\nTodoの自動作成には「Todoの繰り返し」と「定期的なTodo」が存在します。設問に「繰り返されるタスク」という記載があるため、Aが正解となります。Salesforceは「Todoを指定日に実行する必要がない場合は、繰り返しのほうが合理的」と説明しています。",
+    category: "自動化"
+  },
+  {
+    id: 27,
+    question: "潜在的なセッションの脆弱性を特定して修正するために、管理者が使用する必要があるツールはどれですか？",
+    options: [
+      { label: "A", text: "項目履歴の追跡" },
+      { label: "B", text: "監査証跡の設定" },
+      { label: "C", text: "セキュリティ状態チェック" },
+      { label: "D", text: "組織全体のデフォルト" }
+    ],
+    correctAnswer: ["C"],
+    explanation: "C. セキュリティ状態チェック\n「ホーム > 状態チェック」を使用することで、セキュリティ設定の潜在的な脆弱性を特定して修正することができますので、Cが正解となります。Health Checkの役割です。",
+    category: "共有・セキュリティ"
+  },
+  {
+    id: 28,
+    question: "Cloud Kicksには、「靴」という名前のカスタムオブジェクトがあります。管理者は、孤立した靴レコードを防ぐために、取引先と靴の間に関係が作成されていることを確認するよう求められています。この要件を満たすために、管理者は何をする必要がありますか?",
+    options: [
+      { label: "A", text: "間接参照関係を作成する" },
+      { label: "B", text: "暗号化参照を作成する" },
+      { label: "C", text: "階層関係を作成する" },
+      { label: "D", text: "主従関係を作成する" }
+    ],
+    correctAnswer: ["D"],
+    explanation: "D. 主従関係を作成する\nこの設問では「孤立したレコードを防ぐ」が目的です。主従関係は、2つのオブジェクト間の親子関係を設定でき、取引先に紐づかない靴レコードは作成できなくなる（親の指定が必須になる）ため、Dが正解です。",
+    category: "オブジェクト・項目"
+  },
+  {
+    id: 29,
+    question: "Ursa Major Solarは、ケースの作成後2時間以上エージェントからの応答を待っているケースについて、マネージャーに自動的に通知したいと考えています。この要件を満たすために、管理者は何を使用して処理を作成しますか？",
+    options: [
+      { label: "A", text: "割り当てルール" },
+      { label: "B", text: "ケースエスカレーションルール" },
+      { label: "C", text: "オムニチャネルスーパーバイザー" },
+      { label: "D", text: "数式項目" }
+    ],
+    correctAnswer: ["B"],
+    explanation: "B. ケースエスカレーションルール\nレコード作成のXX時間後に、条件を満たすレコードを別のユーザーやキューに再割り当て（または通知）する機能はエスカレーションルールとなりますので、Bが正解です。",
+    category: "割り当て・ルーティング"
+  },
+  {
+    id: 30,
+    question: "Northern Trail Outfittersは、各マーケティングキャンペーンで生成された収益を計算したいと考えています。管理者はこの情報をどのように提供する必要がありますか？",
+    options: [
+      { label: "A", text: "標準のキャンペーンレポートを設計し、「キャンペーンの成立商談金額」項目を追加します。" },
+      { label: "B", text: "定期的なデータジョブを実行して、キャンペーン レコードを更新します。" },
+      { label: "C", text: "商談からキャンペーンへの積み上げ集計項目を作成します。" },
+      { label: "D", text: "キャンペーンに合計値項目を追加し、ワークフロールールを使用して値を更新します。" }
+    ],
+    correctAnswer: ["A"],
+    explanation: "A. 標準のキャンペーンレポートを設計し、「キャンペーンの成立商談金額」項目を追加します。\n商談を作成するとき、「主キャンペーンソース」項目に入力することで、その商談が特定のキャンペーンに影響を受けたことを管理できます。キャンペーンには標準項目が存在するため、レポートで集計可能です。積み上げ集計項目は主従関係にしか使えないため、Cは誤りです。",
+    category: "キャンペーン・マーケティング"
+  },
+  {
+    id: 31,
+    question: "AW Consulting の管理者は、カスタム選択リスト項目を作成しました。管理者は項目タイプを変更しようとしましたが、他の機能によって参照されているため変更できません。項目タイプの変更を妨げている機能はどれですか?",
+    options: [
+      { label: "A", text: "数式項目" },
+      { label: "B", text: "レコードタイプ" },
+      { label: "C", text: "Visualforce" },
+      { label: "D", text: "Javascript" }
+    ],
+    correctAnswer: ["A"],
+    explanation: "A. 数式項目\n数式項目や、フローで使用されている場合、項目タイプを変更するとエラーとなります。従って、Aが正解です。",
+    category: "オブジェクト・項目"
+  },
+  {
+    id: 32,
+    question: "Universal Containers (UC) にはサポートチームが処理する必要があるタスクを管理するために使用されるキューがあります。管理者がサポートチームを支援するために使用する必要がある2つのオプションはどれですか？",
+    options: [
+      { label: "A", text: "ケースをキューに割り当てるフローを設定します。" },
+      { label: "B", text: "割り当てルールを使用して、キューをケースの所有者として設定します。" },
+      { label: "C", text: "既存のキューに使用可能なオブジェクトとしてケースを追加します。" },
+      { label: "D", text: "新しいキューを作成し、利用可能なオブジェクトとしてケースを追加します。" }
+    ],
+    correctAnswer: ["B", "C"],
+    explanation: "B. 割り当てルールを使用して、キューをケースの所有者として設定します。\nC. 既存のキューに使用可能なオブジェクトとしてケースを追加します。\nキューを対象オブジェクトで使用するには、キュー設定内の「サポートされるオブジェクト」に対象オブジェクトを追加する必要があります。割り当てルールは作成時の所有者変更に最適です。",
+    category: "割り当て・ルーティング"
+  },
+  {
+    id: 33,
+    question: "Ursa Major Solarの管理者が、顧客保証ケース用の新しいレコード タイプを作成しました。管理者が新しいレコードタイプをユーザに表示するには、どの2つの割り当てを使用する必要がありますか?",
+    options: [
+      { label: "A", text: "プロファイルの割り当て" },
+      { label: "B", text: "ロールの割り当て" },
+      { label: "C", text: "アプリ マネージャーの割り当て" },
+      { label: "D", text: "ページレイアウトの割り当て" }
+    ],
+    correctAnswer: ["A", "D"],
+    explanation: "A. プロファイルの割り当て\nD. ページレイアウトの割り当て\nレコードタイプを新規作成した後、画面にて表示を行うには、プロファイルの割り当て(誰が使えるか)とページレイアウトの割り当て(どう見えるか)の設定が必要となります。",
+    category: "レコードタイプ・レイアウト"
+  },
+  {
+    id: 34,
+    question: "モバイルナビゲーションメニューで使用できる項目を3つ選択してください。",
+    options: [
+      { label: "A", text: "Lightningアプリケーションページ" },
+      { label: "B", text: "Lightningホームページ" },
+      { label: "C", text: "Chatter" },
+      { label: "D", text: "ユーティリティバー" },
+      { label: "E", text: "ダッシュボード" }
+    ],
+    correctAnswer: ["A", "C", "E"],
+    explanation: "A. Lightning アプリケーションページ\nC. Chatter\nE. ダッシュボード\nLightningホームページとユーティリティバーは、デスクトップのLightningExperienceのみで使用可能です。モバイルナビゲーションメニューでは使用できません。",
+    category: "レコードタイプ・レイアウト"
+  },
+  {
+    id: 35,
+    question: "Universal Containersは、組織のデータ保護とプライバシーを有効にします。データのプライバシー情報を追跡するための「個人」項目を使用できるのは、どのページレイアウトですか?",
+    options: [
+      { label: "A", text: "ケースと商談" },
+      { label: "B", text: "取引先とユーザー" },
+      { label: "C", text: "リード、取引先責任者、および個人取引先" },
+      { label: "D", text: "個人、ユーザー、および取引先" }
+    ],
+    correctAnswer: ["C"],
+    explanation: "C. リード、取引先責任者、および個人取引先\n「個人」項目(Individual)を使用できるのは、「リード、取引先責任者、および個人取引先」に限定されています。",
+    category: "オブジェクト・項目"
+  },
+  {
+    id: 36,
+    question: "営業担当者は、取引先で配送先住所が変更されたときに、関連付けられた選択した注文の配送先住所を更新するための合理化されたソリューションを用意する必要があります。管理者はこの要件をどのように提供する必要がありますか？",
+    options: [
+      { label: "A", text: "注文ページの自動起動フロー" },
+      { label: "B", text: "取引先ページの自動起動フロー" },
+      { label: "C", text: "注文ページの画面フロー" },
+      { label: "D", text: "取引先ページの画面フロー" }
+    ],
+    correctAnswer: ["D"],
+    explanation: "D. 営業担当者がすべてのオープン関連注文で更新された取引先の配送先住所を選択できる取引先ページの画面フロー\n「いくつかを選択して」更新させるには、ユーザーがレコードを選択する画面が必要になります。画面フローが正解です。",
+    category: "自動化"
+  },
+  {
+    id: 37,
+    question: "Cloud Kicksには、同じ画面に2つの設問がある画面フローがありますが、一度に必要なのは1つだけです。管理者はこれをどのように完了する必要がありますか?",
+    options: [
+      { label: "A", text: "シナリオごとに新しいバージョンのフローを使用する" },
+      { label: "B", text: "決定要素と新しい画面を使用して適切な示する" },
+      { label: "C", text: "条件付き表示を使用して不要な表示にする" },
+      { label: "D", text: "フロー画面で分岐を使用して適切なシナリオを表示する" }
+    ],
+    correctAnswer: ["C"],
+    explanation: "C. 条件付き表示を使用して不要な表示にする\n画面フローには条件付きで表示を制御できる機能があります。これにより、特定の回答に基づいて次の設問を出し分けることができます。",
+    category: "自動化"
+  },
+  {
+    id: 38,
+    question: "DreamHouse Realtyは、ケースを生成するためのセルフサービスオプションを顧客に提供したいと考えています。管理者が使用する必要がある2つのソリューションはどれですか？",
+    options: [
+      { label: "A", text: "Web-to-ケース" },
+      { label: "B", text: "ケースエスカレーション" },
+      { label: "C", text: "メール-to-ケース" },
+      { label: "D", text: "ケースキュー" }
+    ],
+    correctAnswer: ["A", "C"],
+    explanation: "A. Web-to-ケース\nC. メール-to-ケース\n顧客のアクション（Webフォーム入力やメール送信）をもとにケースを自動作成する標準機能です。",
+    category: "データ管理"
+  },
+  {
+    id: 39,
+    question: "管理者がLightningアプリケーションビルダーを使用して、作成およびカスタマイズできるページタイプはどれですか？2つ回答してください。",
+    options: [
+      { label: "A", text: "ユーザーページ" },
+      { label: "B", text: "ダッシュボードページ" },
+      { label: "C", text: "アプリケーションページ" },
+      { label: "D", text: "レコードページ" }
+    ],
+    correctAnswer: ["C", "D"],
+    explanation: "C. アプリページ\nD. レコードページ\nLightningアプリケーションビルダーでカスタマイズ可能なのは、アプリケーションページ、レコードページ、ホームページの3種類です。",
+    category: "レコードタイプ・レイアウト"
+  },
+  {
+    id: 40,
+    question: "DreamHouse Realtyの管理者は、エージェントのキャパシティとスキルセットをより簡単に割り当てる方法を望んでいます。どの機能を有効にする必要がありますか？",
+    options: [
+      { label: "A", text: "ナレッジ マネジメント" },
+      { label: "B", text: "オムニチャネル" },
+      { label: "C", text: "エスカレーション ルール" },
+      { label: "D", text: "テリトリー管理" }
+    ],
+    correctAnswer: ["B"],
+    explanation: "B. オムニチャネル\nスキルごとに自動割り振り（ルーティング）してくれる機能はオムニチャネルです。",
+    category: "割り当て・ルーティング"
+  },
+  {
+    id: 41,
+    question: "Cloud Kicksにはプロダクトオーナーのチームがあり、プロダクトチームだけでフィードバックやアイデアを共有するためのスペースが必要です。管理者はどのように Salesforceを活用すべきでしょうか？",
+    options: [
+      { label: "A", text: "ク​​イック アクションを使用して会話をログに記録します。" },
+      { label: "B", text: "Chatter非公開グループを作成します。" },
+      { label: "C", text: "Chatter公開グループを設定します。" },
+      { label: "D", text: "活動履歴をドキュメントタスクに追加します。" }
+    ],
+    correctAnswer: ["B"],
+    explanation: "B. Chatterプライベートグループを作成します。\n特定チームのみが閲覧・会話できるようにするには、非公開グループが最適です。",
+    category: "その他"
+  },
+  {
+    id: 42,
+    question: "インストールされた権限セットグループには削除アクセス権が含まれており、管理者はユーザーがレコードを削除できないようにする必要があります。管理者は削除アクセスを制御するために何をすべきですか？",
+    options: [
+      { label: "A", text: "権限セットグループでミュート権限セットを使用して、選択した権限をミュートする。" },
+      { label: "B", text: "削除アクセス権が選択解除された新しい権限セットを作成する。" },
+      { label: "C", text: "削除権限がユーザーにロールアップされないようにする新しいロールを作成する。" },
+      { label: "D", text: "ユーザーのプロファイルを編集して、オブジェクトの削除権限を取り除く。" }
+    ],
+    correctAnswer: ["A"],
+    explanation: "A. 権限セットグループでミュート権限セットを使用して、選択した権限をミュートします。\n権限セットは加算方式ですが、権限セットグループ内では特定の権限を「ミュート」することで打ち消すことができます。",
+    category: "ユーザー・権限"
+  },
+  {
+    id: 43,
+    question: "サポートプロセスには10個のステータス値がありますが、サービス担当者は5つ以上は必要ないと言っています。管理者は現在の実装をどのように改善する必要がありますか?",
+    options: [
+      { label: "A", text: "ケースのステータス値の数を5に減らします。" },
+      { label: "B", text: "画面フローを作成し、コンソールのユーティリティ バーに表示します。" },
+      { label: "C", text: "各レコードタイプに必要なステータスを確認し、各サポートプロセスを作成します。" },
+      { label: "D", text: "レコードタイプでステータスの選択値を直接編集します。" }
+    ],
+    correctAnswer: ["C"],
+    explanation: "C. 各レコードタイプに必要なステータスの選択を確認し、必要となる各サポート プロセスを作成します。\nレコードタイプごとにサポートプロセス（ステータスのリスト）を出し分けることができます。",
+    category: "オブジェクト・項目"
+  },
+  {
+    id: 44,
+    question: "営業担当者が商談を保存するときは、製品タイプを選択するか、「要レビュー」チェックボックスをオンにする必要があります。管理者はこれを達成するために何を使用する必要がありますか？",
+    options: [
+      { label: "A", text: "保存前更新を実行するフロー" },
+      { label: "B", text: "入力規則" },
+      { label: "C", text: "ワークフロールール" },
+      { label: "D", text: "必須項目" }
+    ],
+    correctAnswer: ["B"],
+    explanation: "B. 入力規則\n特定の論理条件（AまたはBの入力が必要）に基づいてエラーを表示し、保存を阻止するのは入力規則です。",
+    category: "データ管理"
+  },
+  {
+    id: 45,
+    question: "Dreamhouse realty は、検査官が物件検査の結果を提出するフォームを提供したいと考えています。管理者はどの機能をページに配置する必要がありますか？",
+    options: [
+      { label: "A", text: "関連リスト" },
+      { label: "B", text: "自動起動フロー" },
+      { label: "C", text: "レコードの詳細" },
+      { label: "D", text: "画面フロー" }
+    ],
+    correctAnswer: ["D"],
+    explanation: "D. 画面フロー\n画面入力を伴うフォームの作成は画面フローにて実装できます。",
+    category: "自動化"
+  },
+  {
+    id: 46,
+    question: "訪問者数を追跡するために、管理者はオープンハウスオブジェクト（親）にどのタイプのフィールドを追加する必要がありますか？（主従関係）",
+    options: [
+      { label: "A", text: "積み上げ集計項目" },
+      { label: "B", text: "複数選択リスト" },
+      { label: "C", text: "クロスオブジェクト数式項目" },
+      { label: "D", text: "間接参照" }
+    ],
+    correctAnswer: ["A"],
+    explanation: "A. 積み上げ集計項目\n主従関係の親レコードで子レコードの数や合計値を集計できるのは積み上げ集計項目です。",
+    category: "オブジェクト・項目"
+  },
+  {
+    id: 47,
+    question: "経営陣は、リードの製品カテゴリというカスタム項目情報がリードの変換時に商談の一部になることを望んでいます。どのようなアクションを実行すべきですか?",
+    options: [
+      { label: "A", text: "リード カスタム 項目を製品の製品カテゴリ 項目にマッピングします。" },
+      { label: "B", text: "リードに基づいて商談項目を更新するワークフローを作成します。" },
+      { label: "C", text: "商談にカスタム項目を作成し、2つの項目をマッピングします。" },
+      { label: "D", text: "製品の製品カテゴリ ピックリスト 項目を設定します。" }
+    ],
+    correctAnswer: ["C"],
+    explanation: "C. 商談にカスタム項目を作成し、2つの項目をマッピングします。\nカスタム項目の変換マッピングには、変換先（商談等）にもカスタム項目を作成して紐付ける必要があります。",
+    category: "データ管理"
+  },
+  {
+    id: 48,
+    question: "営業担当者は月に1つのイベントを主催しており、シリーズ別のキャンペーンROIをレポートできるようにしたいと考えています。管理者はキャンペーンをどのように設定すべきですか？",
+    options: [
+      { label: "A", text: "毎月のイベント タイプに別のレコード タイプを追加します。" },
+      { label: "B", text: "すべて同じ名前のキャンペーンを個別に作成します。" },
+      { label: "C", text: "キャンペーンメンバーステータスを構成します。" },
+      { label: "D", text: "毎月のイベントが親キャンペーンにロールアップされるキャンペーン階層を使用する。" }
+    ],
+    correctAnswer: ["D"],
+    explanation: "D. 毎月のイベントが親キャンペーンにロールアップされるキャンペーン階層を使用する。\nキャンペーンを親子関係にすることで、親側で子の実績をロールアップ集計できます。",
+    category: "キャンペーン・マーケティング"
+  },
+  {
+    id: 49,
+    question: "管理者が構成する必要がある3つのパスワードポリシーはどれですか？",
+    options: [
+      { label: "A", text: "Password Managerアプリの使用を要求する" },
+      { label: "B", text: "パスワードの複雑さの要件" },
+      { label: "C", text: "有効期限日数" },
+      { label: "D", text: "無効なログイン試行の最大回数" },
+      { label: "E", text: "禁止されているパスワード値" }
+    ],
+    correctAnswer: ["B", "C", "D"],
+    explanation: "B. パスワードの複雑さの要件\nC. 有効期限日数\nD. 無効なログイン試行の最大回数\nパスワードポリシー（プロファイル設定）で管理可能な標準項目です。複雑さ、期限、ロックアウトまでの回数が正解です。",
+    category: "ユーザー・権限"
+  },
+  {
+    id: 50,
+    question: "Universal Containersは、リセラーパートナーに製品の割引価格を提供したいと考えています。管理者はどのように設定すればよいでしょうか。",
+    options: [
+      { label: "A", text: "Partner_Discount_c 項目を商談に追加する" },
+      { label: "B", text: "別のリセラー パートナー製品を構築する。" },
+      { label: "C", text: "別の商談レコードタイプを使用する。" },
+      { label: "D", text: "リセラーパートナー用に別の価格表を作成する。" }
+    ],
+    correctAnswer: ["D"],
+    explanation: "D. リセラーパートナー用に別の価格表を作成する。\n顧客グループごとに価格を変えるには、価格表を使い分けるのが最適です。",
+    category: "その他"
+  },
+ {
+    id: 51,
+    question: "Universal Containers の管理者は、商談が$500000 に達したときにセールス ディレクターにアラートをトリガーする簡単な方法を必要としています。この要件を満たすために、管理者は何を構成する必要がありますか？",
+    options: [
+      { label: "A", text: "金額の大規模商談アラートを設定します。" },
+      { label: "B", text: "商談更新リマインダーを有効にする" },
+      { label: "C", text: "かんばんビューでの商談の警告。" },
+      { label: "D", text: "ホームページの主要取引コンポーネント" }
+    ],
+    correctAnswer: ["A"],
+    explanation: "回答\nA. 金額の大規模商談アラートを設定します。\n「大規模商談アラート」は、商談が一定の金額と確度となった時、ユーザーに自動でメールを送信する機能です。\n※現在は、フローを使うと、より高度な条件でアラート(メール・項目更新)が可能ですので、使われなくなってきつつある機能となります。\n商談の大規模商談アラートの設定",
+    category: "自動化"
+  },
+  {
+    id: 52,
+    question: "管理者は、今後の重要な更新を確認しました。管理者は、重要な更新の有効化をどのように進める必要がありますか？",
+    options: [
+      { label: "A", text: "サンドボックスで重要な更新をアクティブ化します。" },
+      { label: "B", text: "重要な更新の自動有効化を許可します。" },
+      { label: "C", text: "本番環境で重要な更新をアクティブ化します。" },
+      { label: "D", text: "サンドボックスで重要な更新を自動で有効化できるようにする。" }
+    ],
+    correctAnswer: ["A"],
+    explanation: "回答\nA.サンドボックスで重要な更新をアクティブ化します。\nSalesforceは年3回のバージョンアップが実施されます。(6月、10月、2月頃)\nその際に、新機能や既存機能の拡張に関して、事前検証が可能です。\nSandbox環境に対して、プレビュー機能を適用するには手動操作が必要となりますので、Ａが正解となります。\n※リリース発表されると、リリースノートを確認するタスクが突然降ってくるのはどこもあるあるなのでしょうか（笑）\nリリース更新の管理",
+    category: "ユーザー・権限"
+  },
+  {
+    id: 53,
+    question: "Northern Trail Outfittersの管理者は、Salesforceに新しいユーザーを追加できません。この因は何ですか?",
+    options: [
+      { label: "A", text: "ユーザー名は会社のメールアドレスではありません" },
+      { label: "B", text: "ユーザー名が 80 文字未満である。" },
+      { label: "C", text: "ユーザー名が偽のメールアドレスです。" },
+      { label: "D", text: "ユーザー名は既に使用されています。" }
+    ],
+    correctAnswer: ["D"],
+    explanation: "回答\nD. ユーザー名は既に使用されています。\n組織全体で(トライアル組織・Sandbox含め)、ユーザー名は一意である必要がありますので、Dが正解となります。\nまた、ユーザー名はメールアドレス形式である必要がありますが、実際のメールアドレスである必要はないため、その他の選択肢は不正解となります。\nユーザー名作成時にエラーとなる",
+    category: "ユーザー・権限"
+  },
+  {
+    id: 54,
+    question: "Cloud Kicksで商談フェーズに到達すると、金額項目が営業ユーザーにとって必須となります。営業マネージャーは、金額を知らなくてもこのフェーズに商談を移動させることができるようにする必要があります。管理者は、この項目を営業ユーザーの交渉段階で必須とし、マネージャには変更を許可するにはどうすればよいでしょうか。",
+    options: [
+      { label: "A", text: "すべてのユーザーに対して項目を必須にする。" },
+      { label: "B", text: "マネージャー用の項目に入力する数式項目を作成する。" },
+      { label: "C", text: "管理者プロファイルをマネージャに割り当てる。" },
+      { label: "D", text: "条件を満たすように入力規則を設定する。" }
+    ],
+    correctAnswer: ["D"],
+    explanation: "回答\nD. 条件を満たすように入力規則を設定する。\n本設問の要件は「商談フェーズ時は金額確定してなくてもよいが、交渉フェーズ時には金額を必須としたい！」です。\n特定の条件を満たしていないと保存できないよう、制御をかけることが可能な「入力規則」が最適ですので、Dが正解です。",
+    category: "データ管理"
+  },
+  {
+    id: 55,
+    question: "Northern Trail Outfittersは、顧客から受信したメールでケースを自動的に生成したいと考えています。管理者は、電子メールが正しいキューに送信されるようにするにはどうすればよいですか？",
+    options: [
+      { label: "A", text: "フローを利用して正しいキューを特定し、ケースを割り当てます。" },
+      { label: "B", text: "カスタムメールサービスを使用して、作成時にケースの所有者を設定します。" },
+      { label: "C", text: "ケースを正しいキューに送信するためのエスカレーションルールを作成します。" },
+      { label: "D", text: "メールが正しいキューに配信されるようにメール-to-ケースを設定する。" }
+    ],
+    correctAnswer: ["D"],
+    explanation: "回答\nD. メールが正しいキューに配信されるようにメール-to-ケースを設定する。\n本設問のキーは「メールからケースを自動的に作成したい」です。\nメールからケースの自動作成は「メール-to-ケース」が最適ですので、Dが正解です。\nメール-to-ケースの「ケース所有者」にユーザーまたはキューを設定することで、ルーティングが可能となります。\nちなみに、「ケース所有者」に値が設定されている場合、割り当てルールは適用されませんのでご注意ください。\nメール-to-ケースを介してケースが作成されたときに割り当てルールが起動しない",
+    category: "割り当て・ルーティング"
+  },
+  {
+    id: 56,
+    question: "DreamHouse Realtyでは、一戸建てとコンドミニアムの両方を販売するオープンハウスを開催しています。コンドミニアムの場合、いくつかの追加の手順を実行する必要があります。管理者は、コンドミニアムのレコードを作成するときにのみ、これらの追加の手順が表示されるようにするにはどうすればよいですか？",
+    options: [
+      { label: "A", text: "1 つのページ レイアウトを作成する。レコード タイプを使用して適切な項目を表示する。" },
+      { label: "B", text: "1 つのページ レイアウトを作成する。ビジネスプロセスを使用して適切な項目を表示する。" },
+      { label: "C", text: "2 つのページ レイアウトを作成します。1 つは住宅用、もう 1 つはコンドミニアム用。" },
+      { label: "D", text: "2 つのページ レイアウトを作成する。ビジネスプロセスとレコード タイプを使用して、適切な選択リスト値を表示します。" }
+    ],
+    correctAnswer: ["D"],
+    explanation: "回答\nD. 2 つのページ レイアウトを作成する。ビジネスプロセスとレコード タイプを使用して、適切な選択リスト値を表示します。\n本設問の要件は「一戸建てとコンドミニアムがあるが、コンドミニアム用のレコードを作成する場合、追加のビジネスプロセス手順を表示してほしい！」です。\nページレイアウトを2つ作成し、レコードタイプとビジネスプロセスを使用し、それぞれの手順にあったプロセスで構成することにより、上記要件を満たすことができますので、Dが正解です。\n※レコードタイプにはビジネスプロセスを1:1で紐づけなければいけないので、ビジネスプロセスを先に作成しておく必要があります。",
+    category: "レコードタイプ・レイアウト"
+  },
+  {
+    id: 57,
+    question: "Clod Kicksの管理者は、「イベント」カスタムオブジェクトを更新して、取引先への参照項目を含めました。イベントレポートを実行するとき、関連付けられた取引先レコードから項目を参照したいと考えています。連絡先項目をカスタムレポートに取り込むには、管理者は何をする必要がありますか？",
+    options: [
+      { label: "A", text: "イベントの数式項目を構成して、連絡先情報を入力します" },
+      { label: "B", text: "「イベント」カスタムレポートタイプを編集し、ルックアップによって関連する項目を追加します。" },
+      { label: "C", text: "イベントをプライマリオブジェクトとして、連絡先を関連オブジェクトとして、新しいレポート タイプを作成します。" },
+      { label: "D", text: "フィルター付きのダッシュボードを使用して表示する。" }
+    ],
+    correctAnswer: ["B"],
+    explanation: "回答\nB. 「イベント」カスタムレポートタイプを編集し、ルックアップによって関連する項目を追加します。\nレポートは、参照項目等、リレーションがあるオブジェクトから項目を表示することが可能です。\n参照項目を含めた時点で、イベントレポート上で取引先の項目が表示可能となるため、Bが正解となります。",
+    category: "レポート・ダッシュボード"
+  },
+  {
+    id: 58,
+    question: "管理者がケースエスカレーションルールで実行する必要がある2つのアクションはどれですか? 2つ回答してください。",
+    options: [
+      { label: "A", text: "ケースを再度開きます。" },
+      { label: "B", text: "メール通知を送信します。" },
+      { label: "C", text: "ケースの優先度を変更します。" },
+      { label: "D", text: "ケースを再割り当てします。" }
+    ],
+    correctAnswer: ["B", "D"],
+    explanation: "回答\nB. メール通知を送信します。\nD. ケースを再割り当てします。\nケースエスカレーションルールは、XX時間経過後、一定の条件の場合に再割り当てを行う機能ですので、Dが正解です。\nまた、エスカレーション時に通知メールを送信することが可能ですので、Bも正解です。\nエスカレーションルールの設定",
+    category: "割り当て・ルーティング"
+  },
+  {
+    id: 59,
+    question: "Ursa Major Solarのセールスとカスタマーケアは、取引先レコードのケース関連リストで異なる項目を確認する必要があります。セールスユーザーはケースの作成日とステータスを確認したいのに対し、カスタマーケアは所有者、ステータス、および連絡先を確認したいと考えています。管理者はこれを達成するために何を使用する必要がありますか?",
+    options: [
+      { label: "A", text: "関連するルックアップ検索条件" },
+      { label: "B", text: "コンパクト レイアウト エディタ" },
+      { label: "C", text: "ページレイアウトエディタ" },
+      { label: "D", text: "検索レイアウト エディタ" }
+    ],
+    correctAnswer: ["C"],
+    explanation: "回答\nC. ページレイアウトエディタ\n本設問の要件は「セールスとカスタマーケアで、ケース関連リストの表示項目を変えたい！」です。\n上記を実現するためには、各ユーザー向けのページレイアウトを作成する必要がありますので、Cが正解となります。\n※ページレイアウトの表示制御をするために、レコードタイプの作成も必要となりますので、あわせて覚えておきましょう。",
+    category: "レコードタイプ・レイアウト"
+  },
+  {
+    id: 60,
+    question: "Cloud Kicksは、販売ユーザーとマーケティング ユーザーに対して異なる選択リスト値を表示できる必要があります。この要件を満たす 2 つのオプションはどれですか？2つ回答してください。",
+    options: [
+      { label: "A", text: "1 つのページ レイアウト、2 つのレコード タイプ、1 つの選択リスト" },
+      { label: "B", text: "2 つのページ レイアウト、1 つのレコード タイプ、2 つの選択リスト" },
+      { label: "C", text: "2 つの権限セット、1 つのレコードタイプ、1 つの選択リスト" },
+      { label: "D", text: "1 つのレコードタイプ、2 つのプロファイル、1 つの選択リスト" }
+    ],
+    correctAnswer: ["A", "B"],
+    explanation: "回答\nA. 1 つのページ レイアウト、2 つのレコード タイプ、1 つの選択リスト\nB. 2 つのページ レイアウト、1 つのレコード タイプ、2 つの選択リスト\n選択リスト値の表示制御であれば、レコードタイプで設定可能ですので、Aが正解です。\nまた、ページレイアウトごとに別々の選択リストを追加することで、それぞれ異なる選択肢を表示させることが可能ですので、Bが正解です。",
+    category: "レコードタイプ・レイアウト"
+  },
+  {
+    id: 61,
+    question: "DreamHouseReality は、取引先およびケースに登録されたカテゴリで一貫した選択リスト値を使用する必要があり、値はレコードタイプごとに異なります。管理者がこの要件を満たすために使用する必要がある2つの機能はどれですか？",
+    options: [
+      { label: "A", text: "依存ピックリスト" },
+      { label: "B", text: "グローバル選択リスト" },
+      { label: "C", text: "複数選択リスト" },
+      { label: "D", text: "カスタム選択リスト" }
+    ],
+    correctAnswer: ["B", "D"],
+    explanation: "回答\nB. グローバル選択リスト\nD. カスタム選択リスト\nグローバル選択リストを作成すると、複数オブジェクトで作成した選択リスト値を使用することができますので、Bが正解です。\nまた、グローバル選択リストはカスタム選択リストのみで使用可能ですので、Dも正解となります。\n※レコードタイプ設定にて、どの選択リスト値を使用するかを選ぶことができます。",
+    category: "オブジェクト・項目"
+  },
+  {
+    id: 62,
+    question: "主従関係の特徴を3つ挙げてください。",
+    options: [
+      { label: "A", text: "主オブジェクトは、標準オブジェクトまたはカスタムオブジェクトです。" },
+      { label: "B", text: "子レコードの権限は、親レコードとは別に設定されます。" },
+      { label: "C", text: "各オブジェクトは、最大5つの主従関係を持つことができます。" },
+      { label: "D", text: "積み上げ集計は主従関係でサポートされています。" },
+      { label: "E", text: "子レコードの所有者項目は、親レコードの所有者です。" }
+    ],
+    correctAnswer: ["A", "D", "E"],
+    explanation: "回答\nA. 主オブジェクトは、標準オブジェクトまたはカスタムオブジェクトです。\nD. 積み上げ集計は主従関係でサポートされています。\nE. 子レコードの所有者項目は、親レコードの所有者です。\n主従関係の場合、子と親の権限は同一になるので、Bは不正解です。\nまた、主従関係の最大数は2ですので、Cも不正解となります。\n他の選択肢はすべて正しいことを述べているため、A,D,Eが正解となります。\nオブジェクトリレーションの考慮事項",
+    category: "オブジェクト・項目"
+  },
+  {
+    id: 63,
+    question: "Ursa Major Solarの管理者は、カスタムレポートタイプを作成し、セールスオペレーションチーム用のレポートを作成しました。しかし、どのユーザーもレポートにアクセスできません。この時発生した可能性のある2つのオプションはどれですか?",
+    options: [
+      { label: "A", text: "カスタムレポートタイプが開発中である。" },
+      { label: "B", text: "ユーザーのプロファイルに表示アクセス権がない。" },
+      { label: "C", text: "組織がカスタムレポートタイプの制限に達した。" },
+      { label: "D", text: "レポートはプライベートフォルダーに保存されている" }
+    ],
+    correctAnswer: ["A", "D"],
+    explanation: "回答\nA. カスタムレポートタイプが開発中である。\nD. レポートはプライベートフォルダーに保存されている\nカスタムレポートタイプが「開発中」であるレポートは、「カスタムレポートタイプの管理」権限を持つユーザーのみに表示されるため、Aが正解です。(公開するにはレポートタイプを「リリース済み」にする必要があります。)\nまた、レポートを「非公開フォルダ」に格納していると、他の人はそのレポートを閲覧できなくなるため、Dも正解となります。\nオブジェクト権限がないとレポート表示時にエラーとなりますが、セールスユーザーのために作成したレポートに、オブジェクト参照権限がない可能性は低いと考えられますので、Bは不正解です。\nCはそもそもカスタムレポートを作れないという問題はありますが、本設問はレポートを作成済みなので、不正解です。",
+    category: "レポート・ダッシュボード"
+  },
+  {
+    id: 64,
+    question: "Universal Containersの営業部長は、営業チームのメンバーが商談を過去の日付に変更できないようにしたいと考えています。この要件を満たすために、管理者は何を構成する必要がありますか？",
+    options: [
+      { label: "A", text: "割り当てルール" },
+      { label: "B", text: "入力規則" },
+      { label: "C", text: "項目レベルのセキュリティ" },
+      { label: "D", text: "承認プロセス" }
+    ],
+    correctAnswer: ["B"],
+    explanation: "回答\nB. 入力規則\n保存時、特定の条件時にエラーを表示し保存させないように制御できる「入力規則」が、本設問の要件を満たすことができるため、Bが正解です。",
+    category: "データ管理"
+  },
+  {
+    id: 65,
+    question: "AW Computing (AWC) は独立した請負業者と協力することがあります。請負業者は頻繁に代理店を変更するため、AWCは過去の記録の正確性を維持したいと考えています。連絡先を追跡するために AWCは何を使用する必要がありますか？",
+    options: [
+      { label: "A", text: "パートナーコミュニティを使用して取引先を追跡します。" },
+      { label: "B", text: "代理店ごとに新しい連絡先レコードを作成します。" },
+      { label: "C", text: "ジャンクションオブジェクトを作成して、多対多の関係を追跡します。" },
+      { label: "D", text: "取引先責任者-to-複数取引先を有効にします。" }
+    ],
+    correctAnswer: ["D"],
+    explanation: "回答\nD. 取引先責任者-to-複数取引先を有効にします。\n本設問の意図は「請負業者の勤務先(代理店)が変わるたびに「取引先」項目を変更すると過去の履歴が変わっちゃうのをどうにかしたい！」です。\nSalesforceには1取引先責任者に複数の取引先を紐づけることが可能な「取引先責任者-to-複数取引先」という機能がありますので、Dが正解となります。",
+    category: "オブジェクト・項目"
+  },
+  {
+    id: 66,
+    question: "Cloud kicksは、製品ごとに靴のデザインを追跡したいと考えています。製品を削除した際に、靴のデザインは削除されないようにする必要があり、さまざまな段階で 1 つの製品に複数のデザインが存在する可能性があります。管理者が構成する必要がある2つの手順はどれですか？",
+    options: [
+      { label: "A", text: "靴のデザイン用のカスタムオブジェクトを作成します。" },
+      { label: "B", text: "製品オブジェクトで靴のデザインのカスタム参照関係項目を構成します。" },
+      { label: "C", text: "製品オブジェクトに靴のデザインのカスタム主従関係項目を追加します。" },
+      { label: "D", text: "デザインに標準オブジェクトを使用します。" }
+    ],
+    correctAnswer: ["A", "B"],
+    explanation: "回答\nA. 靴のデザイン用のカスタムオブジェクトを作成します。\nB. 製品オブジェクトで靴のデザインのカスタム参照関係項目を構成します。\n本設問のポイントは「製品を削除した際に、靴のデザインは削除できないようにする必要がある」です。\n主従関係を作ってしまうと、親レコードを削除したとき、子レコードも一緒に削除されてしまうので、参照関係を使用するAとBが正解となります。",
+    category: "オブジェクト・項目"
+  },
+  {
+    id: 67,
+    question: "Universal Containersでは、セールスコンソールとサービスコンソールで取引先を表示するときに、別のLightningページを表示する必要があります。管理者はこの要件をどのように満たす必要がありますか？",
+    options: [
+      { label: "A", text: "ページレイアウトの割り当てを更新する。" },
+      { label: "B", text: "複数のレコード タイプを定義する。" },
+      { label: "C", text: "Lightningページをアプリのデフォルトとして割り当てる。" },
+      { label: "D", text: "異なるユーザープロファイルを作成する。" }
+    ],
+    correctAnswer: ["C"],
+    explanation: "回答\nC. Lightningページをアプリのデフォルトとして割り当てる。\nLightningページは、組織のデフォルト、アプリケーションのデフォルト、または[アプリ]-[レコードタイプ]-[プロファイル]の組み合わせに割り当てることができます。\n今回はアプリケーション単位（コンソールごと）での出し分けですので、Cが最適となります。",
+    category: "レコードタイプ・レイアウト"
+  },
+  {
+    id: 68,
+    question: "Linkedlnデータを表示するコンポーネントがあります。営業ユーザーが携帯電話を使用している場合にのみ、このコンポーネントを表示したいと考えています。管理者が使用する必要があるソリューションを2つ選択してください。",
+    options: [
+      { label: "A", text: "ユーザー > プロファイル > 名前 = “営業ユーザー” でコンポーネントの可視性をフィルタリングする。" },
+      { label: "B", text: "フォーム要素 = 電話 でコンポーネントの可視性をフィルタリングする。" },
+      { label: "C", text: "ビュー = 携帯電話 でコンポーネントの可視性をフィルタリングする。" },
+      { label: "D", text: "ユーザー > ロール > 名前 = “営業ユーザー” でコンポーネントの可視性をフィルタリングする。" }
+    ],
+    correctAnswer: ["A", "B"],
+    explanation: "回答\nA. ユーザー > プロファイル > 名前 = “営業ユーザー” でコンポーネントの可視性をフィルタリングする。\nB. フォーム要素 = 電話 でコンポーネントの可視性をフィルタリングする。\nコンポーネントはプロファイルごとに表示制御できるため、Aが正解です。\nまた、「フォーム要素」フィルターを使用することで、デスクトップかモバイルかによって表示を制御できるため、Bが正解となります。",
+    category: "レコードタイプ・レイアウト"
+  },
+  {
+    id: 69,
+    question: "Universal Containersの営業ユーザーは、商談レコードの編集に時間がかかっていると報告しています。 通常、彼らが編集する唯一の項目はフェーズ項目です。プロセスを簡素化するために、管理者が推奨する2つのオプションはどれですか？",
+    options: [
+      { label: "A", text: "商談レコードページにフェーズのパスを追加します。" },
+      { label: "B", text: "商談にかんばんリストビューを使用します。" },
+      { label: "C", text: "商談編集用の自動起動フローを構成します。" },
+      { label: "D", text: "シンプルな商談ページ レイアウトを作成します。" }
+    ],
+    correctAnswer: ["A", "B"],
+    explanation: "回答\nA. 商談レコードページにフェーズのパスを追加します。\nB. 商談にかんばんリストビューを使用します。\nパスを追加することで、ワンクリックでフェーズを更新できるようになります。また、かんばんを使用するとドラッグ＆ドロップで更新できるため、プロセスが簡素化されます。",
+    category: "レコードタイプ・レイアウト"
+  },
+  {
+    id: 70,
+    question: "Ursa Solarの営業担当者は、取引の管理に苦労しています。 リーダーシップチームは管理者に、営業担当者がより多くの商談に優先順位を付けて成約できるように支援するよう依頼しました。管理者はどのように構成しますか？",
+    options: [
+      { label: "A", text: "Einstein 商談スコアリング" },
+      { label: "B", text: "Einstein リードスコアリング" },
+      { label: "C", text: "Einstein 検索のパーソナライズ" },
+      { label: "D", text: "Einstein 活動キャプチャ" }
+    ],
+    correctAnswer: ["A"],
+    explanation: "回答\nA. Einstein 商談スコアリング\nEinstein 商談スコアリングを使用すると、AIが各商談に対して1~99のスコアを付けます。商談スコアを確認すると、成約可能性が高いものに優先順位を付けることができるため、Aが正解です。",
+    category: "その他"
+  },
+  {
+    id: 71,
+    question: "Cloud Kicksのユーザーが画面フローを使用する際に、不明瞭なエラーメッセージが表示されることがあります。管理者はこの問題にどのように対処すべきでしょうか？",
+    options: [
+      { label: "A", text: "入力規則を削除して、ユーザーが不完全なレコードで処理できるようにします。" },
+      { label: "B", text: "ユーザーがエラーをバイパスできるように権限セットを作成します。" },
+      { label: "C", text: "障害コネクタを使用して、原因とその修正方法を説明するテキストを含む画面を表示します。" },
+      { label: "D", text: "セットアップでエンド ユーザーのFlow Errorsボックスのチェックを外します。" }
+    ],
+    correctAnswer: ["C"],
+    explanation: "回答\nC. 障害コネクタを使用して、問題の原因とその修正方法を説明するテキストを含む画面を表示します。\n本設問の要件は「エラー時にちゃんと指示を出してほしい！」です。「障害コネクタ（Faultパス）」を使用すると、エラー時の遷移先を制御できるため、Cが正解です。",
+    category: "自動化"
+  },
+  {
+    id: 72,
+    question: "Northern Trail Outfittersには2つの異なるセールスプロセスがあります。 どちらのプロセスも、ページレイアウトと選択リストの値が異なります。これらの要件を満たすために、管理者は何を構成する必要がありますか？",
+    options: [
+      { label: "A", text: "ユーザーが正確な販売段階の情報を入力していることを確認する入力規則。" },
+      { label: "B", text: "商談タイプの選択リスト値を制御するさまざまなページレイアウト。" },
+      { label: "C", text: "商談のレコードタイプと販売プロセスを制限するための公開グループ。" },
+      { label: "D", text: "商談の種類ごとにレコードタイプと販売プロセスを分ける。" }
+    ],
+    correctAnswer: ["D"],
+    explanation: "回答\nD. 商談の種類ごとにレコードタイプと販売プロセスを分ける。\n選択リスト値の出し分けは、プロセス（販売プロセス/サポートプロセス等）を作成し、それをレコードタイプで紐付けることで実現できます。",
+    category: "レコードタイプ・レイアウト"
+  },
+  {
+    id: 73,
+    question: "Cloud Kicks の経営陣は、ダッシュボードに不正確なデータが表示されていると報告しています。ソースレポートが変更されていることを発見しました。整合性を維持するために管理者が実行すべき2つのアクションは？",
+    options: [
+      { label: "A", text: "ダッシュボードをユーザーのプライベートフォルダーに移動する。" },
+      { label: "B", text: "表示アクセス権を持つ新しいレポートフォルダーを作成する。" },
+      { label: "C", text: "ダッシュボードレポートを表示専用フォルダに移動する。" },
+      { label: "D", text: "ダッシュボードを動的ダッシュボードに変更する" }
+    ],
+    correctAnswer: ["B", "C"],
+    explanation: "回答\nB. 閲覧アクセス権を持つ新しいレポートフォルダーを作成する。\nC. ダッシュボードレポートを表示専用フォルダに移動する。\n本設問の要件は「ユーザーがレポートを編集できないようにしたい！」です。フォルダに対して「表示のみ」権限を設定することで編集をブロックできます。",
+    category: "レポート・ダッシュボード"
+  },
+  {
+    id: 74,
+    question: "10%を超える割引はユーザーのマネージャー、30%以上は営業担当副社長の承認が必要です。この承認プロセスを設定する前に確認すべき2つの考慮事項はどれですか？",
+    options: [
+      { label: "A", text: "商談にカスタム割引項目を作成して、割引額を取得します" },
+      { label: "B", text: "営業ユーザーのユーザー詳細ページのマネージャー標準項目に入力します。" },
+      { label: "C", text: "2つの個別の承認プロセスを構成します。" },
+      { label: "D", text: "提出者が承認者を手動で選択できるようにする。" }
+    ],
+    correctAnswer: ["A", "B"],
+    explanation: "回答\nA.商談にカスタム割引項目を作成して、割引額を取得します\nB.営業ユーザーのユーザー詳細ページのマネージャー標準項目に入力します。\n承認プロセスでは、特定の項目値（割引率）をもとに承認ルートを決定するためAが必要です。また、マネージャーへ自動転送するにはユーザー設定のマネージャー項目（B）を使用します。",
+    category: "自動化"
+  },
+  {
+    id: 75,
+    question: "管理者がSalesforce オブジェクトを操作する際に留意すべき考慮事項を2つ挙げてください。",
+    options: [
+      { label: "A", text: "標準オブジェクトのみが主従関係をサポートします。" },
+      { label: "B", text: "Salesforce には標準オブジェクトが含まれている。" },
+      { label: "C", text: "カスタムオブジェクトと標準オブジェクトには標準項目があります。" },
+      { label: "D", text: "新しい標準オブジェクトを作成できます。" }
+    ],
+    correctAnswer: ["B", "C"],
+    explanation: "回答\nB. Salesforce には標準オブジェクトが含まれている。\nC. カスタムオブジェクトと標準オブジェクトには標準項目があります。\nカスタムオブジェクトも主従関係を作成できるためAは誤りです。標準オブジェクトは削除や新規作成（自作）ができないためDも誤りです。",
+    category: "オブジェクト・項目"
+  },
+  {
+    id: 76,
+    question: "営業担当者が商談のボタンをクリックすると、単純な割引計算画面が起動する必要があります。この画面を作成するために、管理者はどの自動化ツールを使用すべきですか？",
+    options: [
+      { label: "A", text: "Flow Builder" },
+      { label: "B", text: "ワークフロールール" },
+      { label: "C", text: "プラットフォームイベント" },
+      { label: "D", text: "プロセスビルダー" }
+    ],
+    correctAnswer: ["A"],
+    explanation: "回答\nA. Flow Builder\n「画面フロー」を使用すれば、ユーザーが入力をしたり計算結果を確認したりできる画面を簡単に開発できるため、Aが正解です。",
+    category: "自動化"
+  },
+  {
+    id: 77,
+    question: "営業担当副社長は、商談の保存を妨げるエラーメッセージを受け取っています。管理者は再現できません。どのようにしてユーザーが受けているエラーを検証すべきですか？",
+    options: [
+      { label: "A", text: "ページ レイアウトを編集する。" },
+      { label: "B", text: "セットアップの監査証跡を表示する。" },
+      { label: "C", text: "他のユーザーとしてログインする。" },
+      { label: "D", text: "共有モデルを確認する。" }
+    ],
+    correctAnswer: ["C"],
+    explanation: "回答\nC. 他のユーザーとしてログインする。\nSalesforceには管理者がそのユーザーとしてログインできる「代理ログイン」機能があります。これを利用して実際の操作を行うことで、ユーザー固有のエラーを確実に検証できます。",
+    category: "ユーザー・権限"
+  },
+  {
+    id: 78,
+    question: "営業担当者が退職し無効化されましたが、後で再雇用され有効化されました。ユーザーは会社を辞める前に作業していたのと同じレコードを表示できなくなりました。考えられる原因は？",
+    options: [
+      { label: "A", text: "商談レコードのフェーズが、不成立に変更されました。" },
+      { label: "B", text: "ユーザーが非アクティブ化されたときに権限セットが削除された。" },
+      { label: "C", text: "商談レコードのレコードタイプが変更されました。" },
+      { label: "D", text: "レコードは手動でユーザーと共有されました。" }
+    ],
+    correctAnswer: ["D"],
+    explanation: "回答\nD. レコードは手動でユーザーと共有されました。\nユーザーを無効化しても権限セットは維持されますが、そのユーザーに対して行われていた「手動共有」の設定は無効化時に破棄されるため、再雇用後も見えなくなります。",
+    category: "共有・セキュリティ"
+  },
+  {
+    id: 79,
+    question: "ヘルプデスクおよびR&Dという2つの子フォルダがあります。サポートエージェントはヘルプデスクを実行でき、R&Dは閲覧不可。マネージャーはすべてを閲覧・編集。共有する方法は？（2つ）",
+    options: [
+      { label: "A", text: "編集アクセス権を持つサポート マネージャーと R&D フォルダを共有します。" },
+      { label: "B", text: "ヘルプデスクフォルダーを、表示アクセス権を持つサポートエージェントと共有します。" },
+      { label: "C", text: "サポートレポートフォルダを、編集アクセス権を持つサポートマネージャーと共有します。" },
+      { label: "D", text: "表示アクセス権を持つサポートエージェントとサポートレポートフォルダを共有します。" }
+    ],
+    correctAnswer: ["B", "C"],
+    explanation: "回答\nB. ヘルプデスクフォルダーを、表示アクセス権を持つサポートエージェントと共有します。\nC. サポートレポートフォルダを、編集アクセス権を持つサポートマネージャーと共有します。\n親フォルダに編集権限を与えると子フォルダも継承されるためCでマネージャはOK。エージェントは必要な子フォルダのみBで共有します。",
+    category: "レポート・ダッシュボード"
+  },
+  {
+    id: 80,
+    question: "営業マネージャーが毎日の始まりにインサイトを提供することで生産性を向上させたいと考えています。ホームページに追加すべき3つの標準Lightningコンポーネントは？",
+    options: [
+      { label: "A", text: "アクティビティ" },
+      { label: "B", text: "パス" },
+      { label: "C", text: "アシスタント" },
+      { label: "D", text: "主要な商談" },
+      { label: "E", text: "パフォーマンスチャート" }
+    ],
+    correctAnswer: ["C", "D", "E"],
+    explanation: "回答\nC. アシスタント\nD. 主要な商談\nE. パフォーマンスチャート\nこれらはホームページで利用可能な標準コンポーネントです。「アクティビティ」や「パス」はホームページ用のコンポーネントとしては提供されていません。",
+    category: "レコードタイプ・レイアウト"
+  },
+  {
+    id: 81,
+    question: "購入したライセンスの種類と利用可能な数を確認するために、管理者はどこに行く必要がありますか？",
+    options: [
+      { label: "A", text: "セットアップでライセンスの種類を検索します。" },
+      { label: "B", text: "組織情報のユーザーライセンス関連リスト。" },
+      { label: "C", text: "設定のユーザー管理設定。" },
+      { label: "D", text: "会社情報の使用ベースの資格関連リスト。" }
+    ],
+    correctAnswer: ["B"],
+    explanation: "回答\nB. 組織情報のユーザーライセンス関連リスト。\n「設定 > 会社情報 > 組織情報」セクションにある関連リストから、組織で購入済みのライセンスとその使用状況を確認できます。",
+    category: "ユーザー・権限"
+  },
+  {
+    id: 82,
+    question: "オブジェクトマネージャで項目を必須としてマークする際に考慮すべき事項はどれですか？2つの回答を選択してください。",
+    options: [
+      { label: "A", text: "そのオブジェクトのAPIを介してレコードを保存するために、項目に値は必要ない。" },
+      { label: "B", text: "そのオブジェクトのレコードを保存するには、項目が普遍的に必要となる。" },
+      { label: "C", text: "そのオブジェクトのすべてのページレイアウトに項目が追加される。" },
+      { label: "D", text: "Web-to-リードおよび Web-to-ケースでは項目はオプションです。" }
+    ],
+    correctAnswer: ["B", "C"],
+    explanation: "回答\nB. そのオブジェクトのレコードを保存するには、項目が普遍的に必要となる。\nC. そのオブジェクトのすべてのページレイアウトに項目が追加される。\n項目レベルで必須にすると、APIやWeb-to-Leadなど経路を問わず必須となります。また、全レイアウトに強制的に配置されます。",
+    category: "オブジェクト・項目"
+  },
+  {
+    id: 83,
+    question: "VIP顧客からのケースを5時間以内にサービス担当者に転送する必要があります。VIP顧客は24時間サポートを受けられます。これはどのように構成すべきですか？",
+    options: [
+      { label: "A", text: "割り当てルール" },
+      { label: "B", text: "営業時間" },
+      { label: "C", text: "ケースキュー" },
+      { label: "D", text: "エスカレーションルール" }
+    ],
+    correctAnswer: ["D"],
+    explanation: "回答\nD. エスカレーションルール\n時間経過（この場合は5時間以内）に基づいてレコードの所有者を変更したり通知を行ったりするには、エスカレーションルールを使用します。",
+    category: "割り当て・ルーティング"
+  },
+  {
+    id: 84,
+    question: "30日以内にプロジェクトを完了する必要があり、予算を使い果たしました。管理者が住宅ローン計算機を使用したテンプレート化プロセスを構築するのに役立つAppExchangeアイテムは？",
+    options: [
+      { label: "A", text: "Lightningデータ" },
+      { label: "B", text: "Lightningコミュニティ" },
+      { label: "C", text: "Flowソリューション" },
+      { label: "D", text: "Boltsソリューション" }
+    ],
+    correctAnswer: ["C"],
+    explanation: "回答\nC. Flowソリューション\nAppExchangeのFlowソリューションを利用することで、既に構築されたフローのテンプレートやアクションを導入できるため、低コストかつ短期間で要件を満たせます。",
+    category: "その他"
+  },
+  {
+    id: 85,
+    question: "「期待収益」項目に誤った値が表示される商談に気付きました。管理者はこれをどのように修正する必要がありますか？",
+    options: [
+      { label: "A", text: "フェーズに関連する「予想収益」項目を更新する。" },
+      { label: "B", text: "フェーズに関連付けられた「予測カテゴリ」を調整する。" },
+      { label: "C", text: "フェーズに関連付けられた「成約額」を変更する。" },
+      { label: "D", text: "フェーズに関連付けられた「確度」を変更する。" }
+    ],
+    correctAnswer: ["D"],
+    explanation: "回答\nD. フェーズに関連付けられた「確度」を変更する。\n「期待収益」は「金額 × 確度（%）」で自動計算されます。この値が誤っている場合、フェーズに紐付いている確度設定を見直す必要があります。",
+    category: "オブジェクト・項目"
+  },
+  {
+    id: 86,
+    question: "スタッフがマネージャーについてフィードバックを提供しますが、マネージャがそのレコードを参照できないようにする必要があります。カスタムオブジェクトをどのように構成すべきですか？",
+    options: [
+      { label: "A", text: "「階層を使用したアクセス許可」のチェックを外します。" },
+      { label: "B", text: "条件に基づく共有ルールを定義します。" },
+      { label: "C", text: "デフォルトの外部アクセスをプライベートに設定します。" },
+      { label: "D", text: "所有者ベースの共有ルールを構成します。" }
+    ],
+    correctAnswer: ["A"],
+    explanation: "回答\nA. 「階層を使用したアクセス許可」のチェックを外します。\n標準ではロール階層の上位者は下位者のレコードを閲覧できますが、このチェックを外すことで階層によるアクセス権の継承を停止できます。",
+    category: "共有・セキュリティ"
+  },
+  {
+    id: 87,
+    question: "新規ケースはすぐに確認され適切なエージェントに割り当てられ、4時間経過しても「新規」のままならエスカレートされる必要があります。どのツールを利用すべきですか？",
+    options: [
+      { label: "A", text: "自動応答ルール、マクロ、資格" },
+      { label: "B", text: "自動応答ルール、キュー、マクロ" },
+      { label: "C", text: "自動応答ルール、キュー、エスカレーション ルール" },
+      { label: "D", text: "自動応答ルール、エンタイトルメント、エスカレーション ルール" }
+    ],
+    correctAnswer: ["C"],
+    explanation: "回答\nC. 自動応答ルール、キュー、エスカレーション ルール\n確認メールの送信には「自動応答ルール」、担当者のグループ管理には「キュー」、時間経過による処理には「エスカレーションルール」を使用します。",
+    category: "割り当て・ルーティング"
+  },
+  {
+    id: 88,
+    question: "営業マネージャーは、商談の段階に基づいて重要な価値（項目）を明らかにするために何を実装できるかを知りたがっています。どのツールを使用すべきですか？",
+    options: [
+      { label: "A", text: "商談プロセス" },
+      { label: "B", text: "動的フォーム" },
+      { label: "C", text: "パスの重要な項目" },
+      { label: "D", text: "ワークフロールール" }
+    ],
+    correctAnswer: ["C"],
+    explanation: "回答\nC. パスの重要な項目\nセールスパス（Path）の設定により、特定のフェーズで入力すべき「重要な項目」を表示させ、ユーザーをガイドすることができます。",
+    category: "レコードタイプ・レイアウト"
+  },
+  {
+    id: 89,
+    question: "営業担当者は、一度に読み込みたい取引先責任者を持つ300の取引先のリストを持っています。管理者は、レコードをインポートするためにどのツールを使用すべきですか？",
+    options: [
+      { label: "A", text: "Dataloader.io" },
+      { label: "B", text: "データローダ" },
+      { label: "C", text: "手動インポート" },
+      { label: "D", text: "データインポートウィザード" }
+    ],
+    correctAnswer: ["D"],
+    explanation: "回答\nD. データインポートウィザード\n300件程度の取引先と取引先責任者の同時インポートであれば、ブラウザ上で簡単に操作できるデータインポートウィザードが最適です。",
+    category: "データ管理"
+  },
+  {
+    id: 90,
+    question: "Cloud Kicksでは、リードソースが選択されている場合にのみ、ユーザーが商談フェーズで「成立」を選択できるようにしたいと考えています。管理者はこれをどのように達成すべきですか？",
+    options: [
+      { label: "A", text: "リードソースを商談フェーズ項目に依存する選択リストにします。" },
+      { label: "B", text: "フェーズが「成立」に設定されている場合、リードソースを要求する入力規則を構成します。" },
+      { label: "C", text: "ページレイアウトで商談フェーズ項目を読み取り専用に変更します。" },
+      { label: "D", text: "商談フェーズの依存ピックリストをリードソース項目に変更します。" }
+    ],
+    correctAnswer: ["B"],
+    explanation: "回答\nB. フェーズが「成立」に設定されている場合に、リード ソースを要求する入力規則を構成します。\n特定の条件（成立フェーズ）において項目の入力を強制するには、入力規則の論理式で制御するのが正解です。",
+    category: "データ管理"
+  },
+  {
+    id: 91,
+    question: "管理者はユーザーが複数のスタイルを選択できないように、靴オブジェクトの「スタイル」項目を変更するよう求められました。実行する必要がある2つの手順はどれですか?",
+    options: [
+      { label: "A", text: "項目タイプが変更された後、適切な靴のスタイルの値を再度有効にします。" },
+      { label: "B", text: "選択リスト項目の「値を 1 つだけ選択する」チェックボックスをオンにします。" },
+      { label: "C", text: "既存のレコードの靴のスタイルの値をバックアップします。" },
+      { label: "D", text: "項目タイプを複数選択リスト項目から選択リスト項目に変更します。" }
+    ],
+    correctAnswer: ["C", "D"],
+    explanation: "回答\nC. 既存のレコードの靴のスタイルの値をバックアップします。\nD. 項目タイプを複数選択リスト項目から選択リスト項目に変更します。\nデータ型の変更（複数→単一）を行うとデータが失われる可能性があるため、バックアップが必要です。また、項目自体のデータ型を変更する必要があります。",
+    category: "オブジェクト・項目"
+  },
+  {
+    id: 92,
+    question: "Ursa Major Solarにはケースのパスがあります。エージェントがケースを以前のステータスに戻すことを禁止する必要があります。この要求を満たすために管理者が使用すべき機能は？",
+    options: [
+      { label: "A", text: "事前定義された項目値" },
+      { label: "B", text: "グローバル選択リスト" },
+      { label: "C", text: "連動選択リスト" },
+      { label: "D", text: "入力規則" }
+    ],
+    correctAnswer: ["D"],
+    explanation: "回答\nD. 入力規則\n以前の値を参照するISCHANGED関数やPRIORVALUE関数を組み合わせた入力規則を作成することで、ステータスの逆戻りを制限できます。",
+    category: "データ管理"
+  },
+  {
+    id: 93,
+    question: "サービス担当者が同じ一連の質問をできるようにするための画面フローを作成しました。この画面はケースから表示できる必要があります。画面フローをどのように提供すべきですか？",
+    options: [
+      { label: "A", text: "ページレイアウト" },
+      { label: "B", text: "コンポーネントフィルター" },
+      { label: "C", text: "Lightningページ" },
+      { label: "D", text: "ホームページ" }
+    ],
+    correctAnswer: ["C"],
+    explanation: "回答\nC. Lightningページ\nLightningレコードページに「フロー」コンポーネントを配置し、作成した画面フローを指定することで、ケースレコード画面上に直接フォームを表示できます。",
+    category: "自動化"
+  },
+  {
+    id: 94,
+    question: "取引先ページからすべての出荷項目を確認したい。取引先が削除されても出荷レコードは残る必要があります。出荷と取引先の間にどのような関係を確立すべきですか?",
+    options: [
+      { label: "A", text: "出荷には、取引先への参照関係が必要です。" },
+      { label: "B", text: "取引先には、出荷への参照関係が必要です。" },
+      { label: "C", text: "出荷には、取引先への主従関係が必要です。" },
+      { label: "D", text: "取引先には、出荷への主従関係が必要です。" }
+    ],
+    correctAnswer: ["A"],
+    explanation: "回答\nA. 出荷には、取引先への参照関係が必要です。\n親（取引先）が消えても子（出荷）が残る必要があるため、削除が連動しない「参照関係」を使用します。また、子側のオブジェクト（出荷）に親への参照項目を作成します。",
+    category: "オブジェクト・項目"
+  },
+  {
+    id: 95,
+    question: "Universal Containerは、より厳格なユーザーパスワードを要求することで、セキュリティを強化したいと考えています。管理者が構成すべき2つの設定は？",
+    options: [
+      { label: "A", text: "ユーザー名と異なるパスワード" },
+      { label: "B", text: "一般的なワードの禁止" },
+      { label: "C", text: "パスワードの最小長" },
+      { label: "D", text: "パスワードの複雑さ" }
+    ],
+    correctAnswer: ["C", "D"],
+    explanation: "回答\nC. パスワードの最小長\nD. パスワードの複雑さ\nこれらはプロファイルのパスワードポリシー設定から構成可能です。「英数字を混在させる」などの複雑さの設定や、文字数の下限を指定できます。",
+    category: "ユーザー・権限"
+  },
+  {
+    id: 96,
+    question: "新規ケースを作成する取引先のカスタムクイックアクションがあります。管理者は、モバイルアプリでクイックアクションを利用できるようにするにはどうすればよいですか？",
+    options: [
+      { label: "A", text: "アクションを使用してカスタムLightningアプリケーションを作成する。" },
+      { label: "B", text: "ケースのコンパクトレイアウトを変更して、アクションを含める。" },
+      { label: "C", text: "アクションを Salesforce モバイルナビゲーションメニューに含める。" },
+      { label: "D", text: "SalesforceモバイルおよびLightning Experienceアクションをページレイアウトに追加する。" }
+    ],
+    correctAnswer: ["D"],
+    explanation: "回答\nD. SalesforceモバイルおよびLightning Experienceアクションをページレイアウトに追加する。\nモバイルでクイックアクションを表示するには、ページレイアウト編集画面の「Salesforce モバイルおよび Lightning Experience のアクション」セクションへの配置が必要です。",
+    category: "レコードタイプ・レイアウト"
+  },
+  {
+    id: 97,
+    question: "営業担当者が重要な顧客と話しているときに注意を払うようにしたい。これを実現するには、Lightning レコード ページにどの2つのオプションを追加すべきですか？",
+    options: [
+      { label: "A", text: "カスタムコンポーネント" },
+      { label: "B", text: "強調表示パネル" },
+      { label: "C", text: "アクションと推奨事項" },
+      { label: "D", text: "コンポーネント表示フィルター" },
+      { label: "E", text: "リッチテキストエリア" }
+    ],
+    correctAnswer: ["A", "C"],
+    explanation: "回答\nA. カスタム コンポーネント\nC. アクションと推奨事項\n独自の警告表示などを行う「カスタムコンポーネント」や、特定の状況下で次にすべきことを提示する「アクションと推奨事項」コンポーネントが有効です。",
+    category: "レコードタイプ・レイアウト"
+  },
+  {
+    id: 98,
+    question: "入力規則を作成するときに管理者が使用する必要がある2つの機能はどれですか？",
+    options: [
+      { label: "A", text: "数式の戻り型" },
+      { label: "B", text: "エラー条件式" },
+      { label: "C", text: "エラーメッセージの場所" },
+      { label: "D", text: "ルールの有効日" }
+    ],
+    correctAnswer: ["B", "C"],
+    explanation: "回答\nB. エラー条件式\nC. エラーメッセージの場所\n入力規則は、エラーと判定する条件式（B）と、エラー時に表示する文言およびその表示場所（C）の設定が必要です。",
+    category: "データ管理"
+  },
+  {
+    id: 99,
+    question: "2時間以上オープンになっている未割り当てケースをすべて緊急ケース キューに送信し、サポートマネージャーに通知したい。どの機能を構成すべきですか？",
+    options: [
+      { label: "A", text: "ケーススケジュールレポート" },
+      { label: "B", text: "ケースダッシュボードの更新" },
+      { label: "C", text: "ケースエスカレーションルール" },
+      { label: "D", text: "ケース割り当てルール" }
+    ],
+    correctAnswer: ["C"],
+    explanation: "回答\nC. ケースエスカレーションルール\n時間経過（2時間）を条件としてレコードを自動的に別のキューに再割り当てするには、エスカレーションルールが最適です。",
+    category: "割り当て・ルーティング"
+  },
+  {
+    id: 100,
+    question: "取引先ページでサービス担当者が特定の項目をすばやく見つけられるように、強調表示パネルに表示したい。管理者はこれをどのように実現すればよいでしょうか。",
+    options: [
+      { label: "A", text: "新しいページレイアウトと強調表示パネルセクションを作成します。" },
+      { label: "B", text: "取引先オブジェクトマネージャで、カスタムコンパクトレイアウトを作成します。" },
+      { label: "C", text: "ページレイアウトエディタから、項目を強調表示パネルにドラッグします。" },
+      { label: "D", text: "項目を必須にして、ページの上部に移動します。" }
+    ],
+    correctAnswer: ["B"],
+    explanation: "回答\nB. 取引先オブジェクトマネージャで、カスタムコンパクトレイアウトを作成します。\n強調表示パネルに表示される項目は、「コンパクトレイアウト」で定義されます。カスタムのコンパクトレイアウトを作成し、それを割り当てることで表示内容を変更できます。",
+    category: "レコードタイプ・レイアウト"
+  } ,
+    {
+    id: 101,
+    question: "Cloud Kicksの管理者は、サポートケースがどのように作成されたかに関係なく、ケースの優先度に基づいてキューに自動的にルーティングする必要があります。管理者はどのツールを使用する必要がありますか?",
+    options: [
+      { label: "A", text: "メール-to-ケース" },
+      { label: "B", text: "割り当てルール" },
+      { label: "C", text: "自動応答ルール" },
+      { label: "D", text: "Web-to-ケース" }
+    ],
+    correctAnswer: ["B"],
+    explanation: "回答\nB. 割り当てルール\nレコード作成時に、特定の条件で割り当てを行う設定が可能なのは、「割り当てルール」ですので、Bが正解です。",
+    category: "割り当て・ルーティング"
+  },
+  {
+    id: 102,
+    question: "Dreamhouse Realtyの営業担当副社長は、異なるチーム間の企業売上を視覚化するためのダッシュボードを要求しました。年間の全売上高の合計と、企業売上目標までの進捗状況を一つの値として効果的に表示するコンポーネントは何でしょうか？",
+    options: [
+      { label: "A", text: "テーブル" },
+      { label: "B", text: "積み上げ棒グラフ" },
+      { label: "C", text: "ドーナツ" },
+      { label: "D", text: "ゲージ" }
+    ],
+    correctAnswer: ["D"],
+    explanation: "回答\nD. ゲージ\n目標値と、現在の進捗を表現するのに最も適しているのは、「ゲージ」ですので、Dが正解となります。\nダッシュボードコンポーネントの種類",
+    category: "レポート・ダッシュボード"
+  },
+  {
+    id: 103,
+    question: "リードソースが「検索エンジン」の場合、管理者はユーザーが選択リスト項目から特定の検索エンジンを選択するように要求する必要があります。それ以外の場合、この選択リストは非表示にする必要があります。管理者はこの要件をどのように満たす必要がありますか？",
+    options: [
+      { label: "A", text: "決定要素を割り当ててユーザーを2番目の画面に誘導する。" },
+      { label: "B", text: "割り当て要素を使用します。" },
+      { label: "C", text: "特定の検索エンジンの選択リストを作成し、フローの「条件付き表示」を設定して、リードソースが「検索エンジン」の場合にのみ表示されるようにします。" },
+      { label: "D", text: "入力規則を使用して、リードソースが「検索エンジン」の場合にのみ条件付きで表示します" }
+    ],
+    correctAnswer: ["C"],
+    explanation: "回答\nC. 特定の検索エンジンの選択リストを作成し、「フローの条件付き表示」を設定して、リードソースが「検索エンジン」の場合にのみ表示されるようにします。\n本設問の意図は、「画面フローにて、ソースが「検索エンジン」かどうかで、選択リスト項目の表示を出し分けたい！」です。\nフローの「条件付き表示」を使用すれば、特定の条件で項目の表示制御が可能ですので、Cが正解となります。\n条件付き表示を使用した動的なフロー画面の作成",
+    category: "自動化"
+  },
+  {
+    id: 104,
+    question: "カスタムオブジェクトである請求書オブジェクトを使用して外部請求システムから顧客の支払い情報を収集します。請求システム項目は、すべての請求書レコードで入力する必要があります。管理者はこの要件をどのように確認する必要がありますか？",
+    options: [
+      { label: "A", text: "項目を必須に設定する" },
+      { label: "B", text: "項目を設定するプロセスビルダーを作成する" },
+      { label: "C", text: "子の承認プロセスを定義する" },
+      { label: "D", text: "レコードタイプで項目を必須にする" }
+    ],
+    correctAnswer: ["A"],
+    explanation: "回答\nA. 項目を必須に設定する\n全ての請求書レコードで値が入力される必要があるため、項目の必須設定が最適となりますので、Aが正解です。\n必須設定をすると、画面以外からの作成時(データローダー等)にも必須設定が適用されますので、実際に使用する際は注意しましょう。",
+    category: "データ管理"
+  },
+  {
+    id: 105,
+    question: "管理者は、組織で行われた最近の設定変更を確認するためにどのツールを使用する必要がありますか？",
+    options: [
+      { label: "A", text: "重要な更新(リリース更新)" },
+      { label: "B", text: "デバッグログ" },
+      { label: "C", text: "設定変更履歴" },
+      { label: "D", text: "項目履歴管理" }
+    ],
+    correctAnswer: ["C"],
+    explanation: "回答\nC. 設定変更履歴\n組織のユーザーによって行われた設定の変更は、設定変更履歴にて確認することが可能ですので、Cが正解です。\n重要な更新(リリース更新)は、Salesforceの定期的なアップデート情報となりますので誤りです。\nデバッグログは、Apex等の実行履歴を確認する場所ですので、誤りです。\n項目履歴管理は、レコードに対する項目変更履歴を確認できる機能ですので、誤りです。\n設定変更履歴を使用した設定変更の監視\n項目管理履歴",
+    category: "ユーザー・権限"
+  },
+  {
+    id: 106,
+    question: "新規に作成されたリードは、リードの住所に基づいて正しい営業担当者にルーティングする必要があります。管理者は、この要件をどのように構成する必要がありますか？",
+    options: [
+      { label: "A", text: "入力規則を構成する" },
+      { label: "B", text: "リードの割り当てルールを使用する" },
+      { label: "C", text: "数式項目を作成する" },
+      { label: "D", text: "エスカレーションルールを割り当てます" }
+    ],
+    correctAnswer: ["B"],
+    explanation: "回答\nB.リードの割り当てルールを使用する\nレコード作成時の項目値をもとに所有者を割り当てる機能は、割り当てルールにて実装できますので、Bが正解です。\n\nSalesforce試験において、エスカレーションルールと割り当てルールの違いは以下となっております。\n■エスカレーションルール : レコード作成後XX時間後に起動し、別のユーザーやキューに再割り当てする。\n■割り当てルール : レコード作成時の項目値をもとに所有者を変更する。",
+    category: "割り当て・ルーティング"
+  },
+  {
+    id: 107,
+    question: "Cloud Kicksは、App Exchangeからアプリを試して、アプリがニーズを満たしていることを確認したいと考えています。管理者が提案する必要がある2つのオプションはどれですか？",
+    options: [
+      { label: "A", text: "本番環境でテストを実施する" },
+      { label: "B", text: "サンドボックスにインストールする" },
+      { label: "C", text: "Trailhead Playgroundにダウンロードする" },
+      { label: "D", text: "エディションの互換性を確認する" }
+    ],
+    correctAnswer: ["B", "D"],
+    explanation: "回答\nB. サンドボックスにインストールする\nD. エディションの互換性を確認する\nTrailhead Playgroundは、学習用の環境ですので、Ｃは誤りです。\n本番環境でテストを実施することは推奨されていないので、Ａは誤りです。\n他の選択肢はすべて正しいため、Ｂ,Dが正解です。\nAppExchangeアプリのインストールに関する注意事項",
+    category: "その他"
+  },
+  {
+    id: 108,
+    question: "Cloud kicksは、各商談に対して各人が貢献した努力のレベルに基づいて、商談チームメンバーに功績を認めたいと考えています。この要件を満たすために、管理者はどの機能を使用する必要がありますか？",
+    options: [
+      { label: "A", text: "フェーズ" },
+      { label: "B", text: "商談分割" },
+      { label: "C", text: "キュー" },
+      { label: "D", text: "リストビュー" }
+    ],
+    correctAnswer: ["B"],
+    explanation: "回答\nB. 商談分割\n商談分割を使用することで、成立した商談の収益をチームメンバー間で分配することが可能になりますので、Bが正解です。\n商談チームと商談分割",
+    category: "その他"
+  },
+  {
+    id: 109,
+    question: "チェックボックス項目「High Value Customer」が true に設定されている場合に最初の画面がスキップされ、ユーザーが2番目の画面に誘導されるように画面フローを更新したい。決定要素をどのように構成しますか?",
+    options: [
+      { label: "A", text: "equals 演算子と {!$GlobalConstant.True} を値として使用します。" },
+      { label: "B", text: "equals 演算子と「High Value Customer」を値として使用します。" },
+      { label: "C", text: "contains 演算子と {!$GlobalConstant.False} を値として使用します。" },
+      { label: "D", text: "contains 演算子と「High Value Customer」を値として使用する" }
+    ],
+    correctAnswer: ["A"],
+    explanation: "回答\nA. equals 演算子と {!$GlobalConstant.True} を値として使用します。\n本設問で実装すべき処理条件としては「チェックボックス項目に設定されている値 = “True”」です。\ncontains演算子は「~が含まれる場合」という条件で使用されます。今回の場合はチェックボックス項目ですので、値がTrueかFalseかに定まるため、equal演算子(次の文字列と一致する)が最適となります。\n条件式の「リソース」には参照する項目を設定し、「値」には判定で使用される値を設定します。従って、Aが正解です。",
+    category: "自動化"
+  },
+  {
+    id: 110,
+    question: "コールセンターマネージャは、ケースの発生元、ステータス、および所有者別でドリルダウンできるケースダッシュボードをエージェントに提供したいと考えています。ダッシュボードに何を追加する必要がありますか？",
+    options: [
+      { label: "A", text: "ダッシュボードフィルター" },
+      { label: "B", text: "バケット列" },
+      { label: "C", text: "ダッシュボードコンポーネント" },
+      { label: "D", text: "組み合わせグラフ" }
+    ],
+    correctAnswer: ["A"],
+    explanation: "回答\nA. ダッシュボードフィルター\nダッシュボード検索条件を作成し、適用することで本設問の要件を満たすことができるため、Aが正解です。\nバケット列はレポート内でのグループ化機能、組み合わせグラフはデータの表示形式ですので、ダッシュボード全体をドリルダウンさせる検索条件（フィルタ）が正解です。\nダッシュボードフィルターの作成",
+    category: "レポート・ダッシュボード"
+  },
+  {
+    id: 111,
+    question: "異なる製品カテゴリー（シューズ、アパレル、アクセサリー）のリードがあります。マーケティング担当副社長は、選択した製品カテゴリーに基づいて適切なリードソースのみを表示するよう要求しています。どのように設定すればよいでしょうか。",
+    options: [
+      { label: "A", text: "各カテゴリのページレイアウトを作成し、カテゴリに基づいてリードソース項目をフィルタリングします。" },
+      { label: "B", text: "製品カテゴリ項目と リードソース項目の間に依存関係を作成します。" },
+      { label: "C", text: "3つの製品カテゴリごとにビジネスプロセスとレコードタイプを作成します。" },
+      { label: "D", text: "単一のビジネスプロセスを作成し、各製品カテゴリのレコードタイプを作成します。" }
+    ],
+    correctAnswer: ["C"],
+    explanation: "回答\nC. 3つの製品カテゴリごとにビジネスプロセスとレコードタイプを作成します。\n本設問の意図は、カテゴリーに応じてリードソース選択リストを出し分けたいというものです。レコードタイプごとに使用する選択リスト値を設定できるため、Cが正解となります。各カテゴリーでプロセスが異なると考えるのが自然であるため、ビジネスプロセスも個別に作成します。",
+    category: "レコードタイプ・レイアウト"
+  },
+  {
+    id: 112,
+    question: "管理者は、スプレッドシートを使用して割り当てられたライセンスと権限セットを追跡しています。Salesforce でこれを追跡するには、どの機能を使用できますか？",
+    options: [
+      { label: "A", text: "権限セットグループ" },
+      { label: "B", text: "ログイン履歴" },
+      { label: "C", text: "ユーザーレポート" },
+      { label: "D", text: "Lightning利用状況" }
+    ],
+    correctAnswer: ["D"],
+    explanation: "回答\nD. Lightning利用状況\nLightning利用状況からは、割り当てられたライセンスと権限セットを確認することができますので、Dが正解です。\nLightning利用状況",
+    category: "ユーザー・権限"
+  },
+  {
+    id: 113,
+    question: "ユーザーは自分が所有する商談のみを表示できます。管理者は共有設定を変更せずに、パイプライン内のすべての進行中の商談の全社規模のダッシュボードを作成するにはどうすればよいですか？",
+    options: [
+      { label: "A", text: "ダッシュボードをフォルダ設定に更新して、営業担当ロールのマネージャーにする。" },
+      { label: "B", text: "ダッシュボードにフィルターを追加して、所有者の役割で商談をフィルターする。" },
+      { label: "C", text: "企業の結果を確認する必要があるプロファイル用に個別のダッシュボードを構築する。" },
+      { label: "D", text: "実行中のユーザー設定が、すべての商談を表示できる人として設定されたダッシュボードを作成する。" }
+    ],
+    correctAnswer: ["D"],
+    explanation: "回答\nD. 実行中のユーザー設定が、すべての商談を表示できる人として設定されたダッシュボードを作成する。\n本設問の意図は「通常業務では他の人のレコード見せたくないけど、ダッシュボードは全社のレコードを対象として見せたい！」です。\nダッシュボード設定の「次のユーザーとしてダッシュボードを参照」を別の高権限ユーザーに設定することで、そのユーザーの権限で集計された結果を表示できます。",
+    category: "レポート・ダッシュボード"
+  },
+  {
+    id: 114,
+    question: "管理者は、10人の新入社員用に新しいユーザーを作成しました。これらのユーザーがSalesforceの取引先オブジェクトにアクセスできないのはなぜですか？",
+    options: [
+      { label: "A", text: "ユーザーのプロファイルには、取引先の共有ルールが必要です。" },
+      { label: "B", text: "ユーザーのプロファイルには、取引先オブジェクトへのアクセス許可が必要です。" },
+      { label: "C", text: "ユーザーの役割は、役割階層の下位にあります。" },
+      { label: "D", text: "組織全体のデフォルトは非公開に設定されています。" }
+    ],
+    correctAnswer: ["B"],
+    explanation: "回答\nB. ユーザーのプロファイルには、取引先 オブジェクトへのアクセス許可が必要です。\n本設問ではオブジェクト自体にアクセスできないと言っているので、レコードの共有設定以前に、プロファイルにおけるオブジェクトの「参照」等のアクセス権限が不足していると考えられます。従って、Bが正解です。",
+    category: "ユーザー・権限"
+  },
+  {
+    id: 115,
+    question: "電子メールまたは Web 経由のすべてのケースを自動キューに送信する割り当てルールがあります。手動で作成されたケースの所有者は作成したエージェントになるはずですが、管理者になります。何を調査しますか？",
+    options: [
+      { label: "A", text: "エスカレーションルールにより、ケースの作成時にケースの所有者が変更される" },
+      { label: "B", text: "「割り当てルール」チェックボックスはデフォルトで選択されている" },
+      { label: "C", text: "別の割り当てルールが管理者に所有権を与える" },
+      { label: "D", text: "Webフォームと電子メール テンプレートに所有者項目がない" }
+    ],
+    correctAnswer: ["B"],
+    explanation: "回答\nB. 「割り当てルール」チェックボックスはデフォルトで選択されている\nケースのページレイアウト設定等で、「ケース割り当て」チェックボックスがデフォルトで有効になっていると、手動作成時も割り当てルールが自動適用され、意図しない所有者（管理者など）に変更されることがあります。",
+    category: "割り当て・ルーティング"
+  },
+  {
+    id: 116,
+    question: "CKには新しい販売アプリケーションが必要です。Sandbox に管理パッケージをインストールする際の2つの考慮事項は何ですか？",
+    options: [
+      { label: "A", text: "パッケージに対するメタデータの変更は、本番環境で再作成する必要があります。" },
+      { label: "B", text: "インストールリンクを test.salesforce.comに変更する必要があります。" },
+      { label: "C", text: "管理者のみのインストールは、利用可能な唯一のインストールオプションです。" },
+      { label: "D", text: "サンドボックスが更新されるたびにパッケージが削除されます。" }
+    ],
+    correctAnswer: ["B", "D"],
+    explanation: "回答\nB. インストールリンクを test.salesforce.comに変更する必要があります。\nD. サンドボックスが更新されるたびにパッケージが削除されます。\nSandboxにインストールする場合、ログインURLをSandbox用に変更する必要があります。また、本番環境からSandboxをリフレッシュ（更新）すると、Sandbox内のデータやパッケージは削除され本番と同じ状態に上書きされるため注意が必要です。",
+    category: "その他"
+  },
+  {
+    id: 117,
+    question: "2人のリードエンジニアに、新製品を参照するすべての新しいケースへの読み取り・書き込みアクセスを与える自動化されたソリューションを探しています。管理者は何をする必要がありますか？",
+    options: [
+      { label: "A", text: "キューと基準ベースの共有ルールを作成する" },
+      { label: "B", text: "定義済みのケースチームと割り当てルールを作成する" },
+      { label: "C", text: "ユーザーベースの共有ルールとアドホック ケース チームを作成する" },
+      { label: "D", text: "自動応答ルールと公開グループを作成する" }
+    ],
+    correctAnswer: ["B"],
+    explanation: "回答\nB. 定義済みのケースチームと割り当てルールを作成します。\n本設問の意図は、特定の条件（新製品の参照）を持つ新規ケースに対して、特定ユーザーへのアクセス権を自動付与することです。割り当てルールのアクションとしてケースチームを指定することで、作成と同時に権限を付与できます。",
+    category: "割り当て・ルーティング"
+  },
+  {
+    id: 118,
+    question: "ケース オブジェクトを非公開に設定しています。サポートマネージャーは、担当者が予想以上にデータを閲覧しており、グループダッシュボードですべてのケースを確認できることに懸念を示しました。原因は何でしょうか？",
+    options: [
+      { label: "A", text: "ダッシュボードフィルタ" },
+      { label: "B", text: "ダッシュボードの登録" },
+      { label: "C", text: "動的ダッシュボード" },
+      { label: "D", text: "公開ダッシュボード" }
+    ],
+    correctAnswer: ["C"],
+    explanation: "回答\nC. 動的ダッシュボード\n動的ダッシュボードを使用し、実行ユーザーが高権限のユーザー（マネージャなど）に設定されている場合、閲覧者は自分の本来の権限を超えてデータを表示できてしまいます。共有モデルが非公開なのに多く見えている場合は、動的ダッシュボードの設定が原因と考えられます。",
+    category: "レポート・ダッシュボード"
+  },
+  {
+    id: 119,
+    question: "取引先に関連する未解決のケースの数をカウントするために週に1回実行する自動化ビジネスプロセスが必要です。管理者は、このビジネスプロセスの自動化をどのように推奨する必要がありますか？",
+    options: [
+      { label: "A", text: "アウトバウンドメッセージでワークフロールールを作成します。" },
+      { label: "B", text: "Process Builder でスケジュールされたプロセスを設定します。" },
+      { label: "C", text: "Flow Builder でスケジュールトリガフローを設定します。" },
+      { label: "D", text: "編集時に取引先を更新するプロセスを使用する" }
+    ],
+    correctAnswer: ["C"],
+    explanation: "回答\nC. Flow Builder でスケジュールトリガフローを設定します。\n（※旧設問の名残がありますが、現在の推奨回答です）\n週1回などの時間ベースで実行される定期バッチ処理のような自動化は、スケジュールトリガーフローを使用するのが最適です。",
+    category: "自動化"
+  },
+  {
+    id: 120,
+    question: "分析ユーザーはオブジェクトに対して読み取り、作成、編集のアクセス権が必要ですが、レコードの削除は制限する必要があります。管理者は何をすべきですか？",
+    options: [
+      { label: "A", text: "標準のシステム管理者プロファイルを分析ユーザーに割り当てる" },
+      { label: "B", text: "ユーザーに「すべて表示」アクセス権を付与し、最上位の役割に割り当てる" },
+      { label: "C", text: "オブジェクトごとに削除アクセス権を取り除いた、カスタムプロファイルを作成して割り当てる" },
+      { label: "D", text: "読み取り、作成、および編集アクセスを含む権限セットを作成して割り当てる" }
+    ],
+    correctAnswer: ["C"],
+    explanation: "回答\nC. オブジェクトごとに削除アクセス権を取り除いた、カスタムプロファイルを作成して割り当てる\n権限セットは権限を「追加」するものなので、既存のプロファイルに削除権限がある場合、制限することはできません。ベースとなるプロファイルから削除権限を確実に除く必要があるため、カスタムプロファイルを作成するのが正解です。",
+    category: "ユーザー・権限"
+  },
+  {
+    id: 121,
+    question: "カスタム項目を持つ新しいカスタムオブジェクトへのアクセス権を複数のユーザーに付与する必要があります。管理者が使用すべき2つのオプションはどれですか?",
+    options: [
+      { label: "A", text: "権限セットを作成する" },
+      { label: "B", text: "手動共有リストに追加する" },
+      { label: "C", text: "権限セットグループをユーザーに割り当てる" },
+      { label: "D", text: "組織全体のデフォルトを編集する" }
+    ],
+    correctAnswer: ["A", "C"],
+    explanation: "回答\nA. 権限権セットを作成する\nC. 権限セットグループをユーザーに割り当てる\nオブジェクトや項目への基本的なアクセス許可を与えるには、プロファイルまたは権限セットを使用します。複数のユーザーに対して柔軟に付与するには権限セット（およびそれらをまとめたグループ）が最適です。",
+    category: "ユーザー・権限"
+  },
+  {
+    id: 122,
+    question: "ユーザーのパスワードをリセットする際に、管理者が考慮すべきオプションはどれですか? 2つ回答を選択してください。",
+    options: [
+      { label: "A", text: "パスワードをリセットすると、ユーザーのパスワードポリシーが変更されます。" },
+      { label: "B", text: "SSOユーザーは、「パスワードを忘れた場合」リンクから自分のパスワードをリセットできます。" },
+      { label: "C", text: "ロックアウトされたユーザーのパスワードをリセットすると、ユーザーアカウントが自動的にロック解除されます。" },
+      { label: "D", text: "リセットした後、ログインするためにデバイスを有効化する必要がある場合があります。" }
+    ],
+    correctAnswer: ["C", "D"],
+    explanation: "回答\nC. ロックアウトされたユーザーのパスワードをリセットすると、ユーザーアカウントが自動的にロック解除されます。\nD. パスワードをリセットした後、Salesforceに正常にログインするために、ユーザーはデバイスを有効化する必要がある場合があります。\n管理者がパスワードをリセットするとロック状態は解除されます。また、新しい環境からのログインとみなされ、認証コードの入力などデバイスの有効化が求められることがあります。",
+    category: "ユーザー・権限"
+  },
+  {
+    id: 123,
+    question: "データローダを使用して新しい API からカスタム オブジェクトに新しいレコードを一括インポートすることを計画しています。管理者は何をする必要がありますか?",
+    options: [
+      { label: "A", text: "データのインポートを許可する権限セットを追加する。" },
+      { label: "B", text: "パスワードの末尾にセキュリティトークンを追加してログインする。" },
+      { label: "C", text: "データインポートツールを使用して一括インポートする。" },
+      { label: "D", text: "パスワードとセキュリティトークンをリセットする。" }
+    ],
+    correctAnswer: ["B"],
+    explanation: "回答\nB. パスワードの末尾にセキュリティ トークンを追加してログインする。\nデータローダはAPI経由で接続するため、信頼されていないネットワークからのアクセスの場合はパスワードの後にセキュリティトークンを付加して認証する必要があります。",
+    category: "データ管理"
+  },
+  {
+    id: 124,
+    question: "過去90日間に成立した商談名、ID、完了予定日、および金額を含むファイルをエクスポートする必要があります。管理者はどのようにエクスポートすべきですか？",
+    options: [
+      { label: "A", text: "データエクスポートウィザード" },
+      { label: "B", text: "データインポートウィザード" },
+      { label: "C", text: "データエクスポートサービス" },
+      { label: "D", text: "データローダ" }
+    ],
+    correctAnswer: ["D"],
+    explanation: "回答\nD. データローダ\n商談オブジェクトに対して、フェーズや日付などの条件を指定して特定の項目のみを抽出（エクスポート）するには、データローダが最適です。データエクスポートサービスは組織全体のバックアップ用であり、細かい条件指定には向きません。",
+    category: "データ管理"
+  },
+  {
+    id: 125,
+    question: "Northern Trails Outfittersは、クローズされたすべての案件の平均ステージ期間を知りたいと考えています。管理者はこの要求をどのようにサポートすべきですか？",
+    options: [
+      { label: "A", text: "プロセスビルダーを使用して、各商談の1日の平均を取得します。" },
+      { label: "B", text: "各商談のフェーズを追跡する数式項目を追加します。" },
+      { label: "C", text: "商談フェーズ期間レポートを実行します。" },
+      { label: "D", text: "クローズド商談の週次レポートスナップショットを更新します。" }
+    ],
+    correctAnswer: ["C"],
+    explanation: "回答\nC. 商談フェーズ期間レポートを実行します。\n商談オブジェクトには、標準で各フェーズの滞在期間（Stage Duration）を算出する項目が備わっています。これを利用した標準レポートを実行するのが最も効率的です。",
+    category: "レポート・ダッシュボード"
+  },
+  {
+    id: 126,
+    question: "取引先オブジェクトの業種項目のデータを商談ページレイアウトに表示するよう要求されています。管理者はどのタイプの項目を作成すべきですか？",
+    options: [
+      { label: "A", text: "カスタム取引先項目" },
+      { label: "B", text: "標準取引先項目" },
+      { label: "C", text: "クロスオブジェクト数式項目" },
+      { label: "D", text: "主従関係項目" }
+    ],
+    correctAnswer: ["C"],
+    explanation: "回答\nC. クロスオブジェクト数式項目\n商談（子）から取引先（親）の情報を参照して表示させるには、数式項目の中で親レコードの項目（Account.Industry）を指定する「クロスオブジェクト数式項目」を使用します。",
+    category: "オブジェクト・項目"
+  },
+  {
+    id: 127,
+    question: "ITマネージャーはシステムセキュリティの監査を行っています。管理者は、どのように組織のセキュリティ状態の概要を提供すべきですか?",
+    options: [
+      { label: "A", text: "組織全体のデフォルトを非公開に変更して制限します。" },
+      { label: "B", text: "イベント監視をオンにして追跡します。" },
+      { label: "C", text: "過去6か月のユーザーログイン データをダウンロードします。" },
+      { label: "D", text: "ヘルスチェックを実行して脆弱性を特定します。" }
+    ],
+    correctAnswer: ["D"],
+    explanation: "回答\nD. ヘルスチェックを実行して脆弱性を特定します。\n「設定 > ヘルスチェック」を実行することで、Salesforceが推奨するセキュリティ基準と比較した現在の組織の設定スコアと、修正が必要な脆弱性を一覧で確認できます。",
+    category: "共有・セキュリティ"
+  },
+  {
+    id: 128,
+    question: "ビジネス開発チームは、取引先作成プロセスの項目が多すぎて雑然としていると考えています。管理者はどの自動化ツールを使用すべきですか？",
+    options: [
+      { label: "A", text: "承認プロセス" },
+      { label: "B", text: "ワークフロールール" },
+      { label: "C", text: "Flow Builder" },
+      { label: "D", text: "入力規則" }
+    ],
+    correctAnswer: ["C"],
+    explanation: "回答\nC. Flow Builder\n「画面フロー」を使用することで、ウィザード形式で必要な情報を順番に入力させることができ、画面上の複雑さを解消してプロセスを簡素化できます。",
+    category: "自動化"
+  },
+  {
+    id: 129,
+    question: "シルバー/ゴールドパートナー向けケースは通常のキュー、プラチナレベルの場合は自動的にプライオリティサポートキューに送られます。管理者は何を使用すべきですか？",
+    options: [
+      { label: "A", text: "割り当てルール" },
+      { label: "B", text: "入力規則" },
+      { label: "C", text: "ワークフロールール" },
+      { label: "D", text: "エスカレーションルール" }
+    ],
+    correctAnswer: ["A"],
+    explanation: "回答\nA. 割り当てルール\nレコード作成時の属性（取引先のランク）に基づいて、所有者やキューを自動的に決定・振り分けするには「割り当てルール」を使用します。",
+    category: "割り当て・ルーティング"
+  },
+  {
+    id: 130,
+    question: "リードのマーケットセグメント項目が変換された取引先レコードに定期的にコピーされるようにするには、管理者は何を行う必要がありますか？",
+    options: [
+      { label: "A", text: "項目が正しくマッピングされていることを確認する。" },
+      { label: "B", text: "まったく同じ名前の項目があることを確認する。" },
+      { label: "C", text: "入力規則を作成する。" },
+      { label: "D", text: "リードから取引先にカスタム項目をコピーするためのレコードトリガーフローを作成する。" }
+    ],
+    correctAnswer: ["D"],
+    explanation: "回答\nD. リードから取引先にカスタム項目をコピーするためのレコードトリガーフローを作成する。\n通常のマッピングは変換の「その瞬間」のみ有効ですが、「定期的に（更新があった際も）」同期を維持するような要件には、レコードの更新を検知して動作するフローが必要です。",
+    category: "データ管理"
+  },
+  {
+    id: 131,
+    question: "ユーザーがネットワーク外から Salesforce にアクセスできないようにする依頼がありました。この構成に関する2つの考慮事項は何ですか？",
+    options: [
+      { label: "A", text: "IPアドレスの制限は、プロファイルまたは組織全体に対して設定します。" },
+      { label: "B", text: "ログイン時間を強制するために、プロファイルでU2Fセキュリティキーを制限する。" },
+      { label: "C", text: "IP制限を実施するには、「すべての要求でログインIPの制限を適用」を選択する必要があります。" },
+      { label: "D", text: "SSOを権限セットに割り当て、ネットワーク外からのログインを許可する。" }
+    ],
+    correctAnswer: ["A", "C"],
+    explanation: "回答\nA. IPアドレスの制限は、プロファイルまたは組織全体に対して設定します。\nC. IPアドレス制限を実施するには、「すべての要求でログインIPの制限を適用」を選択する必要があります。\nIP制限はプロファイルレベルでの厳格な設定が可能です。また、組織全体の「セッション設定」で、APIを含むすべての要求に対してログインIP制限を強制するオプションを有効にする必要があります。",
+    category: "共有・セキュリティ"
+  },
+  {
+    id: 132,
+    question: "クライアントサービスチームとカスタマーサポートチームは同じプロファイルを共有しますが権限セットは異なります。関連リストをクライアントサービスチームだけに制限するには？",
+    options: [
+      { label: "A", text: "共有設定" },
+      { label: "B", text: "ページレイアウトの割り当て" },
+      { label: "C", text: "コンポーネントの表示設定" },
+      { label: "D", text: "レコードタイプの割り当て" }
+    ],
+    correctAnswer: ["C"],
+    explanation: "回答\nC. コンポーネントの表示設定\nプロファイルが同じであるため、ページレイアウトでの出し分けは不可能です。Lightningアプリケーションビルダーで、コンポーネント（関連リスト）の表示条件に「ユーザーの権限セット」などを指定することで、動的な出し分けが可能になります。",
+    category: "レコードタイプ・レイアウト"
+  },
+  {
+    id: 133,
+    question: "経費報告書の提出、ルーティング、承認を簡素化するために、ガイド付きの経費報告書プロセスを作りたい。管理者が使用すべき2つのツールはどれですか？",
+    options: [
+      { label: "A", text: "入力規則" },
+      { label: "B", text: "Flow Builder" },
+      { label: "C", text: "承認プロセス" },
+      { label: "D", text: "クイックアクション" }
+    ],
+    correctAnswer: ["B", "C"],
+    explanation: "回答\nB. Flow Builder\nC. 承認プロセス\nガイド付きの入力画面には「画面フロー（Flow Builder）」、その後の多段階の承認フローには「承認プロセス」を組み合わせて構築します。",
+    category: "自動化"
+  },
+  {
+    id: 134,
+    question: "退職したユーザーを無効にしたい。ユーザーの非アクティブ化を妨げる2つの理由は何ですか？",
+    options: [
+      { label: "A", text: "ユーザーはテリトリー階層の一部です。" },
+      { label: "B", text: "ユーザーはカスタム階層項目にあります。" },
+      { label: "C", text: "ユーザーはワークフローのメールアラートの受信者に割り当てられています。" },
+      { label: "D", text: "ユーザーはロール階層の最上位の役割です。" }
+    ],
+    correctAnswer: ["B", "C"],
+    explanation: "回答\nB. ユーザーはカスタム階層項目にあります。\nC. ユーザーはワークフローのメールアラートの受信者に割り当てられています。\nユーザーを無効化できない主な条件には、カスタム階層項目（ユーザー参照項目）での参照先になっている場合や、自動化アクションの受信者として直接指定されている場合などが含まれます。",
+    category: "ユーザー・権限"
+  },
+  {
+    id: 135,
+    question: "本番環境にてレコードを新規作成するフローを持っていますが、新しいレコードは作成されていません。問題は何でしょうか？",
+    options: [
+      { label: "A", text: "フローは読み取り専用です。" },
+      { label: "B", text: "フローが非アクティブです。" },
+      { label: "C", text: "フローURLが無効になっている。" },
+      { label: "D", text: "フロートリガーがありません。" }
+    ],
+    correctAnswer: ["B"],
+    explanation: "回答\nB. フローが非アクティブです。\nフローを作成して保存しただけでは動作しません。必ず「有効化（Activate）」ボタンを押して、アクティブな状態にする必要があります。",
+    category: "自動化"
+  },
+  {
+    id: 136,
+    question: "Cloud Kicksの営業担当者は、$1000000を超える商談を獲得する可能性が高い場合に通知を受け取りたい。要件を満たす機能はどれですか？",
+    options: [
+      { label: "A", text: "重要な取引" },
+      { label: "B", text: "大規模商談アラート" },
+      { label: "C", text: "活動タイムライン" },
+      { label: "D", text: "パフォーマンスチャート" }
+    ],
+    correctAnswer: ["B"],
+    explanation: "回答\nB. 大規模商談アラート\n商談の金額と確度が設定した基準を超えた際に、自動的に指定されたユーザーへメール通知を行う標準機能です。高額商談の進捗を共有するのに適しています。",
+    category: "自動化"
+  },
+  {
+    id: 137,
+    question: "3つの事業部門があり、各部門で表示すべき項目が異なります。また、営業チームとサービスチームでも必要な項目が異なります。どのように構成すべきですか？",
+    options: [
+      { label: "A", text: "3つのページレイアウトを持つ2つのレコードタイプを作成する。" },
+      { label: "B", text: "6つのページレイアウトで 1 つのレコードタイプを作成する。" },
+      { label: "C", text: "2つのページレイアウトを持つ3つのレコードタイプを作成する。" },
+      { label: "D", text: "1つのページ レイアウトを持つ6つのレコードタイプを作成する。" }
+    ],
+    correctAnswer: ["C"],
+    explanation: "回答\nC.それぞれ2つのページレイアウトを持つ3つのレコードタイプを作成する。\n事業部門（3つ）の出し分けには「レコードタイプ」を使用します。各レコードタイプに対して、営業用とサービス用の「ページレイアウト（計2つ）」を割り当てる（3タイプ×2レイアウト=計6つの割り当て）ことで、要件を満たせます。",
+    category: "レコードタイプ・レイアウト"
+  },
+  {
+    id: 138,
+    question: "商談レコードの重要な項目の見逃し防止、次のフェーズへの移動強制、成約後の逆戻り禁止。対処するために使用すべき3つのオプションは？",
+    options: [
+      { label: "A", text: "ガイダンス付きパスを有効にする。" },
+      { label: "B", text: "入力規則を使用する。" },
+      { label: "C", text: "商談パスを構成する。" },
+      { label: "D", text: "フローを使用して項目に必須のマークを付ける。" },
+      { label: "E", text: "ページ レイアウトで必須項目をマークする。" }
+    ],
+    correctAnswer: ["A", "B", "C"],
+    explanation: "回答\nA. ガイダンス付きパスを有効にする。\nB. 入力規則を使用する。\nC. 商談パスを構成する。\nパスを構成して各フェーズでのガイダンスを表示し、入力規則で「フェーズが交渉なら金額必須」「成立後はフェーズ変更不可」などのロジックを組むことで要件を網羅できます。",
+    category: "レコードタイプ・レイアウト"
+  },
+  {
+    id: 139,
+    question: "カスタム項目を削除することを決定しました。項目を削除すると、項目内のデータはどうなりますか？",
+    options: [
+      { label: "A", text: "項目のデータは20日間保存されます。" },
+      { label: "B", text: "データは完全に削除されます。" },
+      { label: "C", text: "項目に関連付けられたデータは必須です。" },
+      { label: "D", text: "データはごみ箱から復元できます。" }
+    ],
+    correctAnswer: ["D"],
+    explanation: "回答\nD. データはごみ箱から復元できます。\n削除されたカスタム項目とそのデータは、完全削除される前の15日間はごみ箱に保持され、その期間内であれば復元が可能です。",
+    category: "オブジェクト・項目"
+  },
+  {
+    id: 140,
+    question: "CEOの役職を持つ取引先責任者が作成された時、取引先のレコードがCEOの名前で更新されるようにしたい。使用する機能はどれですか？",
+    options: [
+      { label: "A", text: "Flow Builder" },
+      { label: "B", text: "ワークフロールール" },
+      { label: "C", text: "プロセスビルダー" },
+      { label: "D", text: "入力規則" }
+    ],
+    correctAnswer: ["A"],
+    explanation: "回答\nA. Flow Builder\nレコードの作成・更新をトリガーにして、関連する別のレコード（親の取引先など）を自動更新する処理には、現在の標準であるレコードトリガーフロー（Flow Builder）を使用します。",
+    category: "自動化"
+  },
+  {
+    id: 141,
+    question: "成功したオープンハウスからのホットリードを商談に変換します。関連するキャンペーンメンバーの履歴を保持しながら変換するには、どこから行うべきですか？",
+    options: [
+      { label: "A", text: "リードを削除し、新しい取引先責任者と商談を作成する。" },
+      { label: "B", text: "リードを複製し、複製されたレコードを取引先責任者に変換する。" },
+      { label: "C", text: "キャンペーンメンバーの詳細ページからリードを変換する。" },
+      { label: "D", text: "キャンペーンメンバーの詳細ページから取引先責任者を追加する。" }
+    ],
+    correctAnswer: ["C"],
+    explanation: "回答\nC. キャンペーンメンバーの詳細ページからリードを変換する。\nキャンペーンメンバーとして登録されているリードレコードの詳細画面から「取引開始（変換）」を行うことで、そのキャンペーンとの紐付け情報を維持したまま、取引先・取引先責任者・商談を作成できます。",
+    category: "キャンペーン・マーケティング"
+  },
+  {
+    id: 142,
+    question: "インターンを雇い、既存のリードと新しく作成したリードレコードを識別する方法を要求されました。どのようなアプローチを取る必要がありますか？",
+    options: [
+      { label: "A", text: "別のリード用Lightningアプリケーションを作成する。" },
+      { label: "B", text: "レコードタイプを定義し、インターンに割り当てる。" },
+      { label: "C", text: "インターンが使用できるように Web-to-Leadをセットアップする。" },
+      { label: "D", text: "アクティブなリード割り当てルールを更新する。" }
+    ],
+    correctAnswer: ["B"],
+    explanation: "回答\nB. レコードタイプを定義し、インターンに割り当てる。\n特定のユーザーグループ（インターン）が作成するレコードを他と区別するには、専用のレコードタイプを作成し、それらのユーザーに割り当てるのが最も標準的な方法です。",
+    category: "レコードタイプ・レイアウト"
+  },
+  {
+    id: 143,
+    question: "リードステータス項目を「適格」としてマークするために、予算項目にデータを入力するように要求されました。どのツールを使用すべきですか？",
+    options: [
+      { label: "A", text: "リードのコンバージョン" },
+      { label: "B", text: "必須項目" },
+      { label: "C", text: "ワークフロールール" },
+      { label: "D", text: "入力規則" }
+    ],
+    correctAnswer: ["D"],
+    explanation: "回答\nD. 入力規則\n「ステータスが適格になった時点で特定の項目が入力されていること」という条件付きの入力を強制するには、入力規則の論理式で制御するのが最適です。単なる必須項目設定では作成時から強制されてしまいます。",
+    category: "データ管理"
+  },
+  {
+    id: 144,
+    question: "ケースページで自分の役割に役立つ情報を見たいと考えています。管理者はどのようにページをより動的で使いやすくすべきですか？",
+    options: [
+      { label: "A", text: "コンポーネントの可視性フィルタをコンポーネントに追加する。" },
+      { label: "B", text: "レコード詳細コンポーネントから項目を削除する。" },
+      { label: "C", text: "ページから余分なコンポーネントを削除する。" },
+      { label: "D", text: "フィルタを使用してより多くのタブコンポーネントを含める。" }
+    ],
+    correctAnswer: ["A"],
+    explanation: "回答\nA. コンポーネントの可視性フィルタをコンポーネントに追加する。\nLightningアプリケーションビルダーで、コンポーネントごとに「表示条件（可視性フィルタ）」を設定し、ユーザーのプロファイルや役割、レコードのステータス等に応じてコンポーネントを出し分けすることで、動的で最適なUIを提供できます。",
+    category: "レコードタイプ・レイアウト"
+  },
+  {
+    id: 145,
+    question: "特定の条件を満たすレコードを検索し、それらのレコードの値を変数に保存して後でフローで使用する場合、どのフロー要素を追加すべきですか？",
+    options: [
+      { label: "A", text: "割り当て" },
+      { label: "B", text: "レコードを取得" },
+      { label: "C", text: "レコードを作成" },
+      { label: "D", text: "レコードを更新" }
+    ],
+    correctAnswer: ["B"],
+    explanation: "回答\nB. レコードを取得\n「レコードを取得（Get Records）」要素を使用することで、条件に一致するレコードをデータベースから検索し、その項目値を変数に格納して後続の処理で利用できるようになります。",
+    category: "自動化"
+  },
+  {
+    id: 146,
+    question: "Salesforceへの不正アクセスを防ぐために、管理者は何をすべきですか？",
+    options: [
+      { label: "A", text: "セッションのTLS 要件を無効にする" },
+      { label: "B", text: "多要素認証を有効にする" },
+      { label: "C", text: "組織全体のデフォルトをカスタマイズする" },
+      { label: "D", text: "ログインページでキャッシュとオートコンプリートを有効にする" }
+    ],
+    correctAnswer: ["B"],
+    explanation: "回答\nB. 多要素認証を有効にする\nユーザー名とパスワードに加えて、承認済みのデバイスでの操作を求める多要素認証（MFA）を有効にすることが、不正ログインや第三者による不正アクセスを防ぐための最も強力な対策です。",
+    category: "共有・セキュリティ"
+  },
+  {
+    id: 147,
+    question: "顧客取引先ページレイアウトを販売およびサポートユーザーに、パートナーページレイアウトをパートナー管理チームに割り当てました。何を構成すべきですか?",
+    options: [
+      { label: "A", text: "公開グループと基準ベースの共有ルールを使用する。" },
+      { label: "B", text: "パートナー管理チームを既定の取引先チームに追加する。" },
+      { label: "C", text: "プロファイルに取引先への「CRUD」アクセス権を付与する。" },
+      { label: "D", text: "顧客取引先用に 1 つ、パートナー取引先用に1つのレコード タイプを作成する。" }
+    ],
+    correctAnswer: ["D"],
+    explanation: "回答\nD. 顧客取引先用に 1 つのレコード タイプを作成し、パートナー取引先用に1つのレコード タイプを作成します。\n異なるページレイアウトを特定のユーザーグループに正しく割り当てるには、プロファイルごとにレコードタイプを指定してレイアウトを割り当てる必要があります。",
+    category: "レコードタイプ・レイアウト"
+  },
+  {
+    id: 148,
+    question: "取引先の詳細、関連リスト、Chatterフィードをそれぞれ別のタブに表示したいと考えています。管理者はどのタイプのページを作成すべきですか？",
+    options: [
+      { label: "A", text: "Lightningアプリケーションページ" },
+      { label: "B", text: "Lightningページタブ" },
+      { label: "C", text: "Lightningレコードページ" },
+      { label: "D", text: "Lightningページコンポーネント" }
+    ],
+    correctAnswer: ["C"],
+    explanation: "回答\nC. Lightningレコードページ\nオブジェクトのレコード画面の構成（詳細、関連リスト、タブの配置など）をカスタマイズするには、Lightningレコードページを作成し、タブコンポーネントを配置して構成します。",
+    category: "レコードタイプ・レイアウト"
+  },
+  {
+    id: 149,
+    question: "営業チームは、管理者に送信メッセージを自動化するよう依頼しました。管理者は要求を満たすために何を利用すべきですか?",
+    options: [
+      { label: "A", text: "プロセスビルダー" },
+      { label: "B", text: "タスクの割り当て" },
+      { label: "C", text: "ワークフロールール" },
+      { label: "D", text: "Flow Builder" }
+    ],
+    correctAnswer: ["D"],
+    explanation: "回答\nD. Flow Builder\n送信メッセージ（Outbound Message）を含む、レコード更新に伴うあらゆる自動化プロセスは、現在 Flow Builder に集約・推奨されています。",
+    category: "自動化"
+  },
+  {
+    id: 150,
+    question: "セールスフェーズ設定フローでカスタマイズできる2つのオブジェクトはどれですか？",
+    options: [
+      { label: "A", text: "リード" },
+      { label: "B", text: "キャンペーン" },
+      { label: "C", text: "商談" },
+      { label: "D", text: "キャンペーンメンバー" }
+    ],
+    correctAnswer: ["A", "C"],
+    explanation: "回答\nA. リード\nC. 商談\nセールスフェーズ設定では、リードから商談へ移行するプロセス全体の進捗や段階を定義・把握することができます。",
+    category: "レコードタイプ・レイアウト"
+  },
+{
+    id: 151,
+    question: "管理者は、最近の更新の一部として作成されたフローを更新するように依頼されました。管理者が編集のためにフローを開くと、フローツールボックスには、割り当て、決定、レコードの取得、およびループの4つの要素のみが表示されます。これは何が原因でしょうか？",
+    options: [
+      { label: "A", text: "フローが画面フローである。" },
+      { label: "B", text: "フローのバージョンが非アクティブである。" },
+      { label: "C", text: "フローが保存前更新フローである。" },
+      { label: "D", text: "フローのバージョンがアクティブ化されている。" }
+    ],
+    correctAnswer: ["C"],
+    explanation: "回答\nC. フローが保存前のフローである。\n保存前更新のフローでは、割り当て・決定・レコードを取得・ループの4要素のみをサポートしておりますので、Cが正解です。\n保存前更新フロー",
+    category: "自動化"
+  },
+  {
+    id: 152,
+    question: "Ursa Solar Majorは、サービスチームのためにSalesforceを評価しており、すぐに使用できるオブジェクトを知りたいと考えています。サポートのユースケースを検討している管理者が使用できる標準オブジェクトを3つ選択してください。",
+    options: [
+      { label: "A", text: "契約" },
+      { label: "B", text: "ケース" },
+      { label: "C", text: "チケット" },
+      { label: "D", text: "リクエスト" },
+      { label: "E", text: "取引先" }
+    ],
+    correctAnswer: ["A", "B", "E"],
+    explanation: "回答\nA. 契約\nB. ケース\nE. 取引先\nチケットやリクエストといった標準オブジェクトは存在しませんので、A,B,Eが正解となります。",
+    category: "オブジェクト・項目"
+  },
+  {
+    id: 153,
+    question: "管理者は、ユーザーが顧客を失ったときに入力するフォームを Salesforceで作成したいと考えています。この目標を達成するためのウィザードの作成をサポートする自動化ツールはどれですか？",
+    options: [
+      { label: "A", text: "プロセスビルダー" },
+      { label: "B", text: "承認プロセス" },
+      { label: "C", text: "アウトバウンド メッセージ" },
+      { label: "D", text: "Flow Builder" }
+    ],
+    correctAnswer: ["D"],
+    explanation: "回答\nD. Flow Builder\n入力フォーム作成は画面フローにて簡単に作成することができますので、Dが正解です。",
+    category: "自動化"
+  },
+  {
+    id: 154,
+    question: "DreamHouse Realtyのセールス マネージャーは、セールスユーザーが、今後90日以内に完了すると予想されるパイプラインの商談をすばやく表示および編集できるようにしたいと考えています。この要求を達成するために、管理者は何をする必要がありますか？",
+    options: [
+      { label: "A", text: "カスタムレポートを作成し、リマインダーとして毎日受け取るようにスケジュールします。" },
+      { label: "B", text: "セールスコンソールを有効にして、各商談のタブを開く方法をユーザーに示します。" },
+      { label: "C", text: "商談オブジェクトでリストビューを作成し、ユーザーがビューをかんばんに切り替えて編集することをお勧めします。" },
+      { label: "D", text: "新しい営業ダッシュボードを作成し、基準を満たすすべての商談を表示するコンポーネントを追加します。" }
+    ],
+    correctAnswer: ["C"],
+    explanation: "回答\nC. 商談オブジェクトでリストビューを作成し、ユーザーがビューをかんばんに切り替えてドラッグアンドドロップで編集することをお勧めします。\n「90日以内に完了すると予想される」商談ビューを作成し、そのビューをかんばんビューに切り替えることでドラッグアンドドロップで素早くステータスを更新することができるようになりますので、Cが正解です。",
+    category: "レコードタイプ・レイアウト"
+  },
+  {
+    id: 155,
+    question: "Cloud kicksの管理者はカスタム項目を削除しましたが、その項目をまだ使用しているビジネスユニットがあることに気付きました。項目の削除を取り消す場合、管理者は何を考慮する必要がありますか？",
+    options: [
+      { label: "A", text: "項目をレポートに再度追加する必要があります。" },
+      { label: "B", text: "項目履歴は削除されたままになります。" },
+      { label: "C", text: "項目をごみ箱から復元する必要がある。" },
+      { label: "D", text: "項目をページ レイアウトに再度追加する必要がある。" }
+    ],
+    correctAnswer: ["C"],
+    explanation: "回答\nC. 項目をごみ箱から復元する必要がある。\n削除したカスタム項目とそのデータは、削除後15日が経過するまで保存されます。それまではその項目とデータをごみ箱から復元できますのでCが正解です。\n削除されたカスタム項目の管理",
+    category: "オブジェクト・項目"
+  },
+  {
+    id: 156,
+    question: "Universal Containerの管理者は、2つのオブジェクト(コンテナ・購入)を作成しました。すべてのコンテナレコードをSalesforceの購入レコードに表示するよう要求されています。どのタイプのリレーションが必要となるでしょうか？",
+    options: [
+      { label: "A", text: "積み上げ集計項目" },
+      { label: "B", text: "数式項目" },
+      { label: "C", text: "主従関係" },
+      { label: "D", text: "参照関係" }
+    ],
+    correctAnswer: ["C"],
+    explanation: "回答\nC. 主従関係\nこの問題のポイントは「すべての(関連する)コンテナレコードを表示する」点です。参照関係だと、親オブジェクトが参照できても子オブジェクトが必ず参照できるわけではありません。主従関係ですと、親レコードが見えていれば紐づく子レコードは自動的に参照できますので、Cが正解となります。",
+    category: "オブジェクト・項目"
+  },
+  {
+    id: 157,
+    question: "Ursa Major Solar の営業担当者は、商談の管理に苦労しています。リーダーシップチームは、営業担当者が優先順位をつけてより多くの案件を成約できるよう、管理者に依頼しました。どのような設定をすべきでしょうか。",
+    options: [
+      { label: "A", text: "Einstein 活動キャプチャ" },
+      { label: "B", text: "Einstein 商談スコアリング" },
+      { label: "C", text: "Einstein 検索のパーソナライゼーション" },
+      { label: "D", text: "Einstein リードスコアリング" }
+    ],
+    correctAnswer: ["B"],
+    explanation: "回答\nB. Einstein 商談スコアリング\nEinstein(アインシュタイン) 商談スコアリングを使用すると、AIが各商談に対して1~99のスコアを付けます。商談スコアを確認すると、商談が成立する可能性を判断することができるため、Bが正解です。\nEinstein 商談スコアリング",
+    category: "その他"
+  },
+  {
+    id: 158,
+    question: "管理者は、自動採番のデータ型をテキスト項目に変更するよう求められました。項目を変更する前に、管理者は何に注意する必要がありますか?",
+    options: [
+      { label: "A", text: "既存の項目値は変更されません。" },
+      { label: "B", text: "既存の項目値が変換されます。" },
+      { label: "C", text: "既存の項目値は削除されます。" },
+      { label: "D", text: "テキストへの既存の自動番号項目が防止されます。" }
+    ],
+    correctAnswer: ["A"],
+    explanation: "回答\nA. 既存の項目値は変更されません。\nもともと自動採番で作成され、入力されていた項目値はそのまま残り続けますので、Aが正解です。",
+    category: "オブジェクト・項目"
+  },
+  {
+    id: 159,
+    question: "Cloud Kicksは、取引先責任者を作成する新しい画面フローをテストするように管理者に依頼しました。フローをテストするための2つの重要なコンポーネントは何ですか？",
+    options: [
+      { label: "A", text: "フローインタビューを設定してフローをテストします。" },
+      { label: "B", text: "フローを実行し、取引先責任者を作成します。" },
+      { label: "C", text: "フロービルダーのデバッグ機能を使用してフローをテストする。" },
+      { label: "D", text: "サンドボックスでフローをテストします。" }
+    ],
+    correctAnswer: ["C", "D"],
+    explanation: "回答\nC. フロービルダーのデバッグ機能を使用してフローをテストする。\nD. サンドボックスでフローをテストします。\nFlow Buiderの画面から「デバッグ」ボタンを押下することでデバッグが可能ですので、Cが正解となります。また、本番環境でフローをテストすることは非推奨ですので、テスト環境であるSandboxにてテストを実施します。",
+    category: "自動化"
+  },
+  {
+    id: 160,
+    question: "AW Computingの管理者は、Salesforceへのログインに問題があるユーザーと協力しています。ユーザーがログインできない理由を特定するために、管理者は何をすべきですか？",
+    options: [
+      { label: "A", text: "ユーザーのログイン履歴を確認します。" },
+      { label: "B", text: "セットアップ監査証跡を実行して確認します。" },
+      { label: "C", text: "パスワード履歴を取得して確認します。" },
+      { label: "D", text: "プロファイルのセキュリティトークンをリセットします。" }
+    ],
+    correctAnswer: ["A"],
+    explanation: "回答\nA. ユーザーのログイン履歴を確認します。\nユーザーのログイン履歴を確認することで、ログインの失敗履歴を確認することができます。上記を参照することで、IP制限によるものなのか、パスワード間違いによるものなのか等を判別できるため、Aが正解となります。",
+    category: "ユーザー・権限"
+  },
+  {
+    id: 161,
+    question: "AW Computingは、ケースが重要なレコードタイプとして保存されたときに太字メッセージを表示するコンポーネントと、取引先のステータスをすばやく更新する方法を求めています。何を使用すべきですか？",
+    options: [
+      { label: "A", text: "関連リスト" },
+      { label: "B", text: "関連レコード" },
+      { label: "C", text: "レコードの詳細" },
+      { label: "D", text: "リッチテキスト" }
+    ],
+    correctAnswer: ["B", "D"],
+    explanation: "回答\nB. 関連レコード\nD. リッチテキスト\n関連レコードコンポーネントは、親レコードの項目を、ケースレイアウト上から直接編集・更新することが可能です。また、リッチテキストコンポーネントを使用することで、太字フォントにて文字を記載でき、表示フィルターで特定のレコードタイプのみ表示させることが可能です。",
+    category: "レコードタイプ・レイアウト"
+  },
+  {
+    id: 162,
+    question: "Northern Trail Outfittersのユーザーがログインに何度も失敗し、組織からロックアウトされています。管理者はどのように助けるべきですか？2つの方法を選択してください。",
+    options: [
+      { label: "A", text: "ユーザーとしてログインして解除します。" },
+      { label: "B", text: "パスワードポリシーをリセットします。" },
+      { label: "C", text: "ユーザーのレコード詳細ページでパスワードをリセットします。" },
+      { label: "D", text: "ユーザーのレコード詳細ページのロック解除ボタンを使用します。" }
+    ],
+    correctAnswer: ["C", "D"],
+    explanation: "回答\nC. ユーザーのレコード詳細ページでパスワードをリセットします。\nD. ユーザーのレコード詳細ページのロック解除ボタンを使用します。\n該当ユーザーのレコード詳細ページから、ロック解除ボタン（ロック中のみ出現）またはパスワードリセットを行うことで、再ログインが可能になります。",
+    category: "ユーザー・権限"
+  },
+  {
+    id: 163,
+    question: "Universal Containersのユーザーが退職しました。新しいユーザーのためにライセンスを解放するには、管理者は何をする必要がありますか？",
+    options: [
+      { label: "A", text: "元従業員のユーザーレコードを無効にする。" },
+      { label: "B", text: "元従業員のユーザーレコードを削除する。" },
+      { label: "C", text: "元従業員のユーザーレコードを凍結する。" },
+      { label: "D", text: "以前のユーザーレコードを新しいユーザーに変更する。" }
+    ],
+    correctAnswer: ["A"],
+    explanation: "回答\nA. 元従業員のユーザーレコードを無効にする。\nSalesforceでは、ユーザーを削除することはできません。退職等でライセンスを空けるには、レコードを「無効」にする必要があります。",
+    category: "ユーザー・権限"
+  },
+  {
+    id: 164,
+    question: "Universal Containerの管理者は、ブランディングをSalesforceに追加したいと考えています。管理者が留意すべき2つの考慮事項はどれですか",
+    options: [
+      { label: "A", text: "一度にアクティブにできるテーマは1つだけで、テーマは組織全体に適用されます。" },
+      { label: "B", text: "テーマはSalesforce Classicとモバイルに適用されます。" },
+      { label: "C", text: "組み込みテーマから最大150個のカスタムテーマを作成できます。" },
+      { label: "D", text: "Chatterの外部ユーザには、組み込みのLightningテーマのみが表示されます。" }
+    ],
+    correctAnswer: ["A", "D"],
+    explanation: "回答\nA. 一度にアクティブにできるテーマは1つだけで、テーマは組織全体に適用されます。\nD. Chatterの外部ユーザには、組み込みのLightningテーマのみが表示されます。\nテーマは組織で1つのみ有効化でき、Classicやモバイルには適用されません。また外部ユーザーには標準テーマのみが表示されます。",
+    category: "その他"
+  },
+  {
+    id: 165,
+    question: "別のシステムからレコードをインポートおよび更新する場合、管理者は識別子として何を使用する必要がありますか？",
+    options: [
+      { label: "A", text: "リッチ テキスト項目" },
+      { label: "B", text: "レコードID" },
+      { label: "C", text: "自動採番項目" },
+      { label: "D", text: "外部 ID" }
+    ],
+    correctAnswer: ["D"],
+    explanation: "回答\nD. 外部ID\nSalesforce外の一意識別子をキーとしてアップサート（作成または更新）処理を行うには、外部ID項目を設定する必要があります。",
+    category: "データ管理"
+  },
+  {
+    id: 166,
+    question: "ワークアイテムとプロジェクトのカスタムオブジェクトの関係を主従関係から参照関係に変更するのを妨げる可能性があるシナリオはどれですか？",
+    options: [
+      { label: "A", text: "連結オブジェクトが必要である" },
+      { label: "B", text: "すべてのレコードに値が含まれている" },
+      { label: "C", text: "レコード保存に参照項目が必要" },
+      { label: "D", text: "主オブジェクトの積み上げ集計項目" }
+    ],
+    correctAnswer: ["D"],
+    explanation: "回答\nD. 主オブジェクトの積み上げ集計項目\n積み上げ集計項目は、主従関係があることで動作する機能です。この項目が存在する限り、主従関係を参照関係に変更することはできません。",
+    category: "オブジェクト・項目"
+  },
+  {
+    id: 167,
+    question: "取引先レコードを参照するときに、ケースに関する特定の情報を確認する必要があります。管理者が設定で行う必要がある2つの変更はどれですか？",
+    options: [
+      { label: "A", text: "ページ レイアウト エディタを使用して、関連リストタイプを拡張リストに変更します。" },
+      { label: "B", text: "Appビルダーでタイプを関連リストとして選択します。" },
+      { label: "C", text: "Appビルダーでタイプを拡張リストとして選択します。" },
+      { label: "D", text: "ページレイアウトエディタを使用して、適切な列を含めます。" }
+    ],
+    correctAnswer: ["A", "D"],
+    explanation: "回答\nA. ページ レイアウト エディタを使用して、関連リストタイプを拡張リストに変更します。\nD. ページレイアウトエディタを使用して、ケース関連リストに適切な列を含めます。\n関連リストの表示列の追加と、表示形式を「拡張関連リスト」に切り替えることで、より多くの情報を確認できるようになります。",
+    category: "レコードタイプ・レイアウト"
+  },
+  {
+    id: 168,
+    question: "サポートエージェントが取引先のステータスを「監査済み」に変更した場合、監査日項目を今日の日付で自動的に更新したい。どのツールを使用すべきですか？",
+    options: [
+      { label: "A", text: "承認プロセス" },
+      { label: "B", text: "数式項目" },
+      { label: "C", text: "Flow Builder" },
+      { label: "D", text: "入力規則" }
+    ],
+    correctAnswer: ["C"],
+    explanation: "回答\nC. Flow Builder\n保存時に特定の条件を満たした場合に別項目を自動更新する処理は、レコードトリガーフロー（Flow Builder）で実装します。",
+    category: "自動化"
+  },
+  {
+    id: 169,
+    question: "マーケティングチームがキャンペーンメンバーのステータス選択リストの値を自分たちでカスタマイズできるようにするために必要な2つの権限はどれですか？",
+    options: [
+      { label: "A", text: "キャンペーンメンバーの作成と編集" },
+      { label: "B", text: "マーケティングユーザー機能ライセンス" },
+      { label: "C", text: "アプリケーションのアクセス許可をカスタマイズする" },
+      { label: "D", text: "キャンペーンの編集権限" }
+    ],
+    correctAnswer: ["B", "D"],
+    explanation: "回答\nB. マーケティングユーザー機能ライセンス\nD. キャンペーンの編集権限\nキャンペーンメンバーの状況を追加するには、ユーザーにマーケティングユーザーライセンスが付与されており、かつ親であるキャンペーンの編集権限を持っている必要があります。",
+    category: "キャンペーン・マーケティング"
+  },
+  {
+    id: 170,
+    question: "契約金額項目にある金額に基づいて、取引先を小規模、中規模、大規模に分類するレポートが必要です。どの機能を使用すべきですか？",
+    options: [
+      { label: "A", text: "詳細列" },
+      { label: "B", text: "バケット列" },
+      { label: "C", text: "グループ化" },
+      { label: "D", text: "フィルタロジック" }
+    ],
+    correctAnswer: ["B"],
+    explanation: "回答\nB. バケット列\nバケット列を使用することで、特定の数値範囲（0-1000万は小など）を指定して、レポート内で新しい分類列を作成できます。",
+    category: "レポート・ダッシュボード"
+  },
+  {
+    id: 171,
+    question: "取引先とケースのカテゴリ項目で一貫した選択リスト値を使用し、レコードタイプに応じた値を使用したい。実装に必要な2つのオプションは？",
+    options: [
+      { label: "A", text: "複数選択リスト" },
+      { label: "B", text: "連動選択リスト" },
+      { label: "C", text: "グローバル選択リスト" },
+      { label: "D", text: "カスタム選択リスト" }
+    ],
+    correctAnswer: ["C", "D"],
+    explanation: "回答\nC. グローバル選択リスト\nD. カスタム選択リスト\n複数のオブジェクト間で同じ選択肢セット（グローバル値セット）を共有し、カスタム項目として実装することで一貫性を保てます。",
+    category: "オブジェクト・項目"
+  },
+  {
+    id: 172,
+    question: "ユーザがユーザインターフェース経由でSalesforceにログインするときに、認証のためにチェックされる2つの設定はどれですか？",
+    options: [
+      { label: "A", text: "APIログイン権限に対するユーザーの2要素認証" },
+      { label: "B", text: "ロールのIPアドレスの制限" },
+      { label: "C", text: "ユーザープロファイルのログイン時間の制限" },
+      { label: "D", text: "ユーザーインターフェイスログインのアクセス許可に対するユーザーの2要素認証" }
+    ],
+    correctAnswer: ["C", "D"],
+    explanation: "回答\nC. ユーザープロファイルのログイン時間の制限\nD. ユーザーインターフェイスログインのアクセス許可に対するユーザーの2要素認証\nログイン時にはプロファイル設定のログイン時間制限や、UIアクセスのための2要素認証（MFA）がチェックされます。IP制限はロールではなくプロファイルです。",
+    category: "共有・セキュリティ"
+  },
+  {
+    id: 173,
+    question: "販売およびマーケティングチーム用のダッシュボードを作成する締め切りが迫っています。予算を増やさずに間に合わせるために何をすべきですか？",
+    options: [
+      { label: "A", text: "チームの誰かをトレーニングして作成させる。" },
+      { label: "B", text: "AppExchange で、簡単にカスタマイズできるビルド済みのソリューションを確認します。" },
+      { label: "C", text: "コンサルタントを雇って構築する。" },
+      { label: "D", text: "締め切りに間に合うように手動で構築する。" }
+    ],
+    correctAnswer: ["B"],
+    explanation: "回答\nB. AppExchange で、簡単にカスタマイズできるビルド済みのソリューションを確認します。\n予算と時間が限られている場合、AppExchangeで提供されている標準的なダッシュボードパッケージを導入して調整するのが最も効率的です。",
+    category: "その他"
+  },
+  {
+    id: 174,
+    question: "適切なメッセージを検索するのに役立つカテゴリを含む電子メール チャネルでメッセージを送信するよう要求がありました。どのソリューションを提案すべきですか?",
+    options: [
+      { label: "A", text: "事前作成済みのクイック テキスト" },
+      { label: "B", text: "事前に作成された電子メール テンプレート" },
+      { label: "C", text: "事前構築済みのフロー テンプレート" },
+      { label: "D", text: "事前構築済みの自動レスポンスルール" }
+    ],
+    correctAnswer: ["D"],
+    explanation: "回答\nD. 事前構築済みの自動レスポンスルール\n自動レスポンスルールを使用すると、送信されてきた内容（カテゴリー等）に応じて自動的に適切なメールを返信でき、対応に一貫性を持たせられます。",
+    category: "自動化"
+  },
+  {
+    id: 175,
+    question: "管理者がカスタマイズすべき標準項目はどれですか？3つ選択してください。",
+    options: [
+      { label: "A", text: "選択リスト項目の値" },
+      { label: "B", text: "ヘルプテキスト" },
+      { label: "C", text: "項目履歴の追跡" },
+      { label: "D", text: "小数点以下の桁数" },
+      { label: "E", text: "項目名" }
+    ],
+    correctAnswer: ["A", "B", "C"],
+    explanation: "回答\nA. 選択リスト項目の値\nB. ヘルプテキスト\nC. 項目履歴の追跡\n標準項目でも選択肢の追加、ガイダンス（ヘルプテキスト）の設定、履歴の追跡はカスタマイズ可能です。",
+    category: "オブジェクト・項目"
+  },
+  {
+    id: 176,
+    question: "フィールドタイプをテキストから選択リスト項目に変更する際に、管理者が留意すべきデータ損失に関する2つの考慮事項は何ですか？",
+    options: [
+      { label: "A", text: "グローバル値セットを使用すると、データが失われることはありません。" },
+      { label: "B", text: "割り当てとエスカレーションのルールは、影響を受ける可能性があります。" },
+      { label: "C", text: "データの損失を防ぐために、Visualforce参照が自動更新されます。" },
+      { label: "D", text: "カスタム項目に基づくすべてのリストビューが削除される" }
+    ],
+    correctAnswer: ["B", "D"],
+    explanation: "回答\nB. 割り当てとエスカレーションのルールが影響を受ける可能性があります。\nD. カスタム項目に基づくすべてのリストビューが削除されます。\n型変更により既存のフィルタや自動化ルールの条件が不整合となり動作しなくなったり、その項目を使用しているリストビューが削除されるリスクがあります。",
+    category: "オブジェクト・項目"
+  },
+  {
+    id: 177,
+    question: "商談オブジェクトにカスタムピックリストをアップロードする際、商談の種類によって異なるオプションを出したい。どこでオプションを更新すべきですか？",
+    options: [
+      { label: "A", text: "項目と関係" },
+      { label: "B", text: "関連ルックアップフィルター" },
+      { label: "C", text: "レコードタイプ" },
+      { label: "D", text: "選択リスト項目値セット" }
+    ],
+    correctAnswer: ["C"],
+    explanation: "回答\nC. レコードタイプ\n同じ項目でもレコードタイプごとに、どの選択リスト値を選択肢として表示するかを制御することができます。",
+    category: "レコードタイプ・レイアウト"
+  },
+  {
+    id: 178,
+    question: "求人がまだ募集中でステータスが面接中でない場合に30日後に投稿されるプロセスアクションがあります。10日後にステータスが面接に更新された場合、Chatter投稿はどうなりますか?",
+    options: [
+      { label: "A", text: "保留中のChatter投稿はキャンセルされます。" },
+      { label: "B", text: "保留中のChatter投稿が毎月10日に送信される" },
+      { label: "C", text: "保留中のChatter投稿は一時停止されます。" },
+      { label: "D", text: "保留中のChatter投稿が 30 日後に送信される。" }
+    ],
+    correctAnswer: ["A"],
+    explanation: "回答\nA. 保留中のChatter投稿はキャンセルされます。\n時間ベースのアクションは、実行時点（30日後）で条件を満たしていない場合、キューから削除されキャンセルされます。",
+    category: "自動化"
+  },
+  {
+    id: 179,
+    question: "マーケティング ユーザーが変換されたリードを表示および編集できる必要があります。編集のために変換済みリードにアクセスできる2つの方法はどれですか？",
+    options: [
+      { label: "A", text: "グローバル検索結果でそれらを見つける" },
+      { label: "B", text: "ホームページの関連レコードコンポーネントを検索する" },
+      { label: "C", text: "リードのステータスが「変換済み」になるようなリストビューを活用する" },
+      { label: "D", text: "データインポートウィザードを使用する" }
+    ],
+    correctAnswer: ["B", "C"],
+    explanation: "回答\nB. ホームページの関連レコードコンポーネントを検索する\nC. リードのステータスがQualifiedになるようなリストビューを活用する\n適切な権限があれば、リストビューや関連レコードのコンポーネントを介して、変換済みのリードレコードを参照・編集することが可能です。",
+    category: "データ管理"
+  },
+  {
+    id: 180,
+    question: "商談が終了すると商談を自動更新する処理を作成したい。どの自動化ツールを使用すべきですか？",
+    options: [
+      { label: "A", text: "承認プロセス" },
+      { label: "B", text: "Flow Builder" },
+      { label: "C", text: "ワークフロールール" },
+      { label: "D", text: "プロセスビルダー" }
+    ],
+    correctAnswer: ["B"],
+    explanation: "回答\nB. Flow Builder\nフェーズの変更（終了）をトリガーにして同じレコードを更新する自動化は、現在 Flow Builder で作成するのが標準的です。",
+    category: "自動化"
+  },
+  {
+    id: 181,
+    question: "クロスセル商談タイプのすべての商談を専門家チームと共有したい。組織全体のデフォルトは非公開です。管理者はこれをどのように達成すべきですか？",
+    options: [
+      { label: "A", text: "専門家を公開グループに追加し、「条件に基づく共有ルール」を使用する。" },
+      { label: "B", text: "組織全体のデフォルトを「公開/参照・更新可能」に変更する。" },
+      { label: "C", text: "テリトリー管理を有効にし、同じテリトリーに割り当てる。" },
+      { label: "D", text: "専門家の新しいロールを作成し、「レコード所有者に基づく共有ルール」を使用する。" }
+    ],
+    correctAnswer: ["A"],
+    explanation: "回答\nA. 対象分野の専門家を公開グループに追加し、「条件に基づく共有ルール」を使用してレコードへのアクセスを許可します。\n特定の条件（商談タイプ）に合致するレコードのみを特定グループに共有するには、条件ベースの共有ルールが最適です。",
+    category: "共有・セキュリティ"
+  },
+  {
+    id: 182,
+    question: "Salesforceレコードをチームの他のメンバーと共有しながら、一般的なトピックについても共同作業したい。機能を有効にするための2つの考慮事項は？",
+    options: [
+      { label: "A", text: "Chatterグループは部門ごとに自動的に作成される。" },
+      { label: "B", text: "オブジェクトレイアウトは、グループ関連リストを含むように構成する必要がある。" },
+      { label: "C", text: "グループパブリッシャーで「レコードの追加」アクションを構成する必要がある。" },
+      { label: "D", text: "管理者は、レコード共有を有効にするためにグループを作成する必要がある。" }
+    ],
+    correctAnswer: ["B", "C"],
+    explanation: "回答\nB. オブジェクトレイアウトは、グループ関連リストを含むように構成する必要がある。\nC. グループパブリッシャーで「レコードの追加」アクションを構成する必要がある。\nChatterグループを利用した共同作業には、UI上での関連リスト配置やアクションの追加設定が必要です。",
+    category: "その他"
+  },
+  {
+    id: 183,
+    question: "「設置日」に基づいて「保証有効期限（1年後）」を把握するために、管理者はSalesforceをどのように設定すべきですか？（モバイルアプリからの利用想定）",
+    options: [
+      { label: "A", text: "保証有効期限項目のデフォルト値として数式を使用する。" },
+      { label: "B", text: "購入した保証から1年を表示する数式項目を作成する。" },
+      { label: "C", text: "有効期限項目が入力されるように入力規則を追加する。" },
+      { label: "D", text: "モバイルページレイアウトに項目を含める。" }
+    ],
+    correctAnswer: ["A"],
+    explanation: "回答\nA. 保証有効期限項目のデフォルト値として数式を使用する。\n設置日をもとに有効期限を自動算出させて表示させるには、数式を用いたデフォルト値の設定などが有効です。",
+    category: "オブジェクト・項目"
+  },
+  {
+    id: 184,
+    question: "子レコードへのアクセスが制限された2つのオブジェクト間に1対多の関係を作成する必要があります。どのタイプの項目を使用すべきですか?",
+    options: [
+      { label: "A", text: "積み上げ集計項目" },
+      { label: "B", text: "主従関係項目" },
+      { label: "C", text: "クロスオブジェクト数式項目" },
+      { label: "D", text: "参照関係項目" }
+    ],
+    correctAnswer: ["D"],
+    explanation: "回答\nD. 参照関係項目\n主従関係は親の権限に子が引きずられます。親は見せたいが子のアクセスを制限したい場合は、権限が独立している参照関係を使用します。",
+    category: "オブジェクト・項目"
+  },
+  {
+    id: 185,
+    question: "商談ページで販売フェーズを視覚的に確認したい。パス構成の重要な考慮事項はどれですか?",
+    options: [
+      { label: "A", text: "パスのかんばんビューは手動で構成する必要がある。" },
+      { label: "B", text: "所有者項目はパネルで編集できる。" },
+      { label: "C", text: "「お祝い」はパスに追加することができない。" },
+      { label: "D", text: "パスには各フェーズに「ガイダンス」と「重要な項目」を含めることができる。" }
+    ],
+    correctAnswer: ["D"],
+    explanation: "回答\nD. パスには、各フェーズに「ガイダンス」と「重要な項目」を含めることができる。\nパスの主な機能は、プロセスの視覚化とともに、各段階で必要な情報（重要な項目）やアドバイス（ガイダンス）をユーザーに示すことです。",
+    category: "レコードタイプ・レイアウト"
+  },
+  {
+    id: 186,
+    question: "目標を設定し、担当者の業績を評価できるように今後数四半期の売上を予測できるようにしたい。管理者が構成すべき2つの機能は？",
+    options: [
+      { label: "A", text: "販売見積もり" },
+      { label: "B", text: "商談リストビュー" },
+      { label: "C", text: "売上予測" },
+      { label: "D", text: "商談ステージ" }
+    ],
+    correctAnswer: ["C", "D"],
+    explanation: "回答\nC. 売上予測\nD. 商談ステージ\n売上予測機能（Collaborative Forecasts）を有効化し、商談ステージごとの確度（%）などを設定することで要件を満たせます。",
+    category: "レポート・ダッシュボード"
+  },
+  {
+    id: 187,
+    question: "「紹介元」オブジェクトで「紹介日」項目が更新されたときに、親オブジェクトの「紹介」も更新する必要がある。どの機能を使用すべきですか？",
+    options: [
+      { label: "A", text: "LightningWebコンポーネント" },
+      { label: "B", text: "承認プロセス" },
+      { label: "C", text: "ワークフロー項目の更新" },
+      { label: "D", text: "Flow Builder" }
+    ],
+    correctAnswer: ["D"],
+    explanation: "回答\nD. Flow Builder\n子レコードの更新を契機に親レコードを自動更新する処理は、レコードトリガーフロー（Flow Builder）で実装します。",
+    category: "自動化"
+  },
+  {
+    id: 188,
+    question: "24時間のSLAを満たすケースは、次の層のキューに自動的に再割り当てする必要があります。どの機能を使用すべきですか？",
+    options: [
+      { label: "A", text: "Einstein ケース ルーティング" },
+      { label: "B", text: "自動応答ルール" },
+      { label: "C", text: "ケース割り当てルール" },
+      { label: "D", text: "ケースエスカレーションルール" }
+    ],
+    correctAnswer: ["D"],
+    explanation: "回答\nD. ケースエスカレーションルール\n時間経過（24時間）によって所有者を別キューへ自動変更し、対応を促進させるにはエスカレーションルールを使用します。",
+    category: "割り当て・ルーティング"
+  },
+  {
+    id: 189,
+    question: "フィールド値に基づいてレコードを削除する自動化された方法が必要です。どのような自動化ソリューションを使用すべきですか？",
+    options: [
+      { label: "A", text: "ワークフロー" },
+      { label: "B", text: "プロセスビルダー" },
+      { label: "C", text: "Flow Builder" },
+      { label: "D", text: "オートメーションスタジオ" }
+    ],
+    correctAnswer: ["C"],
+    explanation: "回答\nC. Flow Builder\nレコードの削除アクションを標準でサポートしている唯一の宣言的自動化ツールは Flow Builder です。",
+    category: "自動化"
+  },
+  {
+    id: 190,
+    question: "ユーザーのアクセス権を直ちに削除するように依頼がありました。対象のユーザーは、階層項目「ダイレクトマネージャー」に属しています。管理者は何をすべきですか？",
+    options: [
+      { label: "A", text: "ユーザーを凍結してログインできないようにし、参照されないようにする。" },
+      { label: "B", text: "ユーザーを無効化し、参照されている全レコードを削除する。" },
+      { label: "C", text: "ユーザーのプロファイルを読み取り専用に変更する。" },
+      { label: "D", text: "ユーザーを削除する。" }
+    ],
+    correctAnswer: ["A"],
+    explanation: "回答\nA. ユーザーを凍結してログインできないようにするとともに、ダイレクトマネージャー項目で参照されないようにする。\n階層項目等で参照されているユーザーはすぐに無効化できませんが、「凍結（Freeze）」することで即座にログインを阻止できます。",
+    category: "ユーザー・権限"
+  },
+  {
+    id: 191,
+    question: "従業員エンゲージメント委員会が、他の従業員の投稿を制限しながら最新情報を投稿したいと考えています。何を作成すべきですか？",
+    options: [
+      { label: "A", text: "Chatter ストリーム" },
+      { label: "B", text: "Chatter ブロードキャストグループ" },
+      { label: "C", text: "おすすめChatterグループ" },
+      { label: "D", text: "Chatter 非公開グループ" }
+    ],
+    correctAnswer: ["B"],
+    explanation: "回答\nB. Chatter ブロードキャストグループ\nブロードキャストグループは、所有者と管理者のみが投稿でき、他のメンバーは閲覧とコメントのみ可能な形式のグループです。",
+    category: "その他"
+  },
+  {
+    id: 192,
+    question: "商談のフェーズに基づいて重要な価値（項目）を明らかにするために何を実装できるかを知りたがっています。どのツールを使用すべきですか？",
+    options: [
+      { label: "A", text: "動的フォーム" },
+      { label: "B", text: "パスの重要な項目" },
+      { label: "C", text: "商談プロセス" },
+      { label: "D", text: "ワークフロールール" }
+    ],
+    correctAnswer: ["B"],
+    explanation: "回答\nB. パスの重要な項目\nパス設定機能の中で、特定のフェーズで入力すべき「重要な項目」を指定し、レコードページ上で強調表示できます。",
+    category: "レコードタイプ・レイアウト"
+  },
+  {
+    id: 193,
+    question: "新しいリードを追加するときに使用する画面フローを作成しました。表示するために管理者が行うべきことを2つ選択してください。",
+    options: [
+      { label: "A", text: "タブを作成し、画面フローをページに追加する。" },
+      { label: "B", text: "フロー要素を使用して、画面フローをレコードページに追加する。" },
+      { label: "C", text: "コンソールのユーティリティバーにフローを追加する" },
+      { label: "D", text: "AppExchange からアプリをインストールする" }
+    ],
+    correctAnswer: ["B", "C"],
+    explanation: "回答\nB. フロー要素を使用して、画面フローをレコードページに追加する。\nC. コンソールのユーティリティバーにフローを追加する\n作成した画面フローは、レコードページのコンポーネントとして配置したり、ユーティリティバーからいつでも呼び出せるよう構成できます。",
+    category: "自動化"
+  },
+  {
+    id: 194,
+    question: "2つの営業チームがあり、どちらのロールも同じ管理者ロールの部下です。営業チームAが所有するレコードを営業チームBにどのように共有すべきですか？",
+    options: [
+      { label: "A", text: "階層を使用した共有" },
+      { label: "B", text: "手動共有を使用" },
+      { label: "C", text: "「条件に基づく」共有" },
+      { label: "D", text: "「レコード所有者に基づく」共有" }
+    ],
+    correctAnswer: ["D"],
+    explanation: "回答\nD. 「レコード所有者に基づく」共有\nロール階層で横並びのチーム間でレコードを共有する場合、所有しているロールやグループを指定する「所有者ベースの共有ルール」が適しています。",
+    category: "共有・セキュリティ"
+  },
+  {
+    id: 195,
+    question: "Service Cloudコンソールを使用せずに、ケースレコードからナレッジ記事にアクセスしたい。どのように構成すべきですか？",
+    options: [
+      { label: "A", text: "ナレッジ コンポーネントをページ レイアウトに追加します。" },
+      { label: "B", text: "ナレッジ コンポーネント リストをページ レイアウトに追加します。" },
+      { label: "C", text: "ページレイアウトにナレッジ関連リストを追加する。" },
+      { label: "D", text: "ナレッジ関連リストをレコードページに追加する" }
+    ],
+    correctAnswer: ["A"],
+    explanation: "回答\nA. ナレッジ コンポーネントをページ レイアウトに追加します。\nナレッジ設定を有効にした後、ナレッジコンポーネントをレイアウトに配置することで、通常のレコード画面から記事の検索・閲覧が可能になります。",
+    category: "レコードタイプ・レイアウト"
+  },
+  {
+    id: 196,
+    question: "ユーザーに繰り返しTodoを追加可能にするためのソリューションを2つ選択してください。",
+    options: [
+      { label: "A", text: "活動設定でTodoの繰り返し作成を有効にする" },
+      { label: "B", text: "共有アクティビティを無効にする" },
+      { label: "C", text: "ページレイアウトに一連のToDoの繰り返し作成項目を追加する" },
+      { label: "D", text: "タスク通知サービスをオンにする" }
+    ],
+    correctAnswer: ["A", "C"],
+    explanation: "回答\nA. 活動設定で繰り返しタスクの作成を有効にする\nC. ページレイアウトに一連のToDoの繰り返し作成項目を追加する\n機能自体の有効化と、繰り返し設定を行うための項目（一連のToDo）をレイアウトに表示させる必要があります。",
+    category: "自動化"
+  },
+  {
+    id: 197,
+    question: "データエクスポートサービスを使用してバックアップをスケジュールする際の2つの考慮事項はどれですか？",
+    options: [
+      { label: "A", text: "メタデータのバックアップは、サンドボックスの更新間隔に制限されている。" },
+      { label: "B", text: "データのバックアップは、毎週または毎月の間隔に制限されている。" },
+      { label: "C", text: "データ エクスポート サービスは、サンドボックスから実行する必要がある。" },
+      { label: "D", text: "メタデータのバックアップは、別のプロセスで実行する必要がある。" }
+    ],
+    correctAnswer: ["B", "D"],
+    explanation: "回答\nB. データのバックアップは、毎週または毎月の間隔に制限されている。\nD. メタデータのバックアップは、別のプロセスで実行する必要がある。\n標準のデータエクスポート機能はデータレコードのみが対象で、間隔には制限があります。メタデータは別の手段でバックアップが必要です。",
+    category: "データ管理"
+  },
+  {
+    id: 198,
+    question: "6つの営業チームがあり、チームメンバーは固定です。チームが同じ取引先と簡単にコラボレーションできるようにするには何を構成すべきですか？",
+    options: [
+      { label: "A", text: "商談分割を使用して構成する。" },
+      { label: "B", text: "取引先チームを有効にし、既定の取引先チームを設定する方法をユーザーに示す。" },
+      { label: "C", text: "各チームのキューを作成し、取引先の所有権を割り当てる。" },
+      { label: "D", text: "ユーザーにすべての取引先を手動で共有することを提案する。" }
+    ],
+    correctAnswer: ["B"],
+    explanation: "回答\nB. 取引先チームを有効にし、デフォルトの取引先チームを設定する方法をユーザーに示す。\n取引先に関わるメンバーを固定化してアクセス権を一括付与するには、取引先チーム機能が最適です。",
+    category: "共有・セキュリティ"
+  },
+  {
+    id: 199,
+    question: "Salesforceを利用して製品の出荷を追跡するため、座標を取得したい。管理者が使用する項目タイプはどれですか？",
+    options: [
+      { label: "A", text: "地理位置情報" },
+      { label: "B", text: "ジオフェンス" },
+      { label: "C", text: "カスタムアドレス" },
+      { label: "D", text: "外部参照" }
+    ],
+    correctAnswer: ["A"],
+    explanation: "回答\nA. 地理位置情報\n緯度と経度を数値として保存し、座標情報を管理するための専用フィールドタイプは「地理位置情報」です。",
+    category: "オブジェクト・項目"
+  },
+{
+    id: 200,
+    question: "誤って大量のレコードをインポートしてしまいました。このインポートを元に戻す（削除する）ための2つのツールは？",
+    options: [
+      { label: "A", text: "毎週のデータエクスポート" },
+      { label: "B", text: "レコードの一括削除" },
+      { label: "C", text: "データローダ" },
+      { label: "D", text: "データインポートウィザード" }
+    ],
+    correctAnswer: ["B", "C"],
+    explanation: "回答\nB. レコードの一括削除\nC. データローダ\n誤インポートの取り消し（削除）には、標準の一括削除ツールか、データローダのDeleteアクションを使用します。",
+    category: "データ管理"
+  }
 ];
