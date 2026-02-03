@@ -15,16 +15,23 @@
 <body class="bg-slate-50 min-h-screen p-4 md:p-8 text-slate-900">
     <div class="max-w-3xl mx-auto space-y-6">
         <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
-            <div class="flex justify-between items-center">
-                <h1 class="text-xl font-black text-indigo-600">SF Admin Quiz</h1>
-                <div id="stats-display" class="text-sm font-bold text-slate-500">
-                    正答率: <span id="accuracy-rate" class="text-indigo-600">0%</span>
+            <div class="flex justify-between items-start">
+                <div>
+                    <h1 class="text-xl font-black text-indigo-600">SF Admin Quiz</h1>
+                    <div id="weak-categories" class="text-[10px] font-bold text-rose-500 mt-1 max-w-xs">弱点: 分析中...</div>
+                </div>
+                <div id="stats-display" class="text-right text-xs font-bold text-slate-500 space-y-1">
+                    <div>正答率: <span id="accuracy-rate" class="text-indigo-600 text-sm">0%</span></div>
+                    <div id="stat-details" class="text-[10px] opacity-70">正解:0 / 挑戦:0</div>
                 </div>
             </div>
+            
             <div class="flex flex-wrap gap-2">
                 <select id="category-filter" class="border p-2 rounded-lg bg-white text-xs"></select>
-                <button id="random-btn" class="border px-4 py-2 rounded-lg text-xs bg-white hover:bg-slate-50">🔄 番号順</button>
+                <button id="review-mode-btn" class="border px-3 py-2 rounded-lg text-xs bg-white hover:bg-rose-50 text-rose-600 font-bold transition-colors">❌ 復習モード: OFF</button>
+                <button id="random-btn" class="border px-3 py-2 rounded-lg text-xs bg-white hover:bg-slate-50">🔄 番号順</button>
                 <input type="text" id="search-input" placeholder="検索..." class="border p-2 rounded-lg flex-1 text-xs">
+                <button id="reset-stats" class="text-[10px] text-slate-400 hover:text-rose-500 underline">統計リセット</button>
             </div>
         </div>
 
